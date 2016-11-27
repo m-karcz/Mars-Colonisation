@@ -1,6 +1,5 @@
 // ConsoleApplication1.cpp : main project file.
 
-#include "stdafx.h"
 #include "Base.hpp"
 #include "Graph.hpp"
 #include "Neighbourhood_generator.hpp"
@@ -10,6 +9,7 @@
 #include "Solution.hpp"
 #include "Validator.hpp"
 
+#include "stdafx.h"
 using namespace System;
 
 int main(array<System::String ^> ^args)
