@@ -5,7 +5,7 @@
 #include<cmath>
 #include<cstdlib>
 
-struct Node { //polaczenie
+struct Edge { //polaczenie
 	int cost; //koszt polaczenia do xy
 	int x;
 	int y;

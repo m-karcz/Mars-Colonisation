@@ -145,7 +145,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Neighbourhood_generator.hpp" />
-    <ClInclude Include="Node.hpp" />
+    <ClInclude Include="Edge.hpp" />
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SA.hpp" />
@@ -175,6 +175,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
