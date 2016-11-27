@@ -16,7 +16,7 @@ struct Node { //polaczenie
 struct Point { //punkt na mapie
 	bool visited; //czy byl odwiedzony dla algorytmu
 	long cost = INT_MAX; //koszt sumaryczny
-	long cost_reversed = INT_MAX;	
+	long cost_reversed = INT_MAX;
 	std::vector<Node> nodes; //talbica dostepnych punktow
 	std::vector<Node> nodes_reversed;
 };
@@ -50,12 +50,12 @@ struct Neighbourhood_generator
 {
 	Solution & actual;
 	std::set<std::vector<Base>> generated;
-	
+
 	Neighbourhood_generator(Soultion & actual);
 	Solution next();
 };
 
-struct SA 
+struct SA
 {
 	Solution actual;
 	Solution best;
@@ -73,7 +73,7 @@ struct SA
 bool SA::run(void)
 {
 	bool result;
-	Solution candidate=nei_generator.next();
+	Solution candidate = nei_generator.next();
 	long delta;
 	while (!Validator::is_allowed(map.get_adjacency_matrix(candidate)))
 	{
@@ -91,7 +91,7 @@ bool SA::run(void)
 	}
 	else
 	{
-	//dodac srand na poczatku !!!!!!!!!!!!oneone
+		//dodac srand na poczatku !!!!!!!!!!!!oneone
 		const double random = static_cast<double> (std::rand()) / RAND_MAX;
 		double val_to_check = exp(-static_cast<double>(delta) / temperature);
 		if (random < val_to_check)
