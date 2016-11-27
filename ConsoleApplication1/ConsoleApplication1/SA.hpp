@@ -1,57 +1,12 @@
 #pragma once
-
 #include<vector>
 #include<set>
 #include<cmath>
 #include<cstdlib>
-
-typedef std::vector<std::vector<bool>> adj_matrix;
-
-struct Node { //polaczenie
-	int cost; //koszt polaczenia do xy
-	int x;
-	int y;
-};
-
-struct Point { //punkt na mapie
-	bool visited; //czy byl odwiedzony dla algorytmu
-	long cost = INT_MAX; //koszt sumaryczny
-	long cost_reversed = INT_MAX;
-	std::vector<Node> nodes; //talbica dostepnych punktow
-	std::vector<Node> nodes_reversed;
-};
-
-struct Graph { //graf
-	std::vector<std::vector<Point>> points;
-	adj_matrix get_adjacency_matrix(Solution & actual);
-};
-
-struct Validator
-{
-	static bool is_allowed(adj_matrix & matrix);
-};
-
-struct Base { //baza
-	int x;
-	int y;
-};
-
-struct Solution {
-	long achievable_points = 0;
-	std::vector<Base> bases;
-
-	std::vector<Base> get_neighbourhood(Graph & map);
-	void objective_function(Graph & map);
-};
-
-struct Neighbourhood_generator
-{
-	Solution & actual;
-	std::set<std::vector<Base>> generated;
-
-	Neighbourhood_generator(Solution & actual);
-	Solution next();
-};
+#include"Solution.hpp"
+#include"Neighbourhood_generator.hpp"
+#include"Graph.hpp"
+#include"Validator.hpp"
 
 struct SA
 {

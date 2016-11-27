@@ -1,0 +1,15 @@
+#pragma once
+#include<vector>
+#include<set>
+#include<cmath>
+#include<cstdlib>
+
+#include "Point.hpp"
+#include "Solution.hpp"
+
+typedef std::vector<std::vector<bool>> adj_matrix;
+struct Graph
+{ //graf
+	std::vector<std::vector<Point>> points;
+	adj_matrix get_adjacency_matrix(Solution & actual);
+};

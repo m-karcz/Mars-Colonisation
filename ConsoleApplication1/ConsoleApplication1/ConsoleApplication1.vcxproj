@@ -137,9 +137,16 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dupaaa.h" />
+    <ClInclude Include="Base.hpp" />
+    <ClInclude Include="Graph.hpp" />
+    <ClInclude Include="Neighbourhood_generator.hpp" />
+    <ClInclude Include="Node.hpp" />
+    <ClInclude Include="Point.hpp" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SA.hpp" />
+    <ClInclude Include="Solution.hpp" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Validator.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
