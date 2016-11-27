@@ -16,6 +16,7 @@ struct SA
 	double temperature;
 	const unsigned int max_iterations;
 	unsigned int iteration;
+	unsigned int max_range;
 	const double alpha;
 	Graph map;
 
@@ -25,14 +26,13 @@ struct SA
 
 bool SA::run(void)
 {
-	bool result;
 	Solution candidate = nei_generator.next();
 	long delta;
 	while (!Validator::is_allowed(map.get_adjacency_matrix(candidate)))
 	{
 		candidate = nei_generator.next();
 	}
-	candidate.objective_function(map);
+	candidate.objective_function(map, max_range);
 	delta = candidate.achievable_points - actual.achievable_points;
 	if (0 < delta)
 	{
