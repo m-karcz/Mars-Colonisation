@@ -3,7 +3,8 @@
 #include<set>
 #include<cmath>
 #include<cstdlib>
-#include "Node.hpp"
+
+struct Node;
 
 struct Point { //punkt na mapie
 	bool visited; //czy byl odwiedzony dla algorytmu

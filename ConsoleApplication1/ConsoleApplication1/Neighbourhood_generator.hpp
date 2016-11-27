@@ -3,8 +3,10 @@
 #include<set>
 #include<cmath>
 #include<cstdlib>
-#include "Solution.hpp"
+
 #include "Base.hpp"
+#include "Solution.hpp"
+
 
 struct Neighbourhood_generator
 {

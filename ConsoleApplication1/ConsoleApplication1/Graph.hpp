@@ -1,4 +1,5 @@
 #pragma once
+
 #include<vector>
 #include<set>
 #include<cmath>
@@ -7,7 +8,7 @@
 #include "Point.hpp"
 #include "Solution.hpp"
 
-typedef std::vector<std::vector<bool>> adj_matrix;
+typedef std::vector<std::vector<bool> > adj_matrix;
 struct Graph
 { //graf
 	std::vector<std::vector<Point>> points;

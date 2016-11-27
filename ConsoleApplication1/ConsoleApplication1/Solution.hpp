@@ -1,9 +1,8 @@
 #pragma once
 #include <vector>
-#include "Base.hpp"
-#include "Graph.hpp"
 
 struct Graph;
+struct Base;
 
 struct Solution {
 	long achievable_points = 0;
