@@ -23,8 +23,6 @@ struct Point { //punkt na mapie
 
 struct Graph { //graf
 	std::vector<std::vector<Point>> points;
-	get_transposed();
-
 	adj_matrix get_adjacency_matrix(Solution & actual);
 };
 
@@ -51,7 +49,7 @@ struct Neighbourhood_generator
 	Solution & actual;
 	std::set<std::vector<Base>> generated;
 
-	Neighbourhood_generator(Soultion & actual);
+	Neighbourhood_generator(Solution & actual);
 	Solution next();
 };
 
@@ -103,5 +101,5 @@ bool SA::run(void)
 	iteration++;
 	temperature = alpha*temperature;
 
-	return (max_iteration > iteration);
+	return (max_iterations > iteration);
 }
