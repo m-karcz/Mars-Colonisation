@@ -1,7 +1,7 @@
 // ConsoleApplication1.cpp : main project file.
 
 #include "stdafx.h"
-
+#include "dupaa.h"
 using namespace System;
 
 int main(array<System::String ^> ^args)
