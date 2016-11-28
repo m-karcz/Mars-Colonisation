@@ -1,5 +1,7 @@
 #include "Graph.hpp"
-
+#include <list>
+#include <algorithm>
+#include <functional>
 
 Graph::Graph()
 {
@@ -60,8 +62,48 @@ void Graph::clear()
 	return;
 }
 
-adj_matrix Graph::get_adjacency_matrix(Solution& actual)
+adj_matrix Graph::get_adjacency_matrix(Solution& actual, int range)
 {
-	adj_matrix todo;
-	return todo;
+	struct SimplePoint{
+		SimplePoint(int x, int y) : x(x), y(y) {}
+		SimplePoint(Edge edge):x(edge.x),y(edge.y) {}
+		int x;
+		int y;
+		bool operator==(const SimplePoint& rhs) const { return (this->x == rhs.x) && (this->y == rhs.y); }
+	};
+	std::function<bool(const SimplePoint&,const SimplePoint&)> comparator = [this](const SimplePoint& b1, const SimplePoint& b2)->bool{
+		return ((this->points[b1.y][b1.x].cost) < (this->points[b2.y][b2.x].cost));
+	};
+
+	adj_matrix adjacency_matrix;
+	for (auto& proceeding_base : actual.bases)
+	{
+		std::vector<bool> vect(actual.bases.size());
+		std::list<SimplePoint> candidates;
+		this->points[proceeding_base.y][proceeding_base.x].cost = 0;
+		candidates.emplace_front(proceeding_base.x, proceeding_base.y);
+		while (this->points[begin(candidates)->y][begin(candidates)->x].cost <= range) {
+			SimplePoint proceeded_point = candidates.front();
+			auto it = begin(actual.bases);
+			for (int i = 0; i < actual.bases.size(); i++, ++it) {
+				if ((it->x == proceeded_point.x) && (it->y == proceeded_point.y)) {
+					vect[i] = true;
+				}
+			}
+			candidates.pop_front();
+			Point& point = this->points[proceeded_point.y][proceeded_point.x];
+			for (auto& edge : point.edges) {
+				(*this)[edge].cost = std::min((*this)[edge].cost, point.cost+static_cast<long>(edge.cost));
+				if (std::find(begin(candidates), end(candidates), edge) == end(candidates))
+					candidates.emplace_back(edge);
+			}
+			candidates.sort(comparator);
+		}
+		this->clear();
+		adjacency_matrix.emplace_back(std::move(vect));
+		for (int i = 0; i < adjacency_matrix.size(); i++) {
+			adjacency_matrix[i][i] = false;
+		}
+	}
+	return adjacency_matrix;
 }
