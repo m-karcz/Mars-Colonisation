@@ -11,4 +11,6 @@ struct Base
 
 	Base(int xx, int yy) :x(xx), y(yy) {}
 	Base(){ x = 0; y = 0; }
+	bool operator==(const Base& rhs)const { return (this->x == rhs.x) && (this->y == rhs.y); }
+	bool operator<(const Base& rhs)const { return this->x < rhs.x ? true : (this->x > rhs.x ? false : this->y < rhs.y); }
 };
