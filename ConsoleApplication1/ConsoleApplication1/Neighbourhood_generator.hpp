@@ -6,6 +6,7 @@
 
 #include "Base.hpp"
 #include "Solution.hpp"
+#include <algorithm>
 
 
 struct Neighbourhood_generator
@@ -14,5 +15,6 @@ struct Neighbourhood_generator
 	std::set<std::vector<Base>> generated;
 
 	Neighbourhood_generator(Solution & actual);
+	bool is_new(Solution & candidate); //checks if new generated solution is unique -wasn't used before
 	Solution next();
 };
