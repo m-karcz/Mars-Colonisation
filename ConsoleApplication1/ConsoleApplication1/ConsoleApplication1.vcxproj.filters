@@ -42,14 +42,14 @@
     <ClInclude Include="Neighbourhood_generator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SA.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MainForm.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Edge.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SA.hpp">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

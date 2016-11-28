@@ -4,39 +4,45 @@
 
 void Solution::move(const unsigned int base,const unsigned int where_to_move)
 {
+	auto it = begin(this->bases);
+	for (unsigned int i = 0; i < base; i++)
+		++it;
+	Base base_to_move = *it;
+	this->bases.erase(it);
 	switch (where_to_move)
 	{
 		case 0:
-			bases[base].x--;
-			bases[base].y++;
+			base_to_move.x--;
+			base_to_move.y++;
 			break;
 		case 1:
-			bases[base].y++;
+			base_to_move.y++;
 			break;
 		case 2:
-			bases[base].x++;
-			bases[base].y++;
+			base_to_move.x++;
+			base_to_move.y++;
 			break;
 		case 3:
-			bases[base].x++;
+			base_to_move.x++;
 			break;
 		case 4:
-			bases[base].x++;
-			bases[base].y--;
+			base_to_move.x++;
+			base_to_move.y--;
 			break;
 		case 5:
-			bases[base].y--;
+			base_to_move.y--;
 			break;
 		case 6:
-			bases[base].y--;
-			bases[base].x--;
+			base_to_move.y--;
+			base_to_move.x--;
 			break;
 		case 7:
-			bases[base].x--;
+			base_to_move.x--;
 			break;
 		default:
 			break;
 	}
+	this->bases.insert(base_to_move);
 }
 
 
