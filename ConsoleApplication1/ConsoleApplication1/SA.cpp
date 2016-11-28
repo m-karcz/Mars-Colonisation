@@ -1,5 +1,5 @@
 #include "SA.hpp"
-
+/*
 bool SA::run(void)
 {
 	Solution candidate = nei_generator.next();
@@ -33,4 +33,4 @@ bool SA::run(void)
 	temperature = alpha*temperature;
 
 	return (max_iterations > iteration);
-}
+}*/
