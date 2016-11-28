@@ -15,5 +15,6 @@ Solution Neighbourhood_generator::next()
 		int where_to_move = (std::rand() % 8);
 		actual.move(base_to_move, where_to_move);
 	} while (this->is_new(neighbour));
-	return Solution();
+	generated.push(neighbour)
+	return neighbour;
 }*/
