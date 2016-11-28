@@ -15,7 +15,7 @@ using namespace System;
 [System::STAThread]
 int main(array<System::String ^> ^args)
 {
-    Console::WriteLine(L"Hello World");
+    Console::WriteLine(L"tutaj bedzie latwo debugowac, np. coutem");
 	ConsoleApplication1::MainForm myForm;
 	myForm.ShowDialog();
 	Console::ReadKey();

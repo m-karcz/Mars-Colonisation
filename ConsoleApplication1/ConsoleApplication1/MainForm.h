@@ -39,6 +39,19 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::OpenFileDialog^  open_map_dialog;
 
 	private: System::Windows::Forms::Button^  open_map;
+	private: System::Windows::Forms::ListBox^  listBox1;
+	private: System::Windows::Forms::NumericUpDown^  numeric_bases;
+
+	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::NumericUpDown^  numeric_range;
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::NumericUpDown^  numeric_temp;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown1;
+	private: System::Windows::Forms::Label^  label5;
+	private: System::Windows::Forms::Label^  label6;
+
 
 
 	protected:
@@ -62,14 +75,29 @@ namespace ConsoleApplication1 {
 			this->map = (gcnew System::Windows::Forms::PictureBox());
 			this->open_map_dialog = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->open_map = (gcnew System::Windows::Forms::Button());
+			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
+			this->numeric_bases = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->numeric_range = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->numeric_temp = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->map))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_bases))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_range))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_temp))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// run_button
 			// 
-			this->run_button->Location = System::Drawing::Point(171, 351);
+			this->run_button->Location = System::Drawing::Point(29, 145);
 			this->run_button->Name = L"run_button";
-			this->run_button->Size = System::Drawing::Size(75, 23);
+			this->run_button->Size = System::Drawing::Size(103, 50);
 			this->run_button->TabIndex = 0;
 			this->run_button->Text = L"Run";
 			this->run_button->UseVisualStyleBackColor = true;
@@ -89,30 +117,140 @@ namespace ConsoleApplication1 {
 			// 
 			// open_map
 			// 
-			this->open_map->Location = System::Drawing::Point(297, 89);
+			this->open_map->Location = System::Drawing::Point(29, 60);
 			this->open_map->Name = L"open_map";
-			this->open_map->Size = System::Drawing::Size(86, 23);
+			this->open_map->Size = System::Drawing::Size(103, 49);
 			this->open_map->TabIndex = 2;
 			this->open_map->Text = L"Open map";
 			this->open_map->UseVisualStyleBackColor = true;
 			this->open_map->Click += gcnew System::EventHandler(this, &MainForm::open_map_Click);
+			// 
+			// listBox1
+			// 
+			this->listBox1->FormattingEnabled = true;
+			this->listBox1->ItemHeight = 16;
+			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"tu beda", L"wspolrzedne", L"baz" });
+			this->listBox1->Location = System::Drawing::Point(448, 48);
+			this->listBox1->Name = L"listBox1";
+			this->listBox1->Size = System::Drawing::Size(120, 292);
+			this->listBox1->TabIndex = 3;
+			// 
+			// numeric_bases
+			// 
+			this->numeric_bases->Location = System::Drawing::Point(295, 60);
+			this->numeric_bases->Name = L"numeric_bases";
+			this->numeric_bases->Size = System::Drawing::Size(119, 22);
+			this->numeric_bases->TabIndex = 4;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(169, 62);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(120, 17);
+			this->label1->TabIndex = 5;
+			this->label1->Text = L"Number of bases:";
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(172, 98);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(54, 17);
+			this->label2->TabIndex = 6;
+			this->label2->Text = L"Range:";
+			// 
+			// numeric_range
+			// 
+			this->numeric_range->Location = System::Drawing::Point(295, 98);
+			this->numeric_range->Name = L"numeric_range";
+			this->numeric_range->Size = System::Drawing::Size(119, 22);
+			this->numeric_range->TabIndex = 4;
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(169, 137);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(94, 17);
+			this->label3->TabIndex = 7;
+			this->label3->Text = L"Temperature:";
+			// 
+			// numeric_temp
+			// 
+			this->numeric_temp->Location = System::Drawing::Point(295, 137);
+			this->numeric_temp->Name = L"numeric_temp";
+			this->numeric_temp->Size = System::Drawing::Size(119, 22);
+			this->numeric_temp->TabIndex = 4;
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(169, 178);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(48, 17);
+			this->label4->TabIndex = 7;
+			this->label4->Text = L"Alpha:";
+			// 
+			// numericUpDown1
+			// 
+			this->numericUpDown1->Location = System::Drawing::Point(295, 178);
+			this->numericUpDown1->Name = L"numericUpDown1";
+			this->numericUpDown1->Size = System::Drawing::Size(119, 22);
+			this->numericUpDown1->TabIndex = 4;
+			this->numericUpDown1->Tag = L"d";
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(38, 244);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(124, 17);
+			this->label5->TabIndex = 8;
+			this->label5->Text = L"Number of series: ";
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(38, 291);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(140, 17);
+			this->label6->TabIndex = 9;
+			this->label6->Text = L"Number of iterations:";
 			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1022, 404);
+			this->Controls->Add(this->label6);
+			this->Controls->Add(this->label5);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->label1);
+			this->Controls->Add(this->numericUpDown1);
+			this->Controls->Add(this->numeric_temp);
+			this->Controls->Add(this->numeric_range);
+			this->Controls->Add(this->numeric_bases);
+			this->Controls->Add(this->listBox1);
 			this->Controls->Add(this->open_map);
 			this->Controls->Add(this->map);
 			this->Controls->Add(this->run_button);
 			this->Name = L"MainForm";
-			this->Text = L"MainForm";
+			this->Text = L"Mars Colonization";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->map))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_bases))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_range))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_temp))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
 	private: System::Void run_button_Click(System::Object^  sender, System::EventArgs^  e) {
+
 	}
 	private: System::Void open_map_Click(System::Object^  sender, System::EventArgs^  e) {
 		open_map_dialog->ShowDialog();
