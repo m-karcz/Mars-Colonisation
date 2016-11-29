@@ -48,8 +48,11 @@
     <ClInclude Include="Edge.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Series_executor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="SA.hpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

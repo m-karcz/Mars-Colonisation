@@ -150,6 +150,7 @@
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SA.hpp" />
+    <ClInclude Include="Series_executor.hpp" />
     <ClInclude Include="Solution.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Validator.hpp" />

@@ -7,6 +7,7 @@
 #include"Neighbourhood_generator.hpp"
 #include"Graph.hpp"
 #include"Validator.hpp"
+#include <gcroot.h>
 
 struct SA
 {
@@ -19,8 +20,12 @@ struct SA
 	unsigned int max_range;
 	const double alpha;
 	Graph map;
+	gcroot<System::String^> gui_iterations; //label w gui, gdzie bêdzie wyœwietlana liczba przebytych iteracji
+	gcroot<System::Windows::Forms::ListBox::ObjectCollection^> gui_best_solution; //lista punktow w gui, ktore sa najlepszym aktualnym rozwiazaniem
+	
 
-	SA(double temperature, const double alpha, const unsigned int max_iterations, Solution & actual, Graph & map);
+	SA(double temperature, const double alpha, const unsigned int max_iterations, int x, int y, Graph & map, System::String^ gui_iterations, System::Windows::Forms::ListBox::ObjectCollection^ gui_best_solution);
+	void generate_first_solution(); //wygenerowanie pierwszego rozwi¹zania w konstruktorze
 	bool run(void);
 };
 

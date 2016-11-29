@@ -1,10 +1,10 @@
 #include "SA.hpp"
-/*
+
 bool SA::run(void)
 {
 	Solution candidate = nei_generator.next();
 	long delta;
-	while (!Validator::is_allowed(map.get_adjacency_matrix(candidate)))
+	while (!Validator::is_allowed(map.get_adjacency_matrix(candidate, max_range)))
 	{
 		candidate = nei_generator.next();
 	}
@@ -20,7 +20,6 @@ bool SA::run(void)
 	}
 	else
 	{
-		//dodac srand na poczatku !!!!!!!!!!!!oneone
 		const double random = static_cast<double> (std::rand()) / RAND_MAX;
 		double val_to_check = exp(-static_cast<double>(delta) / temperature);
 		if (random < val_to_check)
@@ -33,4 +32,4 @@ bool SA::run(void)
 	temperature = alpha*temperature;
 
 	return (max_iterations > iteration);
-}*/
+}

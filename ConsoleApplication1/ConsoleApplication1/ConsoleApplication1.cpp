@@ -9,6 +9,8 @@
 #include "Solution.hpp"
 #include "Validator.hpp"
 #include "MainForm.h"
+#include <cstdlib>
+#include <ctime>
 #include <Windows.h>
 
 #include "stdafx.h"
@@ -17,6 +19,7 @@ using namespace System;
 int main(array<System::String ^> ^args)
 {
 	//WinExec("matlab -r test", SW_SHOWNORMAL);
+	std::srand(std::time(nullptr));
     Console::WriteLine(L"tutaj bedzie latwo debugowac, np. coutem");
 	ConsoleApplication1::MainForm myForm;
 	myForm.ShowDialog();
