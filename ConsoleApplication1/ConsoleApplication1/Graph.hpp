@@ -15,6 +15,6 @@ struct Graph
 	Graph(System::Drawing::Image^ img);
 	std::vector<std::vector<Point>> points;
 	void clear(); //ustawia costy w pointsach
-	adj_matrix get_adjacency_matrix(Solution & actual, int range);
+	adj_matrix get_adjacency_matrix(Solution & actual, long range);
 	Point& operator[](const Edge& edge) { return points[edge.y][edge.y]; }
 };
