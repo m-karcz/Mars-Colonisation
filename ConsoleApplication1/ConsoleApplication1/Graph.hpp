@@ -4,6 +4,7 @@
 #include<set>
 #include<cmath>
 #include<cstdlib>
+#include <gcroot.h>
 
 #include "Point.hpp"
 #include "Solution.hpp"
@@ -17,4 +18,5 @@ struct Graph
 	void clear(); //ustawia costy w pointsach
 	adj_matrix get_adjacency_matrix(Solution & actual, long range);
 	Point& operator[](const Edge& edge) { return points[edge.y][edge.y]; }
+	
 };
