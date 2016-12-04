@@ -34,7 +34,7 @@ Graph::Graph(System::Drawing::Image^ img, int max_slope)
 			std::vector<Edge> edges_reversed;
 			for (int xx=(x==0 ? 0 : -1); xx <= (x==heights[y].size()-1 ? 0 : 1); xx++) {
 				for (int yy = (y==0 ? 0 : -1); yy <= (y==heights.size()-1 ? 0 : 1); yy++) {
-					if (!(xx == 0 && y == 0))
+					if (!(xx == 0 && yy == 0))
 					{
 						//zostawiam jakby jendak nie by³o skopane
 						/*edges.emplace_back(x+xx, y+yy, static_cast<int>(std::abs((std::abs(xx)+std::abs(yy)==2 ? 1.41 : 1)*(heights[y+yy][x+xx]-heights[y][x]+cost_of_path))));

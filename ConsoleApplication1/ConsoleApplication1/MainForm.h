@@ -282,7 +282,7 @@ namespace ConsoleApplication1 {
 	private: System::Void open_map_Click(System::Object^  sender, System::EventArgs^  e) {
 		open_map_dialog->ShowDialog();
 		map->Image = System::Drawing::Image::FromFile(open_map_dialog->FileName);
-		//Graph map(System::Drawing::Image::FromFile(open_map_dialog->FileName), 10);
+		Graph map(System::Drawing::Image::FromFile(open_map_dialog->FileName), 10);
 	}
 	private: System::Void open_map_dialog_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 
