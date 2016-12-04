@@ -7,6 +7,7 @@
 
 struct Point { //punkt na mapie
 	bool visited = false; //czy byl odwiedzony dla algorytmu
+	bool visited_reverse = false;	//odwiedzony przez algorytm odwrotu
 	long cost = LONG_MAX; //koszt sumaryczny
 	long cost_reversed = LONG_MAX;
 	std::vector<Edge> edges; //talbica dostepnych punktow

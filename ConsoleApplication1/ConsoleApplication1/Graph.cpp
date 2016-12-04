@@ -64,6 +64,17 @@ void Graph::clear()
 	return;
 }
 
+void Graph::clear_visited()
+{
+	for (auto & line : points)
+	{
+		for (auto & point : line)
+		{
+			point.visited = false;
+		}
+	}
+}
+
 adj_matrix Graph::get_adjacency_matrix(Solution& actual, long range)
 {
 	//struktura, ktora posiada w sobie wspolrzedne - upraszcza i przyspiesza generowanie listy kandydatow do nastepnej iteracji
