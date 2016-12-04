@@ -13,5 +13,5 @@ struct Point { //punkt na mapie
 	std::vector<Edge> edges; //talbica dostepnych punktow
 	std::vector<Edge> edges_reversed;
 
-	Point(std::vector<Edge> edgess, std::vector<Edge> edges_reversedd) : edges(edgess.begin(), edgess.end()), edges_reversed(edges_reversedd.begin(), edges_reversedd.end()) {}
+	Point(std::vector<Edge> edges, std::vector<Edge> edges_reversed) : edges(edges.begin(), edges.end()), edges_reversed(edges_reversed.begin(), edges_reversed.end()) {}
 };

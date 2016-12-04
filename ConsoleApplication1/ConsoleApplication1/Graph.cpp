@@ -3,20 +3,18 @@
 #include <algorithm>
 #include <functional>
 
-Graph::Graph()
-{
 
-}
-
-Graph::Graph(System::Drawing::Image^ img)
+Graph::Graph(System::Drawing::Image^ img, int max_slope)
 {
 	System::Drawing::Bitmap^ bitmap = gcnew System::Drawing::Bitmap(img);
 	int scale = 2;
 	int dividend = 20;
 	int cost_of_path = 10;
 	std::vector<std::vector<double>> heights;
+	heights.reserve(bitmap->Height / scale);
 	for (int y = 0; y < bitmap->Height; y += scale) {
 		std::vector<double> line;
+		line.reserve(bitmap->Width / scale);
 		for (int x = 0; x < bitmap->Width; x += scale) {
 			double sum = 0;
 			for (int xx = 0; xx < scale; xx++) {
@@ -38,8 +36,15 @@ Graph::Graph(System::Drawing::Image^ img)
 				for (int yy = (y==0 ? 0 : -1); yy <= (y==heights.size()-1 ? 0 : 1); yy++) {
 					if (!(xx == 0 && y == 0))
 					{
-						edges.emplace_back(x+xx, y+yy, static_cast<int>(std::abs((std::abs(xx)+std::abs(yy)==2 ? 1.41 : 1)*(heights[y+yy][x+xx]-heights[y][x]+cost_of_path))));
-						edges_reversed.emplace_back(x + xx, y++, static_cast<int>(std::abs((std::abs(xx), std::abs(yy) == 2 ? 1.41 : 1)*(heights[y][x] - heights[y + yy][x + xx] + cost_of_path))));
+						//zostawiam jakby jendak nie by³o skopane
+						/*edges.emplace_back(x+xx, y+yy, static_cast<int>(std::abs((std::abs(xx)+std::abs(yy)==2 ? 1.41 : 1)*(heights[y+yy][x+xx]-heights[y][x]+cost_of_path))));
+						edges_reversed.emplace_back(x + xx, y+yy, static_cast<int>(std::abs((std::abs(xx), std::abs(yy) == 2 ? 1.41 : 1)*(heights[y][x] - heights[y + yy][x + xx] + cost_of_path))));*/
+						double slope = heights[y][x] - heights[y + yy][x + xx];
+						if (std::abs(slope) < max_slope) {
+							double flat_path =(std::abs(xx) + std::abs(yy) == 2.0 ? 1.41 : 1.0)*cost_of_path;
+							edges.emplace_back(Edge(x + xx, y + yy, static_cast<int>(std::abs(flat_path + slope))));
+							edges_reversed.emplace_back(Edge(x + xx, y + xx, static_cast<int>(std::abs(flat_path - slope))));
+						}
 					}
 				}
 			}
