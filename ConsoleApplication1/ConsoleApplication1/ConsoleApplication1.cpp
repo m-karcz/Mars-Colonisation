@@ -22,20 +22,6 @@ int main(array<System::String ^> ^args)
 	//WinExec("matlab -r test", SW_SHOWNORMAL);
 	std::srand(std::time(nullptr));
     Console::WriteLine(L"tutaj bedzie latwo debugowac, np. coutem");
-	//test
-	System::Drawing::Image^ newImage = System::Drawing::Image::FromFile("img.jpg");
-	std::cout << "dupa1" << std::endl;
-	Graph map(newImage);
-	std::cout << "dupa2" << std::endl;
-	Base base;
-	Solution solution;
-	solution.bases.insert(base);
-	solution.objective_function(map, 10);
-	int result = solution.achievable_points;
-
-	std::cout << "Odiagalnych punktow: " << result << std::endl;
-
-	//end of test
 	ConsoleApplication1::MainForm myForm;
 	myForm.ShowDialog();
 	Console::ReadKey();

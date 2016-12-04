@@ -19,6 +19,6 @@ struct Graph
 	void clear(); //ustawia costy w pointsach
 	void clear_visited();
 	adj_matrix get_adjacency_matrix(Solution & actual, long range);
-	Point& operator[](const Edge& edge) { return points[edge.y][edge.y]; }
+	Point& operator[](const Edge& edge) { return points[edge.y][edge.x]; }
 	
 };

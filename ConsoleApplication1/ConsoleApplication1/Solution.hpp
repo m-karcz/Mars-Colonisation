@@ -8,7 +8,7 @@ struct Base;
 struct Solution {
 	long achievable_points = 0;
 	std::set<Base> bases;
-	void objective_function(Graph & map, const int range);
+	void objective_function(Graph & map, const long range);
 	void move(const unsigned int base,const unsigned int where_to_move);
 	Solution() {}
 	//Solution(const Solution & pattern); //TODO

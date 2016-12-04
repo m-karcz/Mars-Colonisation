@@ -43,7 +43,7 @@ Graph::Graph(System::Drawing::Image^ img, int max_slope)
 						if (std::abs(slope) < max_slope) {
 							double flat_path =(std::abs(xx) + std::abs(yy) == 2.0 ? 1.41 : 1.0)*cost_of_path;
 							edges.emplace_back(Edge(x + xx, y + yy, static_cast<int>(std::abs(flat_path + slope))));
-							edges_reversed.emplace_back(Edge(x + xx, y + xx, static_cast<int>(std::abs(flat_path - slope))));
+							edges_reversed.emplace_back(Edge(x + xx, y + yy, static_cast<int>(std::abs(flat_path - slope))));
 						}
 					}
 				}
