@@ -13,9 +13,11 @@ bool SA::run(void)
 	if (0 < delta)
 	{
 		actual = candidate;
+		nei_generator.generated.clear();
 		if (0 > best.achievable_points - actual.achievable_points)
 		{
 			best = actual;
+			this->show_best_solution();
 		}
 	}
 	else
@@ -25,11 +27,26 @@ bool SA::run(void)
 		if (random < val_to_check)
 		{
 			actual = candidate;
+			nei_generator.generated.clear();
 		}
 	}
+	show_iterations();
 
 	iteration++;
 	temperature = alpha*temperature;
 
 	return (max_iterations > iteration);
+}
+
+void SA::show_best_solution()
+{
+	this->gui_best_solution->Clear();
+	for (auto& base : best.bases) {
+		gui_best_solution->Add(base.x.ToString()+", "+base.y.ToString());
+	}
+}
+
+void SA::show_iterations()
+{
+	gui_iterations->Text = ((System::Int32::Parse(gui_iterations->Text)+1).ToString());
 }

@@ -11,5 +11,5 @@ struct Solution {
 	void objective_function(Graph & map, const int range);
 	void move(const unsigned int base,const unsigned int where_to_move);
 	Solution() {}
-	//Solution(Solution & pattern); //TODO
+	//Solution(const Solution & pattern); //TODO
 };

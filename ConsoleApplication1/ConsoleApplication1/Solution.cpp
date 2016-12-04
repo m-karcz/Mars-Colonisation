@@ -60,7 +60,7 @@ void Solution::objective_function(Graph& map, const int range)
 		bool operator==(const SimplePoint& rhs) const { return (this->x == rhs.x) && (this->y == rhs.y); }
 	};
 	//funkcja, ktora jest uzywana pozniej do sortowania listy kandydatow
-	auto comparator = [map](const SimplePoint& b1, const SimplePoint& b2)->bool 
+	auto comparator = [&map](const SimplePoint& b1, const SimplePoint& b2)->bool 
 	{
 		return ((map.points[b1.y][b1.x].cost) < (map.points[b2.y][b2.x].cost));
 	};
