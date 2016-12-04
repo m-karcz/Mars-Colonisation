@@ -12,8 +12,9 @@
 typedef std::vector<std::vector<bool> > adj_matrix;
 struct Graph
 { //graf
-	Graph();
-	Graph(System::Drawing::Image^ img);
+	Graph()=delete;
+	Graph(const Graph& other) = delete;
+	Graph(System::Drawing::Image^ img, int max_slope);
 	std::vector<std::vector<Point>> points;
 	void clear(); //ustawia costy w pointsach
 	void clear_visited();
