@@ -1,4 +1,5 @@
 #pragma once
+#include "Graph.hpp"
 
 namespace ConsoleApplication1 {
 
@@ -48,9 +49,13 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::NumericUpDown^  numeric_temp;
 	private: System::Windows::Forms::Label^  label4;
-	private: System::Windows::Forms::NumericUpDown^  numericUpDown1;
+	private: System::Windows::Forms::NumericUpDown^  numeric_alpha;
+
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Label^  label6;
+	private: System::Windows::Forms::NumericUpDown^  numeric_slope;
+	private: System::Windows::Forms::Label^  label7;
+
 
 
 
@@ -83,14 +88,17 @@ namespace ConsoleApplication1 {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->numeric_temp = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->numeric_alpha = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->numeric_slope = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label7 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->map))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_bases))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_range))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_temp))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_alpha))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_slope))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// run_button
@@ -192,18 +200,18 @@ namespace ConsoleApplication1 {
 			this->label4->TabIndex = 7;
 			this->label4->Text = L"Alpha:";
 			// 
-			// numericUpDown1
+			// numeric_alpha
 			// 
-			this->numericUpDown1->Location = System::Drawing::Point(295, 178);
-			this->numericUpDown1->Name = L"numericUpDown1";
-			this->numericUpDown1->Size = System::Drawing::Size(119, 22);
-			this->numericUpDown1->TabIndex = 4;
-			this->numericUpDown1->Tag = L"d";
+			this->numeric_alpha->Location = System::Drawing::Point(295, 178);
+			this->numeric_alpha->Name = L"numeric_alpha";
+			this->numeric_alpha->Size = System::Drawing::Size(119, 22);
+			this->numeric_alpha->TabIndex = 4;
+			this->numeric_alpha->Tag = L"d";
 			// 
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(38, 244);
+			this->label5->Location = System::Drawing::Point(38, 261);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(124, 17);
 			this->label5->TabIndex = 8;
@@ -212,24 +220,42 @@ namespace ConsoleApplication1 {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(38, 291);
+			this->label6->Location = System::Drawing::Point(38, 306);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(140, 17);
 			this->label6->TabIndex = 9;
 			this->label6->Text = L"Number of iterations:";
+			// 
+			// numeric_slope
+			// 
+			this->numeric_slope->Location = System::Drawing::Point(295, 218);
+			this->numeric_slope->Name = L"numeric_slope";
+			this->numeric_slope->Size = System::Drawing::Size(120, 22);
+			this->numeric_slope->TabIndex = 10;
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Location = System::Drawing::Point(169, 220);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(75, 17);
+			this->label7->TabIndex = 7;
+			this->label7->Text = L"Max slope:";
 			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1022, 404);
+			this->Controls->Add(this->numeric_slope);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->label5);
+			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->numericUpDown1);
+			this->Controls->Add(this->numeric_alpha);
 			this->Controls->Add(this->numeric_temp);
 			this->Controls->Add(this->numeric_range);
 			this->Controls->Add(this->numeric_bases);
@@ -243,7 +269,8 @@ namespace ConsoleApplication1 {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_bases))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_range))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_temp))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_alpha))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_slope))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -255,6 +282,7 @@ namespace ConsoleApplication1 {
 	private: System::Void open_map_Click(System::Object^  sender, System::EventArgs^  e) {
 		open_map_dialog->ShowDialog();
 		map->Image = System::Drawing::Image::FromFile(open_map_dialog->FileName);
+		Graph map(System::Drawing::Image::FromFile(open_map_dialog->FileName), 10);
 	}
 	private: System::Void open_map_dialog_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 
