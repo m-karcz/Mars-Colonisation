@@ -1,5 +1,6 @@
 #pragma once
 #include "Graph.hpp"
+#include "Series_executor.hpp"
 
 namespace ConsoleApplication1 {
 
@@ -40,7 +41,8 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::OpenFileDialog^  open_map_dialog;
 
 	private: System::Windows::Forms::Button^  open_map;
-	private: System::Windows::Forms::ListBox^  listBox1;
+	private: System::Windows::Forms::ListBox^  best_solutions;
+
 	private: System::Windows::Forms::NumericUpDown^  numeric_bases;
 
 	private: System::Windows::Forms::Label^  label1;
@@ -56,6 +58,10 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::NumericUpDown^  numeric_slope;
 	private: System::Windows::Forms::Label^  label7;
 
+
+	private: Series_executor^ series_executor;
+	private: System::Windows::Forms::Label^  gui_series;
+	private: System::Windows::Forms::Label^  gui_iterations;
 
 
 
@@ -80,7 +86,7 @@ namespace ConsoleApplication1 {
 			this->map = (gcnew System::Windows::Forms::PictureBox());
 			this->open_map_dialog = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->open_map = (gcnew System::Windows::Forms::Button());
-			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
+			this->best_solutions = (gcnew System::Windows::Forms::ListBox());
 			this->numeric_bases = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -93,6 +99,8 @@ namespace ConsoleApplication1 {
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->numeric_slope = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->gui_series = (gcnew System::Windows::Forms::Label());
+			this->gui_iterations = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->map))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_bases))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_range))->BeginInit();
@@ -133,15 +141,15 @@ namespace ConsoleApplication1 {
 			this->open_map->UseVisualStyleBackColor = true;
 			this->open_map->Click += gcnew System::EventHandler(this, &MainForm::open_map_Click);
 			// 
-			// listBox1
+			// best_solutions
 			// 
-			this->listBox1->FormattingEnabled = true;
-			this->listBox1->ItemHeight = 16;
-			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"tu beda", L"wspolrzedne", L"baz" });
-			this->listBox1->Location = System::Drawing::Point(448, 48);
-			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(120, 292);
-			this->listBox1->TabIndex = 3;
+			this->best_solutions->FormattingEnabled = true;
+			this->best_solutions->ItemHeight = 16;
+			this->best_solutions->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"tu beda", L"wspolrzedne", L"baz" });
+			this->best_solutions->Location = System::Drawing::Point(448, 48);
+			this->best_solutions->Name = L"best_solutions";
+			this->best_solutions->Size = System::Drawing::Size(120, 292);
+			this->best_solutions->TabIndex = 3;
 			// 
 			// numeric_bases
 			// 
@@ -242,11 +250,31 @@ namespace ConsoleApplication1 {
 			this->label7->TabIndex = 7;
 			this->label7->Text = L"Max slope:";
 			// 
+			// gui_series
+			// 
+			this->gui_series->AutoSize = true;
+			this->gui_series->Location = System::Drawing::Point(197, 260);
+			this->gui_series->Name = L"gui_series";
+			this->gui_series->Size = System::Drawing::Size(16, 17);
+			this->gui_series->TabIndex = 11;
+			this->gui_series->Text = L"0";
+			// 
+			// gui_iterations
+			// 
+			this->gui_iterations->AutoSize = true;
+			this->gui_iterations->Location = System::Drawing::Point(247, 323);
+			this->gui_iterations->Name = L"gui_iterations";
+			this->gui_iterations->Size = System::Drawing::Size(16, 17);
+			this->gui_iterations->TabIndex = 12;
+			this->gui_iterations->Text = L"0";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1022, 404);
+			this->Controls->Add(this->gui_iterations);
+			this->Controls->Add(this->gui_series);
 			this->Controls->Add(this->numeric_slope);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->label5);
@@ -259,7 +287,7 @@ namespace ConsoleApplication1 {
 			this->Controls->Add(this->numeric_temp);
 			this->Controls->Add(this->numeric_range);
 			this->Controls->Add(this->numeric_bases);
-			this->Controls->Add(this->listBox1);
+			this->Controls->Add(this->best_solutions);
 			this->Controls->Add(this->open_map);
 			this->Controls->Add(this->map);
 			this->Controls->Add(this->run_button);
@@ -277,7 +305,9 @@ namespace ConsoleApplication1 {
 		}
 #pragma endregion
 	private: System::Void run_button_Click(System::Object^  sender, System::EventArgs^  e) {
-
+		series_executor = gcnew Series_executor(this->gui_series, this->gui_iterations, this->best_solutions->Items);
+		series_executor->init(100.0, 0.98, 20, 3, 3, 2, map->Image, 30);
+		series_executor->next_series();
 	}
 	private: System::Void open_map_Click(System::Object^  sender, System::EventArgs^  e) {
 		open_map_dialog->ShowDialog();

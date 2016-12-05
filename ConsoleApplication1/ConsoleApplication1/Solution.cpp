@@ -6,11 +6,13 @@
 
 void Solution::move(const unsigned int base,const unsigned int where_to_move)
 {
-	auto it = begin(this->bases);
+	/*auto it = begin(this->bases);
 	for (unsigned int i = 0; i < base; i++)
 		++it;
 	Base base_to_move = *it;
-	this->bases.erase(it);
+	this->bases.erase(it);*/
+	std::vector<Base> bases(this->bases.begin(), this->bases.end());
+	Base& base_to_move = bases[base];
 	switch (where_to_move)
 	{
 		case 0:
@@ -44,7 +46,8 @@ void Solution::move(const unsigned int base,const unsigned int where_to_move)
 		default:
 			break;
 	}
-	this->bases.insert(base_to_move);
+	//this->bases.insert(base_to_move);
+	this->bases = std::set<Base>(bases.begin(), bases.end());
 }
 
 Solution::Solution(const Solution & pattern)
