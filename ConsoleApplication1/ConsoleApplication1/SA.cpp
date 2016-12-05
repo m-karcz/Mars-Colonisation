@@ -7,7 +7,7 @@ void SA::generate_first_solution()
 
 bool SA::run(void)
 {
-	max_range = 40;  //<-----to wywalic bo chwilowe
+	max_range = 80;  //<-----to wywalic bo chwilowe
 	std::shared_ptr<Solution> candidate = nei_generator.next();
 	System::Console::WriteLine("iteruje");
 	long delta;

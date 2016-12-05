@@ -2,7 +2,10 @@
 #include <list>
 #include <algorithm>
 #include <functional>
+#include <chrono>
+#include <iostream>
 
+using namespace std::chrono;
 
 Graph::Graph(System::Drawing::Image^ img, int max_slope)
 {
@@ -83,6 +86,7 @@ void Graph::clear_visited()
 adj_matrix Graph::get_adjacency_matrix(std::shared_ptr<Solution> actual, long range)
 {
 	//struktura, ktora posiada w sobie wspolrzedne - upraszcza i przyspiesza generowanie listy kandydatow do nastepnej iteracji
+	auto t1 = high_resolution_clock::now();
 	System::Console::WriteLine("sprawdzam przyleglosc");
 	struct SimplePoint{
 		SimplePoint(int x, int y) : x(x), y(y) {}
@@ -135,5 +139,6 @@ adj_matrix Graph::get_adjacency_matrix(std::shared_ptr<Solution> actual, long ra
 	for (int i = 0; i < adjacency_matrix.size(); i++) { //zabronienie drogi do samego siebie(ustawia siê automatycznie w pierwszej iteracji)
 			adjacency_matrix[i][i] = false;
 		}
+	std::cout << "get_adjacency_matrix: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
 	return adjacency_matrix;
 }

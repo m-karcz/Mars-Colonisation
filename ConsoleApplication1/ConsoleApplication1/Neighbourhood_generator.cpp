@@ -1,8 +1,12 @@
 #include "Neighbourhood_generator.hpp"
 #include "Base.hpp"
 #include <iostream>
+#include <chrono>
+
+
 
 using namespace std;
+using namespace std::chrono;
 
 bool Neighbourhood_generator::is_new(std::shared_ptr<Solution> candidate)
 {
@@ -21,7 +25,7 @@ bool Neighbourhood_generator::is_new(std::shared_ptr<Solution> candidate)
 
 std::shared_ptr<Solution> Neighbourhood_generator::next()
 {
-
+	auto t1 = high_resolution_clock::now();
 	std::shared_ptr<Solution> neighbour = std::make_shared<Solution>(*actual);
 	std::vector<Base> bases(actual->bases.begin(), actual->bases.end());
 	do
@@ -37,5 +41,6 @@ std::shared_ptr<Solution> Neighbourhood_generator::next()
 	} while (!this->is_new(neighbour));
 
 	generated.push_back(neighbour->bases);
+	std::cout << "generating new: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
 	return neighbour;
 }

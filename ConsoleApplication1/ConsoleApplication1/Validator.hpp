@@ -7,6 +7,8 @@
 #include<stack>
 #include <list>
 #include <algorithm>
+#include <chrono>
+#include <iostream>
 
 typedef std::vector<std::vector<bool>> adj_matrix;
 
@@ -17,6 +19,8 @@ struct Validator
 {
 	static bool is_allowed(adj_matrix & matrix)
 	{
+		using namespace std::chrono;
+		auto t1 = high_resolution_clock::now();
 		std::vector<int> C(matrix.size());
 		int cn = 0;
 		for (unsigned int v = 0; v < matrix.size(); v++) {
@@ -26,6 +30,7 @@ struct Validator
 			cn++;
 			DFSccc(v, matrix, cn, C);
 		}
+		std::cout << "is_allowed: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
 		return std::all_of(std::begin(C), std::end(C), [](int n) {return n == 1;});
 	}
 private:
