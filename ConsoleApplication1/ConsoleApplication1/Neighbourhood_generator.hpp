@@ -20,11 +20,11 @@
 struct Neighbourhood_generator
 {
 	Solution & actual;
-	std::list<std::set<Base>> generated;
-	Neighbourhood_generator(Solution & actual) : actual(actual) {}
+	std::list<std::multiset<Base>> generated;
+	Neighbourhood_generator(Solution & actual) : actual(actual) { }
 	bool is_new(Solution & candidate); //checks if new generated solution is unique -wasn't used before
 	Solution next();
-	bool comparator(std::set<Base>& a, std::set<Base>& b) {
+	bool comparator(std::multiset<Base>& a, std::multiset<Base>& b) {
 		
 	}
 };

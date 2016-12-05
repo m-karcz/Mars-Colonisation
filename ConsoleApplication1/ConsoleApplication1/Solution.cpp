@@ -47,12 +47,12 @@ void Solution::move(const unsigned int base,const unsigned int where_to_move)
 			break;
 	}
 	//this->bases.insert(base_to_move);
-	this->bases = std::set<Base>(bases.begin(), bases.end());
+	this->bases = std::multiset<Base>(bases.begin(), bases.end());
 }
 
 Solution::Solution(const Solution & pattern)
 {
-	bases = std::set<Base>(bases.begin(), bases.end() );
+	bases = std::multiset<Base>(pattern.bases.begin(), pattern.bases.end() );
 	achievable_points = pattern.achievable_points;
 }
 
