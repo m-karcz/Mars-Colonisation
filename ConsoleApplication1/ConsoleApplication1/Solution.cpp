@@ -4,6 +4,9 @@
 #include <list>
 #include <algorithm>
 #include <iostream>
+#include <chrono>
+
+using namespace std::chrono;
 
 void Solution::move(const unsigned int base,const unsigned int where_to_move)
 {
@@ -62,6 +65,7 @@ void Solution::objective_function(std::shared_ptr<Graph> map, const long range)
 {
 	
 	//struktura, ktora posiada w sobie wspolrzedne - upraszcza i przyspiesza generowanie listy kandydatow do nastepnej iteracji
+	auto t1 = high_resolution_clock::now();
 	struct SimplePoint 
 	{
 		SimplePoint(int x, int y) : x(x), y(y) {}
@@ -153,5 +157,6 @@ void Solution::objective_function(std::shared_ptr<Graph> map, const long range)
 		}
 	}
 	System::Console::WriteLine(achievable_points);
+	std::cout << "objective function: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
 	return;
 }
