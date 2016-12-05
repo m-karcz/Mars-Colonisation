@@ -65,8 +65,8 @@ void Graph::clear()
 		for (auto & point : line)
 		{
 			point.visited = false;
-			point.cost = LONG_MAX;
-			point.cost_reversed = LONG_MAX;
+			point.cost = LONG_MAX/3;
+			point.cost_reversed = LONG_MAX/3;
 		}
 	}
 	return;

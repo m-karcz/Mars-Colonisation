@@ -99,11 +99,13 @@ void Solution::objective_function(std::shared_ptr<Graph> map, const long range)
 				if (!(*map)[edge].visited) 
 				{
 					(*map)[edge].cost = std::min((*map)[edge].cost, point.cost + static_cast<long>(edge.cost));
-					if (std::find(begin(candidates), end(candidates), edge) == end(candidates))
+					if ((*map)[edge].cost <= range) 
 					{
-						candidates.emplace_back(SimplePoint(edge));
+						if (std::find(begin(candidates), end(candidates), edge) == end(candidates))
+						{
+							candidates.emplace_back(SimplePoint(edge));
+						}
 					}
-					
 				}
 			}
 			//przesortowanie punktów celem wy³onienia punktu z najni¿szym górnym ograniczeniem do nastêpnej iteracji
@@ -131,11 +133,13 @@ void Solution::objective_function(std::shared_ptr<Graph> map, const long range)
 				if (!(*map)[edge].visited)
 				{
 					(*map)[edge].cost_reversed = std::min((*map)[edge].cost_reversed, point.cost_reversed + static_cast<long>(edge.cost));
-					if (std::find(begin(candidates), end(candidates), edge) == end(candidates))
+					if ((*map)[edge].cost_reversed <= range) 
 					{
-						candidates.emplace_back(SimplePoint(edge));
+						if (std::find(begin(candidates), end(candidates), edge) == end(candidates))
+						{
+							candidates.emplace_back(SimplePoint(edge));
+						}
 					}
-
 				}
 			}
 			//przesortowanie punktów celem wy³onienia punktu z najni¿szym górnym ograniczeniem do nastêpnej iteracji
