@@ -306,7 +306,7 @@ namespace ConsoleApplication1 {
 #pragma endregion
 	private: System::Void run_button_Click(System::Object^  sender, System::EventArgs^  e) {
 		series_executor = gcnew Series_executor(this->gui_series, this->gui_iterations, this->best_solutions->Items);
-		series_executor->init(100.0, 0.98, 20, 3, 3, 2, map->Image, 30);
+		series_executor->init(100.0, 0.98, 20, 3, 3, 3, map->Image, 30);
 		series_executor->next_series();
 	}
 	private: System::Void open_map_Click(System::Object^  sender, System::EventArgs^  e) {
