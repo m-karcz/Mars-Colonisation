@@ -49,7 +49,7 @@ void Solution::move(const unsigned int base,const unsigned int where_to_move)
 
 Solution::Solution(const Solution & pattern)
 {
-	bases = pattern.bases;
+	bases = std::set<Base>(bases.begin(), bases.end() );
 	achievable_points = pattern.achievable_points;
 }
 
