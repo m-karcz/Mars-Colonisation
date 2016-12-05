@@ -20,7 +20,7 @@ using namespace System;
 int main(array<System::String ^> ^args)
 {
 	//WinExec("matlab -r test", SW_SHOWNORMAL);
-	std::srand(std::time(nullptr));
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
     Console::WriteLine(L"tutaj bedzie latwo debugowac, np. coutem");
 	ConsoleApplication1::MainForm myForm;
 	myForm.ShowDialog();

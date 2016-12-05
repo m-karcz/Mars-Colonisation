@@ -10,8 +10,9 @@ public ref class Series_executor {
 		this->gui_best_solution = gui_best_solution;
 	}
 	
-	void init(double temperature, double alpha, int max_iterations, int x, int y, System::Drawing::Image^ map_image, int max_slope) {
-		this->sa = new SA(temperature, alpha, max_iterations, x, y, Graph(map_image, max_slope), gui_iterations, gui_best_solution);
+	void init(double temperature, double alpha, int max_iterations, int x, int y, int amount, System::Drawing::Image^ map_image, int max_slope) {
+		Solution initial_solution = Solution::generate_initial(x, y, amount);
+		this->sa = new SA(temperature, alpha, max_iterations, initial_solution, Graph(map_image, max_slope), gui_iterations, gui_best_solution);
 	}
 
 	SA* sa;
