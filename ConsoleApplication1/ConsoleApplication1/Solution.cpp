@@ -3,6 +3,7 @@
 #include <vector>
 #include <list>
 #include <algorithm>
+#include <iostream>
 
 void Solution::move(const unsigned int base,const unsigned int where_to_move)
 {
