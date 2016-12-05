@@ -1,5 +1,10 @@
 #include "SA.hpp"
 
+void SA::generate_first_solution()
+{
+
+}
+
 bool SA::run(void)
 {
 	Solution candidate = nei_generator.next();
