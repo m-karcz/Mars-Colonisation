@@ -8,7 +8,7 @@ bool Neighbourhood_generator::is_new(Solution & candidate)
 		return true;
 	if (begin(generated)->size() != candidate.bases.size())
 		return true;
-	return all_of(begin(generated), end(generated), [&](set<Base>& bases){
+	return all_of(begin(generated), end(generated), [&](multiset<Base>& bases){
 		for (auto it1 = begin(bases), it2 = begin(candidate.bases); it1 != end(bases); ++it1, ++it2) {
 			if ((it1->x != it2->x) || (it1->y != it2->y))
 				return true;
