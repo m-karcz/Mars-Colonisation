@@ -20,8 +20,7 @@ bool Neighbourhood_generator::is_new(Solution & candidate)
 Solution Neighbourhood_generator::next()
 {
 
-	Solution neighbour;
-	neighbour = actual;
+	Solution neighbour(actual);
 	do
 	{
 		int base_to_move = (std::rand() % (actual.bases.size() - 1)) + 1;

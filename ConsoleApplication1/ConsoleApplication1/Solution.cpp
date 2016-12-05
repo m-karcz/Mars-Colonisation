@@ -47,6 +47,12 @@ void Solution::move(const unsigned int base,const unsigned int where_to_move)
 	this->bases.insert(base_to_move);
 }
 
+Solution::Solution(const Solution & pattern)
+{
+	bases = pattern.bases;
+	achievable_points = pattern.achievable_points;
+}
+
 
 void Solution::objective_function(Graph& map, const long range)
 {
