@@ -4,6 +4,7 @@
 //potem siê rozbije na cpp
 // klasa bêd¹ca pomostem miêdzy gui, a naszym algorytmem
 public ref class Series_executor {
+public:
 	Series_executor(System::Windows::Forms::Label^ gui_series, System::Windows::Forms::Label^ gui_iterations, System::Windows::Forms::ListBox::ObjectCollection^ gui_best_solution) {
 		this->series = gui_series;
 		this->gui_iterations = gui_iterations;
@@ -20,8 +21,14 @@ public ref class Series_executor {
 	System::Windows::Forms::Label^ gui_iterations;
 	System::Windows::Forms::ListBox::ObjectCollection^ gui_best_solution;
 
-	void next_series();
-	void show_series_number();
+	void next_series() {
+		for (int i = 0; i < 20; i++) {
+			sa->run();
+		}
+	}
+	void show_series_number() {
+	
+	}
 	
 	~Series_executor() {
 		this->!Series_executor();
