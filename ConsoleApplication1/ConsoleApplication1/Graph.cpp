@@ -80,9 +80,10 @@ void Graph::clear_visited()
 	}
 }
 
-adj_matrix Graph::get_adjacency_matrix(Solution& actual, long range)
+adj_matrix Graph::get_adjacency_matrix(std::shared_ptr<Solution> actual, long range)
 {
 	//struktura, ktora posiada w sobie wspolrzedne - upraszcza i przyspiesza generowanie listy kandydatow do nastepnej iteracji
+	System::Console::WriteLine("sprawdzam przyleglosc");
 	struct SimplePoint{
 		SimplePoint(int x, int y) : x(x), y(y) {}
 		SimplePoint(Edge edge):x(edge.x),y(edge.y) {}
@@ -97,9 +98,9 @@ adj_matrix Graph::get_adjacency_matrix(Solution& actual, long range)
 	//macierz przyleglosci
 	adj_matrix adjacency_matrix;
 	//przeiterowanie po wszystkich bazach
-	for (auto& proceeded_base : actual.bases)
+	for (auto& proceeded_base : actual->bases)
 	{
-		std::vector<bool> vect(actual.bases.size()); //wiersz w macierzy przyleglosci
+		std::vector<bool> vect(actual->bases.size()); //wiersz w macierzy przyleglosci
 		std::list<SimplePoint> candidates; //lista kandydatow do nastepnej iteracji algorytmu Dijkstry
 		this->points[proceeded_base.y][proceeded_base.x].cost = 0; //ustawienie punktu startowego(bazy)
 		this->points[proceeded_base.y][proceeded_base.x].visited = true;
@@ -107,13 +108,12 @@ adj_matrix Graph::get_adjacency_matrix(Solution& actual, long range)
 		while (!candidates.empty()) {
 			SimplePoint proceeded_point = candidates.front(); //procedowanie na punkcie z na punkcie z najmniejszym kosztem
 			candidates.pop_front();
-			auto it = begin(actual.bases);
-			for (int i = 0; i < actual.bases.size(); i++, ++it) { //sprawdzenie czy punkt nie jest baz¹
+			auto it = begin(actual->bases);
+			for (int i = 0; i < actual->bases.size(); i++, ++it) { //sprawdzenie czy punkt nie jest baz¹
 				if ((it->x == proceeded_point.x) && (it->y == proceeded_point.y)) {
 					vect[i] = true;
 				}
 			}
-			candidates.pop_front();
 			Point& point = this->points[proceeded_point.y][proceeded_point.x];
 			point.visited = true;
 			for (auto& edge : point.edges) { //ustawienie na górnego ograniczenia kosztu na dostêpnych punktach
@@ -130,9 +130,10 @@ adj_matrix Graph::get_adjacency_matrix(Solution& actual, long range)
 		}
 		this->clear();
 		adjacency_matrix.emplace_back(std::move(vect));
-		for (int i = 0; i < adjacency_matrix.size(); i++) { //zabronienie drogi do samego siebie(ustawia siê automatycznie w pierwszej iteracji)
+	
+	}
+	for (int i = 0; i < adjacency_matrix.size(); i++) { //zabronienie drogi do samego siebie(ustawia siê automatycznie w pierwszej iteracji)
 			adjacency_matrix[i][i] = false;
 		}
-	}
 	return adjacency_matrix;
 }

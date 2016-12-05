@@ -7,19 +7,21 @@ void SA::generate_first_solution()
 
 bool SA::run(void)
 {
-	Solution candidate = nei_generator.next();
+	std::shared_ptr<Solution> candidate = nei_generator.next();
+	System::Console::WriteLine("iteruje");
 	long delta;
-	while (!Validator::is_allowed(map.get_adjacency_matrix(candidate, max_range)))
+	while (!Validator::is_allowed(map->get_adjacency_matrix(candidate, max_range)))
 	{
 		candidate = nei_generator.next();
+		//System::Console::WriteLine("szukam dopuszczalnego");
 	}
-	candidate.objective_function(map, max_range);
-	delta = candidate.achievable_points - actual.achievable_points;
+	candidate->objective_function(map, max_range);
+	delta = candidate->achievable_points - actual->achievable_points;
 	if (0 < delta)
 	{
 		actual = candidate;
 		nei_generator.generated.clear();
-		if (0 > best.achievable_points - actual.achievable_points)
+		if (0 > best->achievable_points - actual->achievable_points)
 		{
 			best = actual;
 			this->show_best_solution();
@@ -46,7 +48,7 @@ bool SA::run(void)
 void SA::show_best_solution()
 {
 	this->gui_best_solution->Clear();
-	for (auto& base : best.bases) {
+	for (auto& base : best->bases) {
 		gui_best_solution->Add(base.x.ToString()+", "+base.y.ToString());
 	}
 }

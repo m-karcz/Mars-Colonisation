@@ -3,6 +3,7 @@
 #include<set>
 #include<cmath>
 #include<cstdlib>
+#include <memory>
 
 #include "Base.hpp"
 #include "Solution.hpp"
@@ -19,11 +20,11 @@
 
 struct Neighbourhood_generator
 {
-	Solution & actual;
+	std::shared_ptr<Solution> actual;
 	std::list<std::multiset<Base>> generated;
-	Neighbourhood_generator(Solution & actual) : actual(actual) { }
-	bool is_new(Solution & candidate); //checks if new generated solution is unique -wasn't used before
-	Solution next();
+	Neighbourhood_generator(std::shared_ptr<Solution> actual) : actual(actual) { }
+	bool is_new(std::shared_ptr<Solution> candidate); //checks if new generated solution is unique -wasn't used before
+	std::shared_ptr<Solution> next();
 	bool comparator(std::multiset<Base>& a, std::multiset<Base>& b) {
 		
 	}
