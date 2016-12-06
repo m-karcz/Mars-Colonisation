@@ -27,9 +27,10 @@ std::shared_ptr<Solution> Neighbourhood_generator::next()
 {
 	auto t1 = high_resolution_clock::now();
 	std::shared_ptr<Solution> neighbour = std::make_shared<Solution>(*actual);
-	std::vector<Base> bases(actual->bases.begin(), actual->bases.end());
+	std::vector<Base> bases(neighbour->bases.begin(), neighbour->bases.end());
 	do
 	{
+		neighbour->bases = std::multiset<Base>(actual->bases.begin(), actual->bases.end());
 		unsigned int base = (std::rand() % (actual->bases.size() - 1)) + 1;
 		int where_to_move = (std::rand() % 8);
 		Base & base2move = bases[base];
@@ -37,7 +38,11 @@ std::shared_ptr<Solution> Neighbourhood_generator::next()
 		{		//when the base lies on the left border										//when the base lies on the right border								//when the base lies on the bottom border							//when the base lies on the upper border
 			where_to_move = (std::rand() % 8);
 		}
-		neighbour->move(base, where_to_move);
+		if(base2move.x==0)
+		{
+			System::Diagnostics::Debug::WriteLine(where_to_move.ToString());
+		}
+		neighbour->move(base2move, where_to_move);
 	} while (!this->is_new(neighbour));
 
 	generated.push_back(neighbour->bases);

@@ -87,7 +87,6 @@ adj_matrix Graph::get_adjacency_matrix(std::shared_ptr<Solution> actual, long ra
 {
 	//struktura, ktora posiada w sobie wspolrzedne - upraszcza i przyspiesza generowanie listy kandydatow do nastepnej iteracji
 	auto t1 = high_resolution_clock::now();
-	System::Console::WriteLine("sprawdzam przyleglosc");
 	struct SimplePoint{
 		SimplePoint(int x, int y) : x(x), y(y) {}
 		SimplePoint(Edge edge):x(edge.x),y(edge.y) {}
