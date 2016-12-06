@@ -8,7 +8,7 @@
 
 using namespace std::chrono;
 
-void Solution::move(const unsigned int base,const unsigned int where_to_move)
+void Solution::move(Base& base2move,const unsigned int where_to_move)
 {
 	/*auto it = begin(this->bases);
 	for (unsigned int i = 0; i < base; i++)
@@ -16,36 +16,37 @@ void Solution::move(const unsigned int base,const unsigned int where_to_move)
 	Base base_to_move = *it;
 	this->bases.erase(it);*/
 	std::vector<Base> bases(this->bases.begin(), this->bases.end());
-	Base& base_to_move = bases[base];
+	//Base& base_to_move = bases[base];
+	auto base_to_move = std::find(bases.begin(), bases.end(), base2move);
 	switch (where_to_move)
 	{
 		case 0:
-			base_to_move.x--;
-			base_to_move.y++;
+			base_to_move->x--;
+			base_to_move->y++;
 			break;
 		case 1:
-			base_to_move.y++;
+			base_to_move->y++;
 			break;
 		case 2:
-			base_to_move.x++;
-			base_to_move.y++;
+			base_to_move->x++;
+			base_to_move->y++;
 			break;
 		case 3:
-			base_to_move.x++;
+			base_to_move->x++;
 			break;
 		case 4:
-			base_to_move.x++;
-			base_to_move.y--;
+			base_to_move->x++;
+			base_to_move->y--;
 			break;
 		case 5:
-			base_to_move.y--;
+			base_to_move->y--;
 			break;
 		case 6:
-			base_to_move.y--;
-			base_to_move.x--;
+			base_to_move->y--;
+			base_to_move->x--;
 			break;
 		case 7:
-			base_to_move.x--;
+			base_to_move->x--;
 			break;
 		default:
 			break;
