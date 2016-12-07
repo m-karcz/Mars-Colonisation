@@ -9,12 +9,10 @@ bool SA::run(void)
 {
 	max_range = 80;  //<-----to wywalic bo chwilowe
 	std::shared_ptr<Solution> candidate = nei_generator.next();
-	System::Console::WriteLine("iteruje");
 	long delta;
 	while (!Validator::is_allowed(map->get_adjacency_matrix(candidate, max_range)))
 	{
 		candidate = nei_generator.next();
-		//System::Console::WriteLine("szukam dopuszczalnego");
 	}
 	candidate->objective_function(map, max_range);
 	delta = candidate->achievable_points - actual->achievable_points;

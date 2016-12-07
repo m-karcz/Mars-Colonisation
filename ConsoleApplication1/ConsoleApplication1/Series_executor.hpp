@@ -23,7 +23,7 @@ public:
 	System::Windows::Forms::ListBox::ObjectCollection^ gui_best_solution;
 
 	void next_series() {
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 			sa->run();
 		}
 	}

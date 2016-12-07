@@ -161,7 +161,9 @@ void Solution::objective_function(std::shared_ptr<Graph> map, const long range)
 			}
 		}
 	}
+	#ifdef BENCHMARKS
 	System::Console::WriteLine(achievable_points);
 	std::cout << "objective function: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
+	#endif BENCHMARKS
 	return;
 }

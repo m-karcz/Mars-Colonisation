@@ -138,6 +138,8 @@ adj_matrix Graph::get_adjacency_matrix(std::shared_ptr<Solution> actual, long ra
 	for (int i = 0; i < adjacency_matrix.size(); i++) { //zabronienie drogi do samego siebie(ustawia siê automatycznie w pierwszej iteracji)
 			adjacency_matrix[i][i] = false;
 		}
+	#ifdef BENCHMARKS
 	std::cout << "get_adjacency_matrix: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
+	#endif
 	return adjacency_matrix;
 }

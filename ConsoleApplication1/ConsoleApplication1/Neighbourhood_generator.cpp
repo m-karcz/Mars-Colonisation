@@ -46,6 +46,8 @@ std::shared_ptr<Solution> Neighbourhood_generator::next()
 	} while (!this->is_new(neighbour));
 
 	generated.push_back(neighbour->bases);
+	#ifdef BENCHMARKS
 	std::cout << "generating new: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
+	#endif BENCHMARKS
 	return neighbour;
 }

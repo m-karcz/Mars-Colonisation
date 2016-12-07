@@ -30,7 +30,9 @@ struct Validator
 			cn++;
 			DFSccc(v, matrix, cn, C);
 		}
+		#ifdef BENCHMARKS
 		std::cout << "is_allowed: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
+        #endif	
 		return std::all_of(std::begin(C), std::end(C), [](int n) {return n == 1;});
 	}
 private:
