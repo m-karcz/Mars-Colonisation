@@ -63,6 +63,8 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::Label^  gui_series;
 	private: System::Windows::Forms::Label^  gui_iterations;
 
+	private: delegate System::Void test2(System::Windows::Forms::Label^ text);
+
 
 
 	protected:
@@ -305,7 +307,7 @@ namespace ConsoleApplication1 {
 		}
 #pragma endregion
 	private: System::Void run_button_Click(System::Object^  sender, System::EventArgs^  e) {
-		series_executor = gcnew Series_executor(this->gui_series, this->gui_iterations, this->best_solutions->Items);
+		series_executor = gcnew Series_executor(this->gui_series, this->gui_iterations, this->best_solutions, this);
 		series_executor->init(100.0, 0.98, 20, 0, 0, 3, map->Image, 30);
 		series_executor->next_series();
 	}
@@ -316,6 +318,33 @@ namespace ConsoleApplication1 {
 	}
 	private: System::Void open_map_dialog_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 
+	}
+	public: void SetBestSolution(std::shared_ptr<Solution> solution)
+	{
+		using namespace System;
+		using namespace System::Collections::Generic;
+		List<String^>^ bases = gcnew List<String^>();
+		for(auto& base : solution->bases)
+		{
+			bases->Add(base.x.ToString() + ", " + base.y.ToString());
+		}
+		this->Invoke(gcnew Action<List<String^>^>(this, &MainForm::SetBestSolutionAction), bases);
+	}
+	void SetBestSolutionAction(System::Collections::Generic::List<System::String^>^ bases)
+	{
+		this->best_solutions->Items->Clear();
+		for(int i=0; i<bases->Count; i++)
+		{
+			this->best_solutions->Items->Add(bases[i]);
+		}
+	}
+	void SetIterations(int iterations)
+	{
+		this->Invoke(gcnew Action<int>(this, &MainForm::SetIterationsAction), iterations);
+	}
+	void SetIterationsAction(int iterations)
+	{
+		this->gui_iterations->Text = iterations.ToString();
 	}
 };
 }

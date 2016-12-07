@@ -165,6 +165,7 @@
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="Neighbourhood_generator.cpp" />
     <ClCompile Include="SA.cpp" />
+    <ClCompile Include="Series_executor.cpp" />
     <ClCompile Include="Solution.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>

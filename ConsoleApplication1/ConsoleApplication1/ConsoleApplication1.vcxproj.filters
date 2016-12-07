@@ -85,6 +85,9 @@
     <ClCompile Include="SA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Series_executor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">
