@@ -21,7 +21,7 @@ namespace ConsoleApplication1
 			candidate = nei_generator.next(actual);
 			System::Console::WriteLine("odrzucam niepoprawne");
 		}
-		candidate->objective_function(map, max_range);
+		auto result=candidate->objective_function(map, max_range);
 		delta = candidate->achievable_points - actual->achievable_points;
 		if (0 < delta)
 		{
@@ -29,7 +29,11 @@ namespace ConsoleApplication1
 			nei_generator.generated.clear();
 			if (0 > best->achievable_points - actual->achievable_points)
 			{
-				best = actual;	
+
+				best = actual;
+				this->show_best_solution();
+				this->draw_best_solution(best, std::move(result));
+
 			}
 			//-----debug only - delete it
 			std::cout << "Przyjalem lepsze: " << *actual << std::endl;
@@ -76,5 +80,8 @@ namespace ConsoleApplication1
 		temperature = start_temperature;
 		iteration = 0;
 	}
-
+	void SA::draw_best_solution(std::shared_ptr<Solution> solution, std::list<std::pair<int,int>>&& range)
+	{
+		this->form->DrawBestSolution(solution, std::move(range));
+	}
 }

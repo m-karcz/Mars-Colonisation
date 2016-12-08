@@ -1,6 +1,7 @@
 #pragma once
 #include "Graph.hpp"
 #include "Series_executor.hpp"
+#include <list>
 
 namespace ConsoleApplication1 {
 
@@ -14,6 +15,18 @@ namespace ConsoleApplication1 {
 	/// <summary>
 	/// Summary for MainForm
 	/// </summary>
+
+	
+	ref class XY
+	{
+	public: XY(int x, int y)
+	{
+		this->x = x;
+		this->y = y;
+	}
+	public: int x;
+	public: int y;
+	};
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 	public:
@@ -67,6 +80,14 @@ namespace ConsoleApplication1 {
 	private: bool is_run = false;
 	private: System::Windows::Forms::NumericUpDown^  numeric_alpha;
 
+	private: System::Drawing::Brush^ base_brush;
+	private: System::Drawing::Brush^ range_brush;
+		
+	private: System::Drawing::Image^ map_original;
+
+	private: System::Drawing::Image^ map_cpy;
+
+	private: System::Drawing::Graphics^ board_to_draw;
 
 	protected:
 
@@ -85,6 +106,8 @@ namespace ConsoleApplication1 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->base_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 0,0,0));
+			this->range_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 255, 255, 255));
 			this->run_button = (gcnew System::Windows::Forms::Button());
 			this->map = (gcnew System::Windows::Forms::PictureBox());
 			this->open_map_dialog = (gcnew System::Windows::Forms::OpenFileDialog());
@@ -336,8 +359,9 @@ namespace ConsoleApplication1 {
 	}
 	private: System::Void open_map_Click(System::Object^  sender, System::EventArgs^  e) {
 		open_map_dialog->ShowDialog();
-		map->Image = System::Drawing::Image::FromFile(open_map_dialog->FileName);
-		Graph map(System::Drawing::Image::FromFile(open_map_dialog->FileName), 10);
+		map_original= System::Drawing::Image::FromFile(open_map_dialog->FileName);
+		map->Image = (System::Drawing::Image^)(map_original->Clone());
+		this->board_to_draw = System::Drawing::Graphics::FromImage(map->Image);
 	}
 	private: System::Void open_map_dialog_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 
@@ -368,6 +392,46 @@ namespace ConsoleApplication1 {
 	void SetIterationsAction(int iterations)
 	{
 		this->gui_iterations->Text = iterations.ToString();
+	}
+	void DrawBestSolution(std::shared_ptr<Solution> solution, std::list<std::pair<int, int>>&& ranges)
+	{
+		using namespace System::Collections::Generic;
+		auto bases = gcnew List<XY^>();
+		auto achievables = gcnew List<XY^>();
+		for(auto b : solution->bases)
+		{
+			bases->Add(gcnew XY(b.x, b.y));
+		}
+		for(auto r : ranges)
+		{
+			achievables->Add(gcnew XY(r.first, r.second));
+		}
+		auto args = gcnew List<List<XY^>^>();
+		args->Add(bases);
+		args->Add(achievables);
+		this->Invoke(gcnew Action<List<List<XY^>^>^>(this, &MainForm::DrawBestSolutionsAction), args);
+	}
+	void DrawBestSolutionsAction(System::Collections::Generic::List<System::Collections::Generic::List<XY^>^>^ args)
+	{
+		auto bases = args[0];
+		auto achievables = args[1];
+		this->clear_map();
+		this->board_to_draw = System::Drawing::Graphics::FromImage(this->map->Image);
+		for(int i=0; i<achievables->Count; i++)
+		{
+			auto a = achievables[i];
+			this->board_to_draw->FillRectangle(range_brush, 2 * a->x, 2 * a->y, 2, 2);
+		}
+		for(int i=0; i<bases->Count; i++)
+		{
+			auto b = bases[i];
+			this->board_to_draw->FillRectangle(base_brush, 2 * b->x, 2 * b->y, 2, 2);
+		}
+		this->map->Image = this->map->Image;
+	}
+	void clear_map()
+	{
+		this->map->Image = (System::Drawing::Image^)(map_original->Clone());
 	}
 };
 }

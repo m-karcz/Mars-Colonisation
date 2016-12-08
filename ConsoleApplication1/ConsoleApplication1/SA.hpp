@@ -38,6 +38,7 @@ namespace ConsoleApplication1
 		void prepare_next_iteration(); //ustawia temperature przed kolejn¹ iteracj¹
 		void show_best_solution(); //ustawia aktualne rozwi¹zanie w gui
 		void show_iterations(); //inkrementuje aktualn¹ iloœæ iteracji w gui
+		void draw_best_solution(std::shared_ptr<Solution> solution, std::list<std::pair<int, int>>&& range); //maluje aktualne rozwiazanie na mapie w gui
 	};
 
 }

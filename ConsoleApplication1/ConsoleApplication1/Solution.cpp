@@ -74,7 +74,7 @@ std::ostream & operator<< (std::ostream & output ,const Solution & s)
 }
 
 
-void Solution::objective_function(std::shared_ptr<Graph> map, const long range)
+std::list<std::pair<int, int>> Solution::objective_function(std::shared_ptr<Graph> map, const long range)
 {
 	//struktura, ktora posiada w sobie wspolrzedne - upraszcza i przyspiesza generowanie listy kandydatow do nastepnej iteracji
 	auto t1 = high_resolution_clock::now();
@@ -164,7 +164,7 @@ void Solution::objective_function(std::shared_ptr<Graph> map, const long range)
 
 	//przeliczenie dostepnych punktow
 	achievable_points = 0;
-	for (auto & line : map->points)
+/*	for (auto & line : map->points)
 	{
 		for (auto & point : line)
 		{
@@ -173,12 +173,25 @@ void Solution::objective_function(std::shared_ptr<Graph> map, const long range)
 				achievable_points++;
 			}
 		}
+	}*/
+	std::list<std::pair<int, int>> result;
+	for(int y=0; y<map->points.size(); y++)
+	{
+		for(int x=0; x<map->points[y].size(); x++)
+		{
+			if (range >= map->points[y][x].cost + map->points[y][x].cost_reversed)
+			{
+				achievable_points++;
+				result.push_back(std::make_pair(x, y));
+			}
+		}
 	}
+	map->clear();
+	map->clear_visited();
 
-	map->clear();	//clearing for faggots from other functions
 	#ifdef BENCHMARKS
 	System::Console::WriteLine(achievable_points);
 	std::cout << "objective function: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
 	#endif BENCHMARKS
-	return;
+	return result;
 }
