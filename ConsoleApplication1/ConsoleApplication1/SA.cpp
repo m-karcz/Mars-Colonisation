@@ -19,6 +19,7 @@ namespace ConsoleApplication1
 		while (!Validator::is_allowed(map->get_adjacency_matrix(candidate, max_range)))
 		{
 			candidate = nei_generator.next(actual);
+			System::Console::WriteLine("odrzucam niepoprawne");
 		}
 		candidate->objective_function(map, max_range);
 		delta = candidate->achievable_points - actual->achievable_points;
