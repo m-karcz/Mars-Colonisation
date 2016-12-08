@@ -1,5 +1,6 @@
 #include "SA.hpp"
 #include <functional>
+#include <iostream>
 #include "MainForm.h"
 
 namespace ConsoleApplication1
@@ -13,11 +14,11 @@ namespace ConsoleApplication1
 
 	bool SA::run(void)
 	{
-		std::shared_ptr<Solution> candidate = nei_generator.next();
+		std::shared_ptr<Solution> candidate = nei_generator.next(actual);
 		long delta;
 		while (!Validator::is_allowed(map->get_adjacency_matrix(candidate, max_range)))
 		{
-			candidate = nei_generator.next();
+			candidate = nei_generator.next(actual);
 		}
 		candidate->objective_function(map, max_range);
 		delta = candidate->achievable_points - actual->achievable_points;
@@ -27,23 +28,34 @@ namespace ConsoleApplication1
 			nei_generator.generated.clear();
 			if (0 > best->achievable_points - actual->achievable_points)
 			{
-				best = actual;
-				this->show_best_solution();
+				best = actual;	
 			}
+			//-----debug only - delete it
+			std::cout << "Przyjalem lepsze: " << *actual << std::endl;
+			//-------end of debug
 		}
 		else
 		{
 			const double random = static_cast<double> (std::rand()) / RAND_MAX;
-			double val_to_check = exp(-static_cast<double>(delta) / temperature);
+			double val_to_check = exp(-(static_cast<double>(-delta) / temperature));
 			if (random < val_to_check)
 			{
 				actual = candidate;
+				//-----debug only - delete it
+				std::cout <<"Przyjalem ciulowe: " << *actual << std::endl;
+				//-------end of debug
 				nei_generator.generated.clear();
 			}
+			else
+			{
+				std::cout << "Odrzucilem ciulowe rozwiazanie: " << *candidate << std::endl;;
+			}
 		}
+		this->show_best_solution();
 		show_iterations();
 		iteration++;
 		temperature = alpha*temperature;
+
 
 		return (max_iterations > iteration);
 	}

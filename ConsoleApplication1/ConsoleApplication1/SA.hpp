@@ -32,7 +32,7 @@ namespace ConsoleApplication1
 		gcroot<System::Windows::Forms::ListBox^> gui_best_solution; //lista punktow w gui, ktore sa najlepszym aktualnym rozwiazaniem
 
 
-		SA(double temperature, const double alpha, const unsigned int max_iterations, std::shared_ptr<Solution> initial, std::shared_ptr<Graph> map, System::Windows::Forms::Label^ gui_iterations, System::Windows::Forms::ListBox^ gui_best_solution, MainForm^ form, int max_range) : temperature(temperature), alpha(alpha), max_iterations(max_iterations), actual(initial), best(initial), map(map), gui_iterations(gui_iterations), gui_best_solution(gui_best_solution), nei_generator(initial, map), form(form), start_temperature(temperature), max_range(max_range) {}
+		SA(double temperature, const double alpha, const unsigned int max_iterations, std::shared_ptr<Solution> initial, std::shared_ptr<Graph> map, System::Windows::Forms::Label^ gui_iterations, System::Windows::Forms::ListBox^ gui_best_solution, MainForm^ form, int max_range) : temperature(temperature), alpha(alpha), max_iterations(max_iterations), actual(initial), best(initial), map(map), gui_iterations(gui_iterations), gui_best_solution(gui_best_solution), nei_generator( map), form(form), start_temperature(temperature), max_range(max_range) {}
 		void generate_first_solution(); //wygenerowanie pierwszego rozwi¹zania w konstruktorze
 		bool run(void);
 		void prepare_next_iteration(); //ustawia temperature przed kolejn¹ iteracj¹

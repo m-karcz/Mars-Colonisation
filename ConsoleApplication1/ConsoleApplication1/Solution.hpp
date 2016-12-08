@@ -3,6 +3,7 @@
 #include <set>
 #include "Base.hpp"
 #include <memory>
+#include <iostream>
 struct Graph;
 struct Base;
 
@@ -21,5 +22,6 @@ struct Solution {
 		return solution;
 	}
 	Solution(){}
+	friend std::ostream & operator<< (std::ostream & output, const Solution & s); //useful to debug
 private:
 };

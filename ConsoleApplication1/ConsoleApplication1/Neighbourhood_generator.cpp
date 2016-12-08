@@ -23,7 +23,7 @@ bool Neighbourhood_generator::is_new(std::shared_ptr<Solution> candidate)
 	});
 }
 
-std::shared_ptr<Solution> Neighbourhood_generator::next()
+std::shared_ptr<Solution> Neighbourhood_generator::next( std::shared_ptr<Solution> actual)
 {
 	auto t1 = high_resolution_clock::now();
 	std::shared_ptr<Solution> neighbour = std::make_shared<Solution>(*actual);
@@ -32,7 +32,7 @@ std::shared_ptr<Solution> Neighbourhood_generator::next()
 	{
 		neighbour->bases = std::multiset<Base>(actual->bases.begin(), actual->bases.end());
 		unsigned int base = (std::rand() % (actual->bases.size() - 1)) + 1;
-		int where_to_move = (std::rand() % 8);
+		int where_to_move = (std::rand() % 3) + 1; //to tests only - remember to come back to %8
 		Base & base2move = bases[base];
 		while ( (base2move.x == 0 && (where_to_move == 0 || where_to_move >= 6 )) || (base2move.x == width && (where_to_move >= 2 && where_to_move <= 4)) || (base2move.y == 0 && (where_to_move >= 4 && where_to_move <= 6)) || (base2move.y == height && (where_to_move >= 0 && where_to_move <= 2)) )
 		{		//when the base lies on the left border										//when the base lies on the right border								//when the base lies on the bottom border							//when the base lies on the upper border

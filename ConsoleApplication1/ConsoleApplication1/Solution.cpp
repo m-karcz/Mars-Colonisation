@@ -15,6 +15,7 @@ void Solution::move(Base& base2move,const unsigned int where_to_move)
 		++it;
 	Base base_to_move = *it;
 	this->bases.erase(it);*/
+	//std::cout << "Before: " << *this << std::endl;
 	std::vector<Base> bases(this->bases.begin(), this->bases.end());
 	//Base& base_to_move = bases[base];
 	auto base_to_move = std::find(bases.begin(), bases.end(), base2move);
@@ -53,6 +54,7 @@ void Solution::move(Base& base2move,const unsigned int where_to_move)
 	}
 	//this->bases.insert(base_to_move);
 	this->bases = std::multiset<Base>(bases.begin(), bases.end());
+	//std::cout << "After: " << *this << std::endl;
 }
 
 Solution::Solution(const Solution & pattern)
@@ -61,10 +63,19 @@ Solution::Solution(const Solution & pattern)
 	achievable_points = pattern.achievable_points;
 }
 
+std::ostream & operator<< (std::ostream & output ,const Solution & s)
+{
+	for (auto& base : s.bases)
+	{
+		output << '{' << base.x << ',' << base.y << "} ";
+	}
+	output <<  s.achievable_points;
+	return output;
+}
+
 
 void Solution::objective_function(std::shared_ptr<Graph> map, const long range)
 {
-	
 	//struktura, ktora posiada w sobie wspolrzedne - upraszcza i przyspiesza generowanie listy kandydatow do nastepnej iteracji
 	auto t1 = high_resolution_clock::now();
 	struct SimplePoint 
@@ -81,6 +92,8 @@ void Solution::objective_function(std::shared_ptr<Graph> map, const long range)
 		return ((map->points[b1.y][b1.x].cost) < (map->points[b2.y][b2.x].cost));
 	};
 	
+	map->clear();
+
 	//przeiterowanie po wszystkich bazach - Dijkstra od bazy
 	for (auto& proceeded_base : bases)
 	{
@@ -161,6 +174,8 @@ void Solution::objective_function(std::shared_ptr<Graph> map, const long range)
 			}
 		}
 	}
+
+	map->clear();	//clearing for faggots from other functions
 	#ifdef BENCHMARKS
 	System::Console::WriteLine(achievable_points);
 	std::cout << "objective function: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
