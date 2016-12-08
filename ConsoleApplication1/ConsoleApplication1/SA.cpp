@@ -13,7 +13,6 @@ namespace ConsoleApplication1
 
 	bool SA::run(void)
 	{
-		max_range = 80;  //<-----to wywalic bo chwilowe
 		std::shared_ptr<Solution> candidate = nei_generator.next();
 		long delta;
 		while (!Validator::is_allowed(map->get_adjacency_matrix(candidate, max_range)))
@@ -43,7 +42,6 @@ namespace ConsoleApplication1
 			}
 		}
 		show_iterations();
-
 		iteration++;
 		temperature = alpha*temperature;
 
@@ -58,6 +56,12 @@ namespace ConsoleApplication1
 	void SA::show_iterations()
 	{
 		form->SetIterations(iteration);
+	}
+
+	void SA::prepare_next_iteration()
+	{
+		temperature = start_temperature;
+		iteration = 0;
 	}
 
 }

@@ -51,7 +51,7 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::NumericUpDown^  numeric_temp;
 	private: System::Windows::Forms::Label^  label4;
-	private: System::Windows::Forms::NumericUpDown^  numeric_alpha;
+
 
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Label^  label6;
@@ -64,7 +64,8 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::Label^  gui_iterations;
 
 	private: delegate System::Void test2(System::Windows::Forms::Label^ text);
-
+	private: bool is_run = false;
+	private: System::Windows::Forms::NumericUpDown^  numeric_alpha;
 
 
 	protected:
@@ -96,19 +97,19 @@ namespace ConsoleApplication1 {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->numeric_temp = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->numeric_alpha = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->numeric_slope = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->gui_series = (gcnew System::Windows::Forms::Label());
 			this->gui_iterations = (gcnew System::Windows::Forms::Label());
+			this->numeric_alpha = (gcnew System::Windows::Forms::NumericUpDown());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->map))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_bases))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_range))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_temp))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_alpha))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_slope))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_alpha))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// run_button
@@ -156,9 +157,12 @@ namespace ConsoleApplication1 {
 			// numeric_bases
 			// 
 			this->numeric_bases->Location = System::Drawing::Point(295, 60);
+			this->numeric_bases->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 6, 0, 0, 0 });
+			this->numeric_bases->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 2, 0, 0, 0 });
 			this->numeric_bases->Name = L"numeric_bases";
 			this->numeric_bases->Size = System::Drawing::Size(119, 22);
 			this->numeric_bases->TabIndex = 4;
+			this->numeric_bases->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 3, 0, 0, 0 });
 			// 
 			// label1
 			// 
@@ -181,9 +185,11 @@ namespace ConsoleApplication1 {
 			// numeric_range
 			// 
 			this->numeric_range->Location = System::Drawing::Point(295, 98);
+			this->numeric_range->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 100000, 0, 0, 0 });
 			this->numeric_range->Name = L"numeric_range";
 			this->numeric_range->Size = System::Drawing::Size(119, 22);
 			this->numeric_range->TabIndex = 4;
+			this->numeric_range->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 80, 0, 0, 0 });
 			// 
 			// label3
 			// 
@@ -196,10 +202,13 @@ namespace ConsoleApplication1 {
 			// 
 			// numeric_temp
 			// 
+			this->numeric_temp->Increment = System::Decimal(gcnew cli::array< System::Int32 >(4) { 100, 0, 0, 0 });
 			this->numeric_temp->Location = System::Drawing::Point(295, 137);
+			this->numeric_temp->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1000000, 0, 0, 0 });
 			this->numeric_temp->Name = L"numeric_temp";
 			this->numeric_temp->Size = System::Drawing::Size(119, 22);
 			this->numeric_temp->TabIndex = 4;
+			this->numeric_temp->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 10000, 0, 0, 0 });
 			// 
 			// label4
 			// 
@@ -209,14 +218,6 @@ namespace ConsoleApplication1 {
 			this->label4->Size = System::Drawing::Size(48, 17);
 			this->label4->TabIndex = 7;
 			this->label4->Text = L"Alpha:";
-			// 
-			// numeric_alpha
-			// 
-			this->numeric_alpha->Location = System::Drawing::Point(295, 178);
-			this->numeric_alpha->Name = L"numeric_alpha";
-			this->numeric_alpha->Size = System::Drawing::Size(119, 22);
-			this->numeric_alpha->TabIndex = 4;
-			this->numeric_alpha->Tag = L"d";
 			// 
 			// label5
 			// 
@@ -242,6 +243,7 @@ namespace ConsoleApplication1 {
 			this->numeric_slope->Name = L"numeric_slope";
 			this->numeric_slope->Size = System::Drawing::Size(120, 22);
 			this->numeric_slope->TabIndex = 10;
+			this->numeric_slope->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 30, 0, 0, 0 });
 			// 
 			// label7
 			// 
@@ -269,6 +271,18 @@ namespace ConsoleApplication1 {
 			this->gui_iterations->Size = System::Drawing::Size(16, 17);
 			this->gui_iterations->TabIndex = 12;
 			this->gui_iterations->Text = L"0";
+			// 
+			// numeric_alpha
+			// 
+			this->numeric_alpha->DecimalPlaces = 2;
+			this->numeric_alpha->Increment = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 131072 });
+			this->numeric_alpha->Location = System::Drawing::Point(295, 178);
+			this->numeric_alpha->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
+			this->numeric_alpha->Name = L"numeric_alpha";
+			this->numeric_alpha->Size = System::Drawing::Size(119, 22);
+			this->numeric_alpha->TabIndex = 4;
+			this->numeric_alpha->Tag = L"d";
+			this->numeric_alpha->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 98, 0, 0, 131072 });
 			// 
 			// MainForm
 			// 
@@ -299,16 +313,25 @@ namespace ConsoleApplication1 {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_bases))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_range))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_temp))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_alpha))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_slope))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_alpha))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
 	private: System::Void run_button_Click(System::Object^  sender, System::EventArgs^  e) {
-		series_executor = gcnew Series_executor(this->gui_series, this->gui_iterations, this->best_solutions, this);
-		series_executor->init(100.0, 0.98, 20, 0, 0, 3, map->Image, 30);
+		if(!is_run)
+		{
+			int number_of_bases = System::Convert::ToInt32(this->numeric_bases->Value);
+			int max_slope = System::Convert::ToInt32(this->numeric_slope->Value);
+			double alpha = System::Convert::ToDouble(this->numeric_alpha->Value);
+			double temperature = System::Convert::ToDouble(this->numeric_temp->Value);
+			int max_range = System::Convert::ToInt32(this->numeric_range->Value);
+			series_executor = gcnew Series_executor(this->gui_series, this->gui_iterations, this->best_solutions, this);
+			series_executor->init(temperature, alpha, 20, 0, 0, number_of_bases, map->Image, max_slope, max_range);
+			is_run = true;
+		}
 		series_executor->next_series();
 	}
 	private: System::Void open_map_Click(System::Object^  sender, System::EventArgs^  e) {
