@@ -24,6 +24,7 @@ struct Neighbourhood_generator
 	int width;
 	int height;
 	std::list<std::multiset<Base>> generated;
+	std::vector<Solution> candidates;
 	Neighbourhood_generator(std::shared_ptr<Graph> map) : width(map->points.size()-1), height(map->points[0].size()-1) {}
 	bool is_new(std::shared_ptr<Solution> candidate); //checks if new generated solution is unique -wasn't used before
 	std::shared_ptr<Solution> next(std::shared_ptr<Solution> actual);

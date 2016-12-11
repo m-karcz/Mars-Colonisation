@@ -8,6 +8,17 @@
 
 using namespace std::chrono;
 
+void Solution::move_rand(int height, int width)
+{
+	//std::vector<Base> bases(this->bases.begin(), this->bases.end());
+	for (int i = 1; i < bases.size(); i++)
+	{
+		bases[i].x = std::rand() % width + 1;
+		bases[i].y = std::rand() % height + 1;
+	}
+	//this->bases = std::multiset<Base>(bases.begin(), bases.end());
+}
+
 void Solution::move(Base& base2move,const unsigned int where_to_move)
 {
 	/*auto it = begin(this->bases);
@@ -16,7 +27,7 @@ void Solution::move(Base& base2move,const unsigned int where_to_move)
 	Base base_to_move = *it;
 	this->bases.erase(it);*/
 	//std::cout << "Before: " << *this << std::endl;
-	std::vector<Base> bases(this->bases.begin(), this->bases.end());
+	//std::vector<Base> bases(this->bases.begin(), this->bases.end());
 	//Base& base_to_move = bases[base];
 	auto base_to_move = std::find(bases.begin(), bases.end(), base2move);
 	switch (where_to_move)
@@ -53,13 +64,13 @@ void Solution::move(Base& base2move,const unsigned int where_to_move)
 			break;
 	}
 	//this->bases.insert(base_to_move);
-	this->bases = std::multiset<Base>(bases.begin(), bases.end());
+	//this->bases = std::multiset<Base>(bases.begin(), bases.end());
 	//std::cout << "After: " << *this << std::endl;
 }
 
 Solution::Solution(const Solution & pattern)
 {
-	bases = std::multiset<Base>(pattern.bases.begin(), pattern.bases.end() );
+	bases = std::vector<Base>(pattern.bases.begin(), pattern.bases.end() );
 	achievable_points = pattern.achievable_points;
 }
 
