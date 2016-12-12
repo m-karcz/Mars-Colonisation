@@ -5,6 +5,7 @@
 #include<cstdlib>
 #include "Edge.hpp"
 
+	
 struct Point { //punkt na mapie
 	bool visited = false; //czy byl odwiedzony dla algorytmu
 	long cost = LONG_MAX/3; //koszt sumaryczny

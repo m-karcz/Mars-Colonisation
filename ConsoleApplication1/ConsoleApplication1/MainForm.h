@@ -2,6 +2,7 @@
 #include "Graph.hpp"
 #include "Series_executor.hpp"
 #include <list>
+#include "XY_CLR.h"
 
 namespace ConsoleApplication1 {
 
@@ -17,16 +18,7 @@ namespace ConsoleApplication1 {
 	/// </summary>
 
 	
-	ref class XY
-	{
-	public: XY(int x, int y)
-	{
-		this->x = x;
-		this->y = y;
-	}
-	public: int x;
-	public: int y;
-	};
+	
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 	public:
@@ -36,6 +28,7 @@ namespace ConsoleApplication1 {
 			//
 			//TODO: Add the constructor code here
 			//
+			InitializeBrushes();
 		}
 
 	protected:
@@ -89,6 +82,13 @@ namespace ConsoleApplication1 {
 
 	private: System::Drawing::Graphics^ board_to_draw;
 
+	private: System::Int32 init_x;
+	private: System::Int32 init_y;
+
+	private: System::Windows::Forms::Label^  label8;
+	private: System::Windows::Forms::PageSetupDialog^  pageSetupDialog1;
+	private: System::Windows::Forms::Label^  gui_total_range;
+
 	protected:
 
 	protected:
@@ -106,8 +106,6 @@ namespace ConsoleApplication1 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->base_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 0,0,0));
-			this->range_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 255, 255, 255));
 			this->run_button = (gcnew System::Windows::Forms::Button());
 			this->map = (gcnew System::Windows::Forms::PictureBox());
 			this->open_map_dialog = (gcnew System::Windows::Forms::OpenFileDialog());
@@ -127,6 +125,9 @@ namespace ConsoleApplication1 {
 			this->gui_series = (gcnew System::Windows::Forms::Label());
 			this->gui_iterations = (gcnew System::Windows::Forms::Label());
 			this->numeric_alpha = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->pageSetupDialog1 = (gcnew System::Windows::Forms::PageSetupDialog());
+			this->gui_total_range = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->map))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_bases))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_range))->BeginInit();
@@ -137,6 +138,7 @@ namespace ConsoleApplication1 {
 			// 
 			// run_button
 			// 
+			this->run_button->Enabled = false;
 			this->run_button->Location = System::Drawing::Point(29, 145);
 			this->run_button->Name = L"run_button";
 			this->run_button->Size = System::Drawing::Size(103, 50);
@@ -171,7 +173,7 @@ namespace ConsoleApplication1 {
 			// 
 			this->best_solutions->FormattingEnabled = true;
 			this->best_solutions->ItemHeight = 16;
-			this->best_solutions->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"tu beda", L"wspolrzedne", L"baz" });
+			this->best_solutions->Items->AddRange(gcnew cli::array< System::Object^  >(1) { L"0, 0" });
 			this->best_solutions->Location = System::Drawing::Point(448, 48);
 			this->best_solutions->Name = L"best_solutions";
 			this->best_solutions->Size = System::Drawing::Size(120, 292);
@@ -231,7 +233,7 @@ namespace ConsoleApplication1 {
 			this->numeric_temp->Name = L"numeric_temp";
 			this->numeric_temp->Size = System::Drawing::Size(119, 22);
 			this->numeric_temp->TabIndex = 4;
-			this->numeric_temp->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 10000, 0, 0, 0 });
+			this->numeric_temp->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 10, 0, 0, 0 });
 			// 
 			// label4
 			// 
@@ -245,7 +247,7 @@ namespace ConsoleApplication1 {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(38, 261);
+			this->label5->Location = System::Drawing::Point(38, 308);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(124, 17);
 			this->label5->TabIndex = 8;
@@ -254,7 +256,7 @@ namespace ConsoleApplication1 {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(38, 306);
+			this->label6->Location = System::Drawing::Point(38, 346);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(140, 17);
 			this->label6->TabIndex = 9;
@@ -280,7 +282,7 @@ namespace ConsoleApplication1 {
 			// gui_series
 			// 
 			this->gui_series->AutoSize = true;
-			this->gui_series->Location = System::Drawing::Point(197, 260);
+			this->gui_series->Location = System::Drawing::Point(228, 308);
 			this->gui_series->Name = L"gui_series";
 			this->gui_series->Size = System::Drawing::Size(16, 17);
 			this->gui_series->TabIndex = 11;
@@ -289,7 +291,7 @@ namespace ConsoleApplication1 {
 			// gui_iterations
 			// 
 			this->gui_iterations->AutoSize = true;
-			this->gui_iterations->Location = System::Drawing::Point(247, 323);
+			this->gui_iterations->Location = System::Drawing::Point(228, 346);
 			this->gui_iterations->Name = L"gui_iterations";
 			this->gui_iterations->Size = System::Drawing::Size(16, 17);
 			this->gui_iterations->TabIndex = 12;
@@ -307,12 +309,32 @@ namespace ConsoleApplication1 {
 			this->numeric_alpha->Tag = L"d";
 			this->numeric_alpha->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 98, 0, 0, 131072 });
 			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->Location = System::Drawing::Point(38, 271);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(85, 17);
+			this->label8->TabIndex = 14;
+			this->label8->Text = L"Total range:";
+			// 
+			// gui_total_range
+			// 
+			this->gui_total_range->AutoSize = true;
+			this->gui_total_range->Location = System::Drawing::Point(228, 271);
+			this->gui_total_range->Name = L"gui_total_range";
+			this->gui_total_range->Size = System::Drawing::Size(16, 17);
+			this->gui_total_range->TabIndex = 11;
+			this->gui_total_range->Text = L"0";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1022, 404);
+			this->Controls->Add(this->label8);
 			this->Controls->Add(this->gui_iterations);
+			this->Controls->Add(this->gui_total_range);
 			this->Controls->Add(this->gui_series);
 			this->Controls->Add(this->numeric_slope);
 			this->Controls->Add(this->label6);
@@ -342,6 +364,11 @@ namespace ConsoleApplication1 {
 			this->PerformLayout();
 
 		}
+		void InitializeBrushes(void)
+		{
+			this->base_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 0, 0, 0));
+			this->range_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 255, 255, 255));
+		}
 #pragma endregion
 	private: System::Void run_button_Click(System::Object^  sender, System::EventArgs^  e) {
 		if(!is_run)
@@ -352,18 +379,36 @@ namespace ConsoleApplication1 {
 			double temperature = System::Convert::ToDouble(this->numeric_temp->Value);
 			int max_range = System::Convert::ToInt32(this->numeric_range->Value);
 			series_executor = gcnew Series_executor(this->gui_series, this->gui_iterations, this->best_solutions, this);
-			series_executor->init(temperature, alpha, 20, 0, 0, number_of_bases, map->Image, max_slope, max_range);
+			series_executor->init(temperature, alpha, 20, init_x, init_y, number_of_bases, map->Image, max_slope, max_range);
 			is_run = true;
+			this->numeric_bases->Enabled = false;
+			this->numeric_slope->Enabled = false;
+			this->numeric_alpha->Enabled = false;
+			this->numeric_range->Enabled = false;
+			this->numeric_temp->Enabled = false;
 		}
 		series_executor->next_series();
+		this->gui_series->Text = (System::Int32::Parse(this->gui_series->Text) + 1).ToString();
 	}
 	private: System::Void open_map_Click(System::Object^  sender, System::EventArgs^  e) {
-		open_map_dialog->ShowDialog();
-		map_original= System::Drawing::Image::FromFile(open_map_dialog->FileName);
-		map->Image = (System::Drawing::Image^)(map_original->Clone());
-		this->board_to_draw = System::Drawing::Graphics::FromImage(map->Image);
+		auto result=open_map_dialog->ShowDialog();
+		if (result==System::Windows::Forms::DialogResult::OK)
+		{
+			map_original = System::Drawing::Image::FromFile(open_map_dialog->FileName);
+			map->Image = (System::Drawing::Image^)(map_original->Clone());
+			this->board_to_draw = System::Drawing::Graphics::FromImage(map->Image);
+			this->map->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::click_on_image);
+			this->init_x = 0;
+			this->init_y = 0;
+			this->map->Width = this->map->Image->Width;
+			this->map->Height = this->map->Image->Height;
+			this->run_button->Enabled = true;
+			this->open_map->Enabled = false;
+		}
 	}
+		
 	private: System::Void open_map_dialog_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
+		System::Console::WriteLine("no tutaj xD");
 
 	}
 	public: void SetBestSolution(std::shared_ptr<Solution> solution)
@@ -376,6 +421,7 @@ namespace ConsoleApplication1 {
 			bases->Add(base.x.ToString() + ", " + base.y.ToString());
 		}
 		this->Invoke(gcnew Action<List<String^>^>(this, &MainForm::SetBestSolutionAction), bases);
+		this->Invoke(gcnew Action<int>(this, &MainForm::SetBestSoltuionValue), solution->achievable_points);
 	}
 	void SetBestSolutionAction(System::Collections::Generic::List<System::String^>^ bases)
 	{
@@ -385,6 +431,10 @@ namespace ConsoleApplication1 {
 			this->best_solutions->Items->Add(bases[i]);
 		}
 	}
+	void SetBestSoltuionValue(int value)
+	{
+		this->gui_total_range->Text = value.ToString();
+	}
 	void SetIterations(int iterations)
 	{
 		this->Invoke(gcnew Action<int>(this, &MainForm::SetIterationsAction), iterations);
@@ -393,7 +443,7 @@ namespace ConsoleApplication1 {
 	{
 		this->gui_iterations->Text = iterations.ToString();
 	}
-	void DrawBestSolution(std::shared_ptr<Solution> solution, std::list<std::pair<int, int>>&& ranges)
+	public: void DrawBestSolution(std::shared_ptr<Solution> solution, std::list<std::pair<int, int>>&& ranges)
 	{
 		using namespace System::Collections::Generic;
 		auto bases = gcnew List<XY^>();
@@ -411,7 +461,7 @@ namespace ConsoleApplication1 {
 		args->Add(achievables);
 		this->Invoke(gcnew Action<List<List<XY^>^>^>(this, &MainForm::DrawBestSolutionsAction), args);
 	}
-	void DrawBestSolutionsAction(System::Collections::Generic::List<System::Collections::Generic::List<XY^>^>^ args)
+	private: void DrawBestSolutionsAction(System::Collections::Generic::List<System::Collections::Generic::List<XY^>^>^ args)
 	{
 		auto bases = args[0];
 		auto achievables = args[1];
@@ -429,9 +479,29 @@ namespace ConsoleApplication1 {
 		}
 		this->map->Image = this->map->Image;
 	}
-	void clear_map()
+	public: void clear_map()
 	{
 		this->map->Image = (System::Drawing::Image^)(map_original->Clone());
 	}
+	void click_on_image(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
+	{
+		if(!is_run)
+		{
+		this->init_x = e->Location.X/2;
+		this->init_y = e->Location.Y/2;
+		this->best_solutions->Items->Clear();
+		this->best_solutions->Items->Add(this->init_x.ToString() + ", " + this->init_y.ToString());
+		}
+	}
+	void SetRun(bool val)
+	{
+		this->Invoke(gcnew Action<bool>(this, &MainForm::SetRunAction), val);
+	}
+	
+	void SetRunAction(bool val)
+	{
+		this->run_button->Enabled = val;
+	}
 };
+
 }

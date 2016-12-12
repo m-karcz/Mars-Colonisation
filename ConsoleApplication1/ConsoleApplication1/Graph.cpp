@@ -30,13 +30,13 @@ Graph::Graph(System::Drawing::Image^ img, int max_slope)
 		heights.emplace_back(std::move(line));
 	}
 	//dzikie rozniczkowanie
-	for(int y=0; y<heights.size(); y++){
+	for (int y = 0; y < heights.size(); y++) {
 		std::vector<Point> line;
 		for (int x = 0; x < heights[y].size(); x++) {
 			std::vector<Edge> edges;
 			std::vector<Edge> edges_reversed;
-			for (int xx=(x==0 ? 0 : -1); xx <= (x==heights[y].size()-1 ? 0 : 1); xx++) {
-				for (int yy = (y==0 ? 0 : -1); yy <= (y==heights.size()-1 ? 0 : 1); yy++) {
+			for (int xx = (x == 0 ? 0 : -1); xx <= (x == heights[y].size() - 1 ? 0 : 1); xx++) {
+				for (int yy = (y == 0 ? 0 : -1); yy <= (y == heights.size() - 1 ? 0 : 1); yy++) {
 					if (!(xx == 0 && yy == 0))
 					{
 						//zostawiam jakby jendak nie by³o skopane
@@ -44,7 +44,7 @@ Graph::Graph(System::Drawing::Image^ img, int max_slope)
 						edges_reversed.emplace_back(x + xx, y+yy, static_cast<int>(std::abs((std::abs(xx), std::abs(yy) == 2 ? 1.41 : 1)*(heights[y][x] - heights[y + yy][x + xx] + cost_of_path))));*/
 						double slope = heights[y][x] - heights[y + yy][x + xx];
 						if (std::abs(slope) < max_slope) {
-							double flat_path =(std::abs(xx) + std::abs(yy) == 2.0 ? 1.41 : 1.0)*cost_of_path;
+							double flat_path = (std::abs(xx) + std::abs(yy) == 2.0 ? 1.41 : 1.0)*cost_of_path;
 							edges.emplace_back(Edge(x + xx, y + yy, static_cast<int>(std::abs(flat_path + slope))));
 							edges_reversed.emplace_back(Edge(x + xx, y + yy, static_cast<int>(std::abs(flat_path - slope))));
 						}
@@ -65,8 +65,8 @@ void Graph::clear()
 		for (auto & point : line)
 		{
 			point.visited = false;
-			point.cost = LONG_MAX/3;
-			point.cost_reversed = LONG_MAX/3;
+			point.cost = LONG_MAX / 3;
+			point.cost_reversed = LONG_MAX / 3;
 		}
 	}
 	return;
@@ -88,15 +88,15 @@ adj_matrix Graph::get_adjacency_matrix(std::shared_ptr<Solution> actual, long ra
 	//struktura, ktora posiada w sobie wspolrzedne - upraszcza i przyspiesza generowanie listy kandydatow do nastepnej iteracji
 	auto t1 = high_resolution_clock::now();
 	this->clear();
-	struct SimplePoint{
+	struct SimplePoint {
 		SimplePoint(int x, int y) : x(x), y(y) {}
-		SimplePoint(Edge edge):x(edge.x),y(edge.y) {}
+		SimplePoint(Edge edge) :x(edge.x), y(edge.y) {}
 		int x;
 		int y;
 		bool operator==(const SimplePoint& rhs) const { return (this->x == rhs.x) && (this->y == rhs.y); }
 	};
 	//funkcja, ktora jest uzywana pozniej do sortowania listy kandydatow
-	auto comparator = [this](const SimplePoint& b1, const SimplePoint& b2)->bool{
+	auto comparator = [this](const SimplePoint& b1, const SimplePoint& b2)->bool {
 		return ((this->points[b1.y][b1.x].cost) < (this->points[b2.y][b2.x].cost));
 	};
 	//macierz przyleglosci
@@ -134,13 +134,13 @@ adj_matrix Graph::get_adjacency_matrix(std::shared_ptr<Solution> actual, long ra
 		}
 		this->clear();
 		adjacency_matrix.emplace_back(std::move(vect));
-	
+
 	}
 	for (int i = 0; i < adjacency_matrix.size(); i++) { //zabronienie drogi do samego siebie(ustawia siê automatycznie w pierwszej iteracji)
-			adjacency_matrix[i][i] = false;
-		}
-	#ifdef BENCHMARKS
+		adjacency_matrix[i][i] = false;
+	}
+#ifdef BENCHMARKS
 	std::cout << "get_adjacency_matrix: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
-	#endif
+#endif
 	return adjacency_matrix;
 }
