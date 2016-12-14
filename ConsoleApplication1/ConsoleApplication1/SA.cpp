@@ -17,7 +17,9 @@ bool SA::run(void)
 	while (!Validator::is_allowed(map->get_adjacency_matrix(candidate, max_range)))
 	{
 		candidate = nei_generator.next(actual);
+#ifdef SA_DEBUG
 		System::Console::WriteLine("odrzucam niepoprawne");
+#endif
 	}
 	auto result = candidate->objective_function(map, max_range);
 	delta = candidate->achievable_points - actual->achievable_points;
@@ -33,9 +35,9 @@ bool SA::run(void)
 			this->draw_best_solution(best, std::move(result));
 
 		}
-		//-----debug only - delete it
+#ifdef SA_DEBUG
 		std::cout << "Przyjalem lepsze: " << *actual << std::endl;
-		//-------end of debug
+#endif SA_DEBUG
 	}
 	else
 	{
@@ -44,14 +46,14 @@ bool SA::run(void)
 		if (random < val_to_check)
 		{
 			actual = candidate;
-			//-----debug only - delete it
-			std::cout << "Przyjalem ciulowe: " << *actual << std::endl;
-			//-------end of debug
 			nei_generator.generated.clear();
+#ifdef SA_DEBUG
+			std::cout << "Przyjalem gorsze: " << *actual << std::endl;
 		}
 		else
 		{
-			std::cout << "Odrzucilem ciulowe rozwiazanie: " << *candidate << std::endl;;
+			std::cout << "Odrzucilem gorsze rozwiazanie: " << *candidate << std::endl;
+#endif SA_DEBUG
 		}
 	}
 	this->show_best_solution();

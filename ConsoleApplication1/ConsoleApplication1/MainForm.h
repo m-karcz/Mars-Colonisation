@@ -90,6 +90,8 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::Label^  gui_total_range;
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^  chart1;
 
+
+
 	protected:
 
 	protected:
@@ -398,8 +400,8 @@ namespace ConsoleApplication1 {
 		}
 		void InitializeBrushes(void)
 		{
-			this->base_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 0, 0, 0));
-			this->range_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 255, 255, 255));
+			this->base_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 255, 255, 255));
+			this->range_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 0,0,0));
 		}
 #pragma endregion
 	private: System::Void run_button_Click(System::Object^  sender, System::EventArgs^  e) {

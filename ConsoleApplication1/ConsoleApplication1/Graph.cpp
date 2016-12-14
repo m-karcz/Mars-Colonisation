@@ -11,8 +11,8 @@ Graph::Graph(System::Drawing::Image^ img, int max_slope)
 {
 	System::Drawing::Bitmap^ bitmap = gcnew System::Drawing::Bitmap(img);
 	int scale = 2;
-	int dividend = 20;
-	int cost_of_path = 10;
+	int dividend = 1;
+	int cost_of_path = 5;
 	std::vector<std::vector<double>> heights;
 	heights.reserve(bitmap->Height / scale);
 	for (int y = 0; y < bitmap->Height; y += scale) {
