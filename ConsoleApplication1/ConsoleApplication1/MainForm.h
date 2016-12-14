@@ -88,6 +88,7 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::Label^  label8;
 	private: System::Windows::Forms::PageSetupDialog^  pageSetupDialog1;
 	private: System::Windows::Forms::Label^  gui_total_range;
+	private: System::Windows::Forms::DataVisualization::Charting::Chart^  chart1;
 
 	protected:
 
@@ -106,6 +107,10 @@ namespace ConsoleApplication1 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Legend^  legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->run_button = (gcnew System::Windows::Forms::Button());
 			this->map = (gcnew System::Windows::Forms::PictureBox());
 			this->open_map_dialog = (gcnew System::Windows::Forms::OpenFileDialog());
@@ -128,12 +133,14 @@ namespace ConsoleApplication1 {
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->pageSetupDialog1 = (gcnew System::Windows::Forms::PageSetupDialog());
 			this->gui_total_range = (gcnew System::Windows::Forms::Label());
+			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->map))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_bases))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_range))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_temp))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_slope))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_alpha))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// run_button
@@ -327,11 +334,35 @@ namespace ConsoleApplication1 {
 			this->gui_total_range->TabIndex = 11;
 			this->gui_total_range->Text = L"0";
 			// 
+			// chart1
+			// 
+			chartArea1->Name = L"ChartArea1";
+			this->chart1->ChartAreas->Add(chartArea1);
+			legend1->Name = L"Legend1";
+			this->chart1->Legends->Add(legend1);
+			this->chart1->Location = System::Drawing::Point(41, 414);
+			this->chart1->Name = L"chart1";
+			series1->ChartArea = L"ChartArea1";
+			series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series1->Legend = L"Legend1";
+			series1->Name = L"actual";
+			series1->XAxisType = System::Windows::Forms::DataVisualization::Charting::AxisType::Secondary;
+			series2->ChartArea = L"ChartArea1";
+			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series2->Legend = L"Legend1";
+			series2->Name = L"best";
+			this->chart1->Series->Add(series1);
+			this->chart1->Series->Add(series2);
+			this->chart1->Size = System::Drawing::Size(933, 334);
+			this->chart1->TabIndex = 15;
+			this->chart1->Text = L"chart1";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1022, 404);
+			this->ClientSize = System::Drawing::Size(1022, 773);
+			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->label8);
 			this->Controls->Add(this->gui_iterations);
 			this->Controls->Add(this->gui_total_range);
@@ -360,6 +391,7 @@ namespace ConsoleApplication1 {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_temp))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_slope))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_alpha))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -501,6 +533,24 @@ namespace ConsoleApplication1 {
 	void SetRunAction(bool val)
 	{
 		this->run_button->Enabled = val;
+	}
+
+	public: void PlotObjectiveFunction(std::shared_ptr<Solution> actual, std::shared_ptr<Solution> best, const unsigned int iteration)
+	{
+		using namespace System::Collections::Generic;
+
+		KeyValuePair<int, int> actual_point(iteration, actual->achievable_points);
+		KeyValuePair<int, int> best_point(iteration, best->achievable_points);
+		this->Invoke(gcnew Action<KeyValuePair<int,int>>(this, &MainForm::PlotActualAction), actual_point );
+		this->Invoke(gcnew Action<KeyValuePair<int, int>>(this, &MainForm::PlotBestAction), best_point);
+	}
+	private: void PlotActualAction(System::Collections::Generic::KeyValuePair<int,int> pair)
+	{
+		this->chart1->Series["actual"]->Points->AddXY(pair.Key, pair.Value);
+	}
+	private: void PlotBestAction(System::Collections::Generic::KeyValuePair<int, int> pair)
+	{
+		this->chart1->Series["best"]->Points->AddXY(pair.Key, pair.Value);
 	}
 };
 

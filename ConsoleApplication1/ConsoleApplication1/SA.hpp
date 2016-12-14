@@ -38,4 +38,5 @@ struct SA
 	void show_best_solution(); //ustawia aktualne rozwi¹zanie w gui
 	void show_iterations(); //inkrementuje aktualn¹ iloœæ iteracji w gui
 	void draw_best_solution(std::shared_ptr<Solution> solution, std::list<std::pair<int, int>>&& range); //maluje aktualne rozwiazanie na mapie w gui
+	void plot_objective_function(std::shared_ptr<Solution> actual, std::shared_ptr<Solution> best, const unsigned int iteration);
 };
