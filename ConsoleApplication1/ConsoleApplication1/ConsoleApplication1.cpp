@@ -13,6 +13,7 @@
 #include <ctime>
 #include <Windows.h>
 #include <iostream>
+#include <Windows.h>
 
 #include "stdafx.h"
 using namespace System;
@@ -23,6 +24,5 @@ int main(array<System::String ^> ^args)
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 	ConsoleApplication1::MainForm myForm;
 	myForm.ShowDialog();
-	Console::ReadKey();
     return 0;
 }

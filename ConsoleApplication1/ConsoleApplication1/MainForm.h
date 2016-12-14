@@ -166,7 +166,8 @@ namespace ConsoleApplication1 {
 			// 
 			// open_map_dialog
 			// 
-			this->open_map_dialog->FileName = L"open_map_dialog";
+			this->open_map_dialog->FileName = L"";
+			this->open_map_dialog->Filter= "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
 			// 
 			// open_map
 			// 
@@ -400,8 +401,8 @@ namespace ConsoleApplication1 {
 		}
 		void InitializeBrushes(void)
 		{
-			this->base_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 255, 255, 255));
-			this->range_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(175, 0,0,0));
+			this->base_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(255, 0, 0, 0));
+			this->range_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(150, 0,0,0));
 		}
 #pragma endregion
 	private: System::Void run_button_Click(System::Object^  sender, System::EventArgs^  e) {

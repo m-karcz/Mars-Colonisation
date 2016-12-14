@@ -126,6 +126,9 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies />
+      <SubSystem>NotSet</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
