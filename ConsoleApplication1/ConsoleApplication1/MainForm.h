@@ -541,18 +541,20 @@ namespace ConsoleApplication1 {
 	{
 		using namespace System::Collections::Generic;
 
-		KeyValuePair<int, int> actual_point(iteration, actual->achievable_points);
-		KeyValuePair<int, int> best_point(iteration, best->achievable_points);
-		this->Invoke(gcnew Action<KeyValuePair<int,int>>(this, &MainForm::PlotActualAction), actual_point );
-		this->Invoke(gcnew Action<KeyValuePair<int, int>>(this, &MainForm::PlotBestAction), best_point);
+		XY^ actual_point = gcnew XY(iteration, actual->achievable_points);
+		XY^ best_point = gcnew XY(iteration, best->achievable_points);
+		this->Invoke(gcnew Action<XY^>(this, &MainForm::PlotActualAction), actual_point);
+		this->Invoke(gcnew Action<XY^>(this, &MainForm::PlotBestAction), best_point);
 	}
-	private: void PlotActualAction(System::Collections::Generic::KeyValuePair<int,int> pair)
+	private: void PlotActualAction(XY^ pair)
 	{
-		this->chart1->Series["actual"]->Points->AddXY(pair.Key, pair.Value);
+		int offset = (System::Int32::Parse(this->gui_series->Text) - 1) * 100;
+		this->chart1->Series["actual"]->Points->AddXY(pair->x + offset, pair->y);
 	}
-	private: void PlotBestAction(System::Collections::Generic::KeyValuePair<int, int> pair)
+	private: void PlotBestAction(XY^ pair)
 	{
-		this->chart1->Series["best"]->Points->AddXY(pair.Key, pair.Value);
+		int offset = (System::Int32::Parse(this->gui_series->Text) - 1) * 100;
+		this->chart1->Series["best"]->Points->AddXY(pair->x + offset, pair->y);
 	}
 };
 

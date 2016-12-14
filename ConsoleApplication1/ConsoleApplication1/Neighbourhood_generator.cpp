@@ -46,7 +46,7 @@ std::shared_ptr<Solution> Neighbourhood_generator::next( std::shared_ptr<Solutio
 		{
 			System::Diagnostics::Debug::WriteLine(where_to_move.ToString());
 		}
-		if (10 < basic_nei_counter++)
+		if ( 8*bases.size() < basic_nei_counter++)
 		{
 			neighbour->move_rand(width,height);
 		}
