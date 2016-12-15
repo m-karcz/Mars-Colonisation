@@ -4,6 +4,7 @@
 #include <functional>
 #include <chrono>
 #include <iostream>
+#include "Dijkstra.hpp"
 
 using namespace std::chrono;
 
@@ -83,7 +84,7 @@ void Graph::clear_visited()
 	}
 }
 
-adj_matrix Graph::get_adjacency_matrix(std::shared_ptr<Solution> actual, long range)
+/*adj_matrix Graph::get_adjacency_matrix(std::shared_ptr<Solution> actual, long range)
 {
 	//struktura, ktora posiada w sobie wspolrzedne - upraszcza i przyspiesza generowanie listy kandydatow do nastepnej iteracji
 	auto t1 = high_resolution_clock::now();
@@ -142,5 +143,35 @@ adj_matrix Graph::get_adjacency_matrix(std::shared_ptr<Solution> actual, long ra
 #ifdef BENCHMARKS
 	std::cout << "get_adjacency_matrix: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
 #endif
+	return adjacency_matrix;
+}*/
+
+adj_matrix Graph::get_adjacency_matrix(std::shared_ptr<Solution> actual, long range)
+{
+	auto dijkstra= Dijkstra<decltype(this), decltype(actual)>::get_dijkstra(this, actual);
+	this->clear();
+	adj_matrix adjacency_matrix;
+	for(auto& proceeded_base : actual->bases)
+	{
+		std::vector<bool> vect(actual->bases.size()); //wiersz w macierzy przyleglosci
+		dijkstra->set_start(proceeded_base);
+		while(!dijkstra->are_candidates_empty())
+		{
+			dijkstra->get_proceeded_point();
+			auto it = actual->bases.begin();
+			for (int i = 0; i < actual->bases.size(); i++, ++it) { //sprawdzenie czy punkt nie jest baz¹
+				if ((it->x == dijkstra->proceeded_point.x) && (it->y == dijkstra->proceeded_point.y)) {
+					vect[i] = true;
+				}
+			}
+			dijkstra->add_candidates(range);
+		}
+		dijkstra->clear_all();
+		adjacency_matrix.emplace_back(std::move(vect));
+	}
+	for(int i=0; i<adjacency_matrix.size(); i++)
+	{
+		adjacency_matrix[i][i] = false;
+	}
 	return adjacency_matrix;
 }

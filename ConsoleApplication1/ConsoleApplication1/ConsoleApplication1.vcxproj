@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.hpp" />
+    <ClInclude Include="Dijkstra.hpp" />
     <ClInclude Include="Graph.hpp" />
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
