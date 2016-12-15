@@ -25,40 +25,113 @@ bool Neighbourhood_generator::is_new(std::shared_ptr<Solution> candidate)
 	});
 }
 
+bool Neighbourhood_generator::is_inside(std::shared_ptr<Solution> candidate)
+{
+	for (auto & base : candidate->bases)
+	{
+		if (base.x < 0 || base.x > width || base.y < 0 || base.y > height)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+ 
+
 std::shared_ptr<Solution> Neighbourhood_generator::next( std::shared_ptr<Solution> actual)
 {
 	auto t1 = high_resolution_clock::now();
 	std::shared_ptr<Solution> neighbour = std::make_shared<Solution>(*actual);
-	std::vector<Base> bases(neighbour->bases.begin(), neighbour->bases.end());
 
 	int basic_nei_counter = 0;
 	do
 	{
-		neighbour->bases = std::vector<Base>(actual->bases.begin(), actual->bases.end());
-		unsigned int base = (std::rand() % (actual->bases.size() - 1)) + 1;
-		int where_to_move = (std::rand() % 8); 
-		Base & base2move = bases[base];
-		while ( (base2move.x == 0 && (where_to_move == 0 || where_to_move >= 6 )) || (base2move.x == width && (where_to_move >= 2 && where_to_move <= 4)) || (base2move.y == 0 && (where_to_move >= 4 && where_to_move <= 6)) || (base2move.y == height && (where_to_move >= 0 && where_to_move <= 2)) )
-		{		//when the base lies on the left border										//when the base lies on the right border								//when the base lies on the bottom border							//when the base lies on the upper border
-			where_to_move = (std::rand() % 8);
-		}
-		if(base2move.x==0)
+
+		if ( 8*actual->bases.size() < basic_nei_counter++)
 		{
-			System::Diagnostics::Debug::WriteLine(where_to_move.ToString());
-		}
-		if ( 8*bases.size() < basic_nei_counter++)
-		{
-			neighbour->move_rand(width,height);
+			neighbour = generate_random_neighbourhood(actual);
+			simple_used = false;
 		}
 		else
 		{
-			neighbour->move(base2move, where_to_move);
+			neighbour = generate_simple_neighbourhood(actual);
+			simple_used = true;
 		}
-	} while (!this->is_new(neighbour));
+	} while (!this->is_new(neighbour) || !(this->is_inside(neighbour)) );
 
 	generated.push_back(std::multiset<Base>(neighbour->bases.begin(), neighbour->bases.end()));
 	#ifdef BENCHMARKS
 	std::cout << "generating new: " << duration_cast<milliseconds>(high_resolution_clock::now() - t1).count() << "ms" << std::endl;
 	#endif BENCHMARKS
+	return neighbour;
+}
+
+std::shared_ptr<Solution>  Neighbourhood_generator::generate_simple_neighbourhood(std::shared_ptr<Solution> actual)
+{
+		std::shared_ptr<Solution> neighbour = std::make_shared<Solution>(*actual);
+		std::vector<Base> candidate_bases = std::vector<Base>(actual->bases.begin(), actual->bases.end());
+		unsigned int base = (std::rand() % (candidate_bases.size() - 1)) + 1;
+		int repeat_lottery = std::rand() % 2;
+		int where_to_move;
+		if ( simple_used  && better && repeat_lottery )
+		{
+			where_to_move = prev_move;
+		}
+		else
+		{
+			where_to_move = (std::rand() % 8);
+		}
+		prev_move = where_to_move;
+
+		auto & base_to_move = (candidate_bases[base]);
+		switch (where_to_move)
+		{
+		case 0:
+			base_to_move.x--;
+			base_to_move.y++;
+			break;
+		case 1:
+			base_to_move.y++;
+			break;
+		case 2:
+			base_to_move.x++;
+			base_to_move.y++;
+			break;
+		case 3:
+			base_to_move.x++;
+			break;
+		case 4:
+			base_to_move.x++;
+			base_to_move.y--;
+			break;
+		case 5:
+			base_to_move.y--;
+			break;
+		case 6:
+			base_to_move.y--;
+			base_to_move.x--;
+			break;
+		case 7:
+			base_to_move.x--;
+			break;
+		default:
+			break;
+		}
+
+		neighbour->move_bases(candidate_bases);
+		return neighbour;
+}
+
+std::shared_ptr<Solution> Neighbourhood_generator::generate_random_neighbourhood(std::shared_ptr<Solution> actual)
+{
+	std::shared_ptr<Solution> neighbour = std::make_shared<Solution>(*actual);
+	std::vector<Base> candidate_bases = std::vector<Base>(actual->bases.begin(), actual->bases.end());
+
+	int rand_base = (std::rand() % (candidate_bases.size() - 1) + 1);
+
+	candidate_bases[rand_base].x = std::rand() % width + 1;
+	candidate_bases[rand_base].y = std::rand() % height + 1;
+	
+	neighbour->move_bases(candidate_bases);
 	return neighbour;
 }

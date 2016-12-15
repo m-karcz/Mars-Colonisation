@@ -33,7 +33,7 @@ bool SA::run(void)
 			best = actual;
 			this->show_best_solution();
 			this->draw_best_solution(best, std::move(result));
-
+			nei_generator.better = true;
 		}
 #ifdef SA_DEBUG
 		std::cout << "Przyjalem lepsze: " << *actual << std::endl;

@@ -9,7 +9,7 @@ namespace ConsoleApplication1
 	{
 		form->SetRun(false);
 		sa->prepare_next_iteration();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1000; i++) {
 			sa->run();
 		}
 		form->SetRun(true);

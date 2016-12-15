@@ -17,9 +17,7 @@ struct Solution {
 	std::vector<Base> bases;
 	std::list<std::pair<int,int>> objective_function(std::shared_ptr<Graph> map, const long range);
 
-
-	void move(Base& base, const unsigned int where_to_move);
-	void move_rand(int height, int width);
+	void move_bases(std::vector<Base> new_bases);
 	Solution(const Solution & pattern);
 	static std::shared_ptr<Solution> generate_initial(int x, int y, int amount)
 	{

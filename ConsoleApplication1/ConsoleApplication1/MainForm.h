@@ -549,12 +549,12 @@ namespace ConsoleApplication1 {
 	}
 	private: void PlotActualAction(XY^ pair)
 	{
-		int offset = (System::Int32::Parse(this->gui_series->Text) - 1) * 100;
+		int offset = (System::Int32::Parse(this->gui_series->Text) - 1) * 1000;
 		this->chart1->Series["actual"]->Points->AddXY(pair->x + offset, pair->y);
 	}
 	private: void PlotBestAction(XY^ pair)
 	{
-		int offset = (System::Int32::Parse(this->gui_series->Text) - 1) * 100;
+		int offset = (System::Int32::Parse(this->gui_series->Text) - 1) * 1000;
 		this->chart1->Series["best"]->Points->AddXY(pair->x + offset, pair->y);
 	}
 };
