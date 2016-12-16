@@ -57,13 +57,14 @@ bool SA::run(void)
 		}
 	}
 	this->show_best_solution();
-	this->plot_objective_function( actual ,best, iteration);
+	this->plot_objective_function();
 	show_iterations();
 	iteration++;
 	temperature = alpha*temperature;
 
 
-	return (max_iterations > iteration);
+	//return (max_iterations > iteration);
+	return temperature > min_temp;
 }
 
 void SA::show_best_solution()
@@ -81,11 +82,11 @@ void SA::prepare_next_iteration()
 	temperature = start_temperature;
 	iteration = 0;
 }
-void SA::draw_best_solution(std::shared_ptr<Solution> solution, std::list<std::pair<int, int>>&& range)
+void SA::draw_best_solution(std::shared_ptr<Solution> solution, std::list<SimplePoint>&& range)
 {
 	this->form->DrawBestSolution(solution, std::move(range));
 }
-void SA::plot_objective_function(std::shared_ptr<Solution> actual, std::shared_ptr<Solution> best, const unsigned int iteration)
+void SA::plot_objective_function()
 {
-	this->form->PlotObjectiveFunction(actual, best, iteration);
+	this->form->PlotObjectiveFunction(actual->achievable_points, best->achievable_points);
 }

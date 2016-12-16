@@ -24,6 +24,7 @@ struct SA
 	const unsigned int max_iterations;
 	unsigned int iteration = 0;
 	const double alpha;
+	const double min_temp = 0.2;
 	int max_range;
 	std::shared_ptr<Graph> map;
 	gcroot<ConsoleApplication1::MainForm^> form;
@@ -37,6 +38,6 @@ struct SA
 	void prepare_next_iteration(); //ustawia temperature przed kolejn¹ iteracj¹
 	void show_best_solution(); //ustawia aktualne rozwi¹zanie w gui
 	void show_iterations(); //inkrementuje aktualn¹ iloœæ iteracji w gui
-	void draw_best_solution(std::shared_ptr<Solution> solution, std::list<std::pair<int, int>>&& range); //maluje aktualne rozwiazanie na mapie w gui
-	void plot_objective_function(std::shared_ptr<Solution> actual, std::shared_ptr<Solution> best, const unsigned int iteration);
+	void draw_best_solution(std::shared_ptr<Solution> solution, std::list<SimplePoint>&& range); //maluje aktualne rozwiazanie na mapie w gui
+	void plot_objective_function();
 };

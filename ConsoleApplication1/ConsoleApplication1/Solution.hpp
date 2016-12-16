@@ -6,6 +6,8 @@
 #include <iostream>
 #include <list>
 #include <utility>
+#include "Dijkstra.hpp"
+
 struct Graph;
 struct Base;
 namespace ConsoleApplication1
@@ -15,7 +17,8 @@ namespace ConsoleApplication1
 struct Solution {
 	long achievable_points = 0;
 	std::vector<Base> bases;
-	std::list<std::pair<int,int>> objective_function(std::shared_ptr<Graph> map, const long range);
+	//std::list<std::pair<int,int>> objective_function(std::shared_ptr<Graph> map, const long range);
+	std::list<SimplePoint> objective_function(std::shared_ptr<Graph> map, const long range);
 
 	void move_bases(std::vector<Base> new_bases);
 	Solution(const Solution & pattern);

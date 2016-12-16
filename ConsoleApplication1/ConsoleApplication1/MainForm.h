@@ -485,18 +485,18 @@ namespace ConsoleApplication1 {
 	{
 		this->gui_iterations->Text = iterations.ToString();
 	}
-	public: void DrawBestSolution(std::shared_ptr<Solution> solution, std::list<std::pair<int, int>>&& ranges)
+	public: void DrawBestSolution(std::shared_ptr<Solution> solution, std::list<SimplePoint>&& ranges)
 	{
 		using namespace System::Collections::Generic;
 		auto bases = gcnew List<XY^>();
 		auto achievables = gcnew List<XY^>();
 		for(auto b : solution->bases)
 		{
-			bases->Add(gcnew XY(b.x, b.y));
+			bases->Add(gcnew XY(b));
 		}
 		for(auto r : ranges)
 		{
-			achievables->Add(gcnew XY(r.first, r.second));
+			achievables->Add(gcnew XY(r.x, r.y));
 		}
 		auto args = gcnew List<List<XY^>^>();
 		args->Add(bases);
@@ -545,24 +545,19 @@ namespace ConsoleApplication1 {
 		this->run_button->Enabled = val;
 	}
 
-	public: void PlotObjectiveFunction(std::shared_ptr<Solution> actual, std::shared_ptr<Solution> best, const unsigned int iteration)
+	public: void PlotObjectiveFunction(int actual, int best)
 	{
-		using namespace System::Collections::Generic;
 
-		XY^ actual_point = gcnew XY(iteration, actual->achievable_points);
-		XY^ best_point = gcnew XY(iteration, best->achievable_points);
-		this->Invoke(gcnew Action<XY^>(this, &MainForm::PlotActualAction), actual_point);
-		this->Invoke(gcnew Action<XY^>(this, &MainForm::PlotBestAction), best_point);
+		this->Invoke(gcnew Action<int>(this, &MainForm::PlotActualAction), actual);
+		this->Invoke(gcnew Action<int>(this, &MainForm::PlotBestAction), best);
 	}
-	private: void PlotActualAction(XY^ pair)
+	private: void PlotActualAction(int value)
 	{
-		int offset = (System::Int32::Parse(this->gui_series->Text) - 1) * 1000;
-		this->chart1->Series["actual"]->Points->AddXY(pair->x + offset, pair->y);
+		this->chart1->Series["actual"]->Points->AddY(value);
 	}
-	private: void PlotBestAction(XY^ pair)
+	private: void PlotBestAction(int value)
 	{
-		int offset = (System::Int32::Parse(this->gui_series->Text) - 1) * 1000;
-		this->chart1->Series["best"]->Points->AddXY(pair->x + offset, pair->y);
+		this->chart1->Series["best"]->Points->AddY(value);
 	}
 
 };

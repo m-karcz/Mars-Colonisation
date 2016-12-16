@@ -9,9 +9,10 @@ namespace ConsoleApplication1
 	{
 		form->SetRun(false);
 		sa->prepare_next_iteration();
-		for (int i = 0; i < 1000; i++) {
+		/*for (int i = 0; i < 200; i++) {
 			sa->run();
-		}
+		}*/
+		while(sa->run()){}
 		form->SetRun(true);
 	}
 	void Series_executor::next_series() {

@@ -52,6 +52,11 @@ public:
 	bool are_candidates_empty();
 	Dijkstra(map_type map, solution_type solution) : map(map), solution(solution) {}
 	Direction direction = Direction::forward;
+	template<typename T>
+	auto get_cost(T& object)->decltype(object.cost)&
+	{
+		return (direction == Direction::forward ? object.cost : object.cost_reversed);
+	}
 };
 
 
@@ -114,6 +119,7 @@ SimplePoint Dijkstra<map_type, solution_type>::get_proceeded_point()
 }
 
 
+
 template<typename map_type, typename solution_type>
 void Dijkstra<map_type, solution_type>::add_candidates(long max_range)
 {
@@ -121,8 +127,8 @@ void Dijkstra<map_type, solution_type>::add_candidates(long max_range)
 	for (auto& edge : direction == Direction::forward ? point.edges : point.edges_reversed)
 	{
 		auto& candidate = (*map)[edge];
-		candidate.cost = std::min(candidate.cost, point.cost + edge.cost);
-		if (!candidate.visited && candidate.cost <= max_range)
+		get_cost(candidate) = std::min(get_cost(candidate), get_cost(point) + edge.cost);
+		if (!candidate.visited && get_cost(candidate) <= max_range)
 			if (std::find(candidates.begin(), candidates.end(), edge) == candidates.end())
 				candidates.push_back(edge);
 	}
