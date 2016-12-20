@@ -421,7 +421,7 @@ namespace ConsoleApplication1 {
 			double temperature = System::Convert::ToDouble(this->numeric_temp->Value);
 			int max_range = System::Convert::ToInt32(this->numeric_range->Value);
 			series_executor = gcnew Series_executor(this->gui_series, this->gui_iterations, this->best_solutions, this);
-			series_executor->init(temperature, alpha, 20, init_x, init_y, number_of_bases, map->Image, max_slope, max_range);
+			series_executor->init(temperature, alpha, init_x, init_y, number_of_bases, map->Image, max_slope, max_range);
 			is_run = true;
 			this->numeric_bases->Enabled = false;
 			this->numeric_slope->Enabled = false;

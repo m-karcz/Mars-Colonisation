@@ -5,11 +5,6 @@
 
 
 
-void SA::generate_first_solution()
-{
-
-}
-
 bool SA::run(void)
 {
 	std::shared_ptr<Solution> candidate = nei_generator.next(actual);
@@ -34,6 +29,7 @@ bool SA::run(void)
 			this->show_best_solution();
 			this->draw_best_solution(best, std::move(result));
 			nei_generator.better = true;
+			this->improved++;
 		}
 #ifdef SA_DEBUG
 		std::cout << "Przyjalem lepsze: " << *actual << std::endl;
@@ -47,11 +43,15 @@ bool SA::run(void)
 		{
 			actual = candidate;
 			nei_generator.generated.clear();
+			this->accepted++;
 #ifdef SA_DEBUG
 			std::cout << "Przyjalem gorsze: " << *actual << std::endl;
+#endif SA_DEBUG
 		}
 		else
 		{
+			this->rejected++;
+#ifdef SA_DEBUG
 			std::cout << "Odrzucilem gorsze rozwiazanie: " << *candidate << std::endl;
 #endif SA_DEBUG
 		}
@@ -63,7 +63,6 @@ bool SA::run(void)
 	temperature = alpha*temperature;
 
 
-	//return (max_iterations > iteration);
 	return temperature > min_temp;
 }
 
@@ -79,8 +78,16 @@ void SA::show_iterations()
 
 void SA::prepare_next_iteration()
 {
-	temperature = start_temperature;
-	iteration = 0;
+	this->prepare_next_iteration(this->start_temperature, this->alpha);
+}
+void SA::prepare_next_iteration(double new_temp, double new_alpha)
+{
+	this->accepted = 0;
+	this->rejected = 0;
+	this->improved = 0;
+	this->alpha = new_alpha;
+	this->temperature = new_temp;
+	this->iteration = 0;
 }
 void SA::draw_best_solution(std::shared_ptr<Solution> solution, std::list<SimplePoint>&& range)
 {

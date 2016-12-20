@@ -20,9 +20,9 @@ namespace ConsoleApplication1 {
 			this->form = form;
 		}
 
-		void init(double temperature, double alpha, int max_iterations, int x, int y, int amount, System::Drawing::Image^ map_image, int max_slope, int max_range) {
+		void init(double temperature, double alpha, int x, int y, int amount, System::Drawing::Image^ map_image, int max_slope, int max_range) {
 			auto initial_solution = Solution::generate_initial(x, y, amount);
-			this->sa = new SA(temperature, alpha, max_iterations, initial_solution, std::shared_ptr<Graph>(new Graph(map_image, max_slope)), gui_iterations, gui_best_solution, form, max_range);
+			this->sa = new SA(temperature, alpha, initial_solution, std::shared_ptr<Graph>(new Graph(map_image, max_slope)), form, max_range);
 			//gui_best_solution->Invoke(Add123);
 		}
 		MainForm^ form;
@@ -37,13 +37,6 @@ namespace ConsoleApplication1 {
 		void show_series_number() {
 
 		}
-
-		/*void test(System::Windows::Forms::Control^ control)
-		{
-			control->Invoke();
-		}*/
-
-
 
 		~Series_executor() {
 			this->!Series_executor();
