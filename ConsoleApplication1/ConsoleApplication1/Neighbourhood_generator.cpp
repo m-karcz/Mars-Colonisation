@@ -46,8 +46,8 @@ std::shared_ptr<Solution> Neighbourhood_generator::next( std::shared_ptr<Solutio
 	int basic_nei_counter = 0;
 	do
 	{
-
-		if ( 8*actual->bases.size() < basic_nei_counter++)
+		int neighbourhood_type = std::rand() % 2;
+		if ( neighbourhood_type )
 		{
 			neighbour = generate_random_neighbourhood(actual);
 			simple_used = false;

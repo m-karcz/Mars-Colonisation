@@ -31,7 +31,7 @@ struct Neighbourhood_generator
 	std::list<std::multiset<Base>> generated;
 	Neighbourhood_generator(std::shared_ptr<Graph> map) : height(static_cast<int>(map->points.size())-1), width(static_cast<int>(map->points[0].size())-1), simple_used(false) {}
 	bool is_new(std::shared_ptr<Solution> candidate); //checks if new generated solution is unique -wasn't used before
-	bool is_inside(std::shared_ptr<Solution> candidate); //checks if the new genrated solution is inside the map
+	bool is_inside(std::shared_ptr<Solution> candidate); //checks if the new generated solution is inside the map
 	std::shared_ptr<Solution> next(std::shared_ptr<Solution> actual);
 
 	std::shared_ptr<Solution>  Neighbourhood_generator::generate_simple_neighbourhood(std::shared_ptr<Solution> actual);
