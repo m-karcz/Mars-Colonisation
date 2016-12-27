@@ -21,21 +21,21 @@ struct SA
 	Neighbourhood_generator nei_generator;
 	double temperature;
 	double start_temperature;
-	const unsigned int max_iterations;
 	unsigned int iteration = 0;
-	const double alpha;
-	const double min_temp = 0.2;
+	double alpha;
+	const double min_temp = 0.4;
 	int max_range;
+	int improved; //liczba polepszeñ wartoœci achievable_points w actualu
+	int accepted; //liczba zaakceptowanych pogorszeñ wartoœci achievable_points w actualu
+	int rejected; //liczba odrzuconych pogorszeñ wartoœci achievable_points w actualu
 	std::shared_ptr<Graph> map;
 	gcroot<ConsoleApplication1::MainForm^> form;
-	gcroot<System::Windows::Forms::Label^> gui_iterations; //label w gui, gdzie bêdzie wyœwietlana liczba przebytych iteracji
-	gcroot<System::Windows::Forms::ListBox^> gui_best_solution; //lista punktow w gui, ktore sa najlepszym aktualnym rozwiazaniem
 
 
-	SA(double temperature, const double alpha, const unsigned int max_iterations, std::shared_ptr<Solution> initial, std::shared_ptr<Graph> map, System::Windows::Forms::Label^ gui_iterations, System::Windows::Forms::ListBox^ gui_best_solution, ConsoleApplication1::MainForm^ form, int max_range) : temperature(temperature), alpha(alpha), max_iterations(max_iterations), actual(initial), best(initial), map(map), gui_iterations(gui_iterations), gui_best_solution(gui_best_solution), nei_generator(map), form(form), start_temperature(temperature), max_range(max_range) {}
-	void generate_first_solution(); //wygenerowanie pierwszego rozwi¹zania w konstruktorze
+	SA(double temperature, const double alpha, std::shared_ptr<Solution> initial, std::shared_ptr<Graph> map, ConsoleApplication1::MainForm^ form, int max_range) : temperature(temperature), alpha(alpha), actual(initial), best(initial), map(map), nei_generator(map), form(form), start_temperature(temperature), max_range(max_range) {}
 	bool run(void);
 	void prepare_next_iteration(); //ustawia temperature przed kolejn¹ iteracj¹
+	void prepare_next_iteration(double new_temp, double new_alpha);
 	void show_best_solution(); //ustawia aktualne rozwi¹zanie w gui
 	void show_iterations(); //inkrementuje aktualn¹ iloœæ iteracji w gui
 	void draw_best_solution(std::shared_ptr<Solution> solution, std::list<SimplePoint>&& range); //maluje aktualne rozwiazanie na mapie w gui

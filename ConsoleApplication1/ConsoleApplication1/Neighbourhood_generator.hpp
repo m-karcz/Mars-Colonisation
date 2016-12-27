@@ -37,8 +37,5 @@ struct Neighbourhood_generator
 	std::shared_ptr<Solution>  Neighbourhood_generator::generate_simple_neighbourhood(std::shared_ptr<Solution> actual);
 	std::shared_ptr<Solution>  Neighbourhood_generator::generate_random_neighbourhood(std::shared_ptr<Solution> actual);
 
-	bool comparator(std::multiset<Base>& a, std::multiset<Base>& b) {
-		
-	}
 };
 

@@ -12,8 +12,11 @@ namespace ConsoleApplication1
 		/*for (int i = 0; i < 200; i++) {
 			sa->run();
 		}*/
-		while(sa->run()){}
+		while(sa->run() && !form->IsDisposed){}
+		if(!form->IsDisposed)
+		{
 		form->SetRun(true);
+		}
 	}
 	void Series_executor::next_series() {
 		System::Threading::Thread^ t = gcnew System::Threading::Thread(gcnew System::Threading::ThreadStart(this, &Series_executor::serie));
