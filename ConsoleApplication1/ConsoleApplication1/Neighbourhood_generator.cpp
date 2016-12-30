@@ -46,16 +46,21 @@ std::shared_ptr<Solution> Neighbourhood_generator::next( std::shared_ptr<Solutio
 	int basic_nei_counter = 0;
 	do
 	{
-		int neighbourhood_type = std::rand() % 2;
-		if ( neighbourhood_type )
+		int neighbourhood_type = std::rand() % 3;
+		switch(neighbourhood_type)
 		{
-			neighbour = generate_random_neighbourhood(actual);
-			simple_used = false;
-		}
-		else
-		{
-			neighbour = generate_simple_neighbourhood(actual);
-			simple_used = true;
+			case 0:
+				neighbour = generate_random_neighbourhood(actual);
+				simple_used = false;
+				break;
+			case 1:
+				neighbour = generate_simple_neighbourhood(actual);
+				simple_used = true;
+				break;
+			case 2:
+				neighbour = generate_wider_neighbourhood(actual);
+				simple_used = false;
+				break;
 		}
 	} while (!this->is_new(neighbour) || !(this->is_inside(neighbour)) );
 
@@ -120,6 +125,23 @@ std::shared_ptr<Solution>  Neighbourhood_generator::generate_simple_neighbourhoo
 
 		neighbour->move_bases(candidate_bases);
 		return neighbour;
+}
+std::shared_ptr<Solution>  Neighbourhood_generator::generate_wider_neighbourhood(std::shared_ptr<Solution> actual)
+{
+	std::shared_ptr<Solution> neighbour = std::make_shared<Solution>(*actual);
+	std::vector<Base> candidate_bases = std::vector<Base>(actual->bases.begin(), actual->bases.end());
+	unsigned int base = (std::rand() % (candidate_bases.size() - 1)) + 1;
+	
+	int	x_to_move = ((std::rand() % (width / 4)) - (width / 8)) * (actual_temp / start_temp);
+	int	y_to_move = ((std::rand() % (height / 4)) - (height / 8)) * (actual_temp / start_temp);
+	
+	auto & base_to_move = (candidate_bases[base]);
+
+	base_to_move.x += x_to_move;
+	base_to_move.y += y_to_move;
+
+	neighbour->move_bases(candidate_bases);
+	return neighbour;
 }
 
 std::shared_ptr<Solution> Neighbourhood_generator::generate_random_neighbourhood(std::shared_ptr<Solution> actual)

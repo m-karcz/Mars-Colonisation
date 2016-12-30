@@ -32,7 +32,7 @@ struct SA
 	gcroot<ConsoleApplication1::MainForm^> form;
 
 
-	SA(double temperature, const double alpha, std::shared_ptr<Solution> initial, std::shared_ptr<Graph> map, ConsoleApplication1::MainForm^ form, int max_range) : temperature(temperature), alpha(alpha), actual(initial), best(initial), map(map), nei_generator(map), form(form), start_temperature(temperature), max_range(max_range) {}
+	SA(double temperature, const double alpha, std::shared_ptr<Solution> initial, std::shared_ptr<Graph> map, ConsoleApplication1::MainForm^ form, int max_range) : temperature(temperature), alpha(alpha), actual(initial), best(initial), map(map), nei_generator(map, start_temperature), form(form), start_temperature(temperature), max_range(max_range) {}
 	bool run(void);
 	void prepare_next_iteration(); //ustawia temperature przed kolejn¹ iteracj¹
 	void prepare_next_iteration(double new_temp, double new_alpha);

@@ -61,7 +61,7 @@ bool SA::run(void)
 	show_iterations();
 	iteration++;
 	temperature = alpha*temperature;
-
+	nei_generator.temp_actualize(temperature);
 
 	return temperature > min_temp;
 }
