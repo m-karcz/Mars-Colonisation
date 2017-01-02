@@ -3,6 +3,7 @@
 #include "SA.hpp"
 #include <memory>
 
+
 //namespace ConsoleApplication1
 //{
 namespace ConsoleApplication1 {

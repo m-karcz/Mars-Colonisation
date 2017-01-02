@@ -2,6 +2,7 @@
 #include "Graph.hpp"
 #include "Series_executor.hpp"
 #include <list>
+#include <cmath>
 #include "XY_CLR.h"
 
 namespace ConsoleApplication1 {
@@ -89,6 +90,8 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::PageSetupDialog^  pageSetupDialog1;
 	private: System::Windows::Forms::Label^  gui_total_range;
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^  chart1;
+	private: System::Windows::Forms::Button^  auto_btn;
+
 
 
 
@@ -137,6 +140,7 @@ namespace ConsoleApplication1 {
 			this->pageSetupDialog1 = (gcnew System::Windows::Forms::PageSetupDialog());
 			this->gui_total_range = (gcnew System::Windows::Forms::Label());
 			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
+			this->auto_btn = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->map))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_bases))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_range))->BeginInit();
@@ -149,7 +153,7 @@ namespace ConsoleApplication1 {
 			// run_button
 			// 
 			this->run_button->Enabled = false;
-			this->run_button->Location = System::Drawing::Point(60, 142);
+			this->run_button->Location = System::Drawing::Point(60, 207);
 			this->run_button->Name = L"run_button";
 			this->run_button->Size = System::Drawing::Size(103, 50);
 			this->run_button->TabIndex = 0;
@@ -214,7 +218,7 @@ namespace ConsoleApplication1 {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(203, 95);
+			this->label2->Location = System::Drawing::Point(200, 99);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(54, 17);
 			this->label2->TabIndex = 6;
@@ -222,7 +226,7 @@ namespace ConsoleApplication1 {
 			// 
 			// numeric_range
 			// 
-			this->numeric_range->Location = System::Drawing::Point(326, 95);
+			this->numeric_range->Location = System::Drawing::Point(323, 99);
 			this->numeric_range->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 100000, 0, 0, 0 });
 			this->numeric_range->Name = L"numeric_range";
 			this->numeric_range->Size = System::Drawing::Size(119, 22);
@@ -232,7 +236,7 @@ namespace ConsoleApplication1 {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(200, 134);
+			this->label3->Location = System::Drawing::Point(197, 146);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(94, 17);
 			this->label3->TabIndex = 7;
@@ -241,7 +245,7 @@ namespace ConsoleApplication1 {
 			// numeric_temp
 			// 
 			this->numeric_temp->Increment = System::Decimal(gcnew cli::array< System::Int32 >(4) { 100, 0, 0, 0 });
-			this->numeric_temp->Location = System::Drawing::Point(326, 134);
+			this->numeric_temp->Location = System::Drawing::Point(323, 146);
 			this->numeric_temp->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1000000, 0, 0, 0 });
 			this->numeric_temp->Name = L"numeric_temp";
 			this->numeric_temp->Size = System::Drawing::Size(119, 22);
@@ -251,7 +255,7 @@ namespace ConsoleApplication1 {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(200, 175);
+			this->label4->Location = System::Drawing::Point(197, 196);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(48, 17);
 			this->label4->TabIndex = 7;
@@ -260,7 +264,7 @@ namespace ConsoleApplication1 {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(69, 305);
+			this->label5->Location = System::Drawing::Point(160, 360);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(124, 17);
 			this->label5->TabIndex = 8;
@@ -269,7 +273,7 @@ namespace ConsoleApplication1 {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(69, 343);
+			this->label6->Location = System::Drawing::Point(160, 398);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(140, 17);
 			this->label6->TabIndex = 9;
@@ -277,7 +281,7 @@ namespace ConsoleApplication1 {
 			// 
 			// numeric_slope
 			// 
-			this->numeric_slope->Location = System::Drawing::Point(326, 215);
+			this->numeric_slope->Location = System::Drawing::Point(323, 238);
 			this->numeric_slope->Name = L"numeric_slope";
 			this->numeric_slope->Size = System::Drawing::Size(120, 22);
 			this->numeric_slope->TabIndex = 10;
@@ -286,7 +290,7 @@ namespace ConsoleApplication1 {
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(200, 217);
+			this->label7->Location = System::Drawing::Point(197, 240);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(75, 17);
 			this->label7->TabIndex = 7;
@@ -295,7 +299,7 @@ namespace ConsoleApplication1 {
 			// gui_series
 			// 
 			this->gui_series->AutoSize = true;
-			this->gui_series->Location = System::Drawing::Point(259, 305);
+			this->gui_series->Location = System::Drawing::Point(350, 360);
 			this->gui_series->Name = L"gui_series";
 			this->gui_series->Size = System::Drawing::Size(16, 17);
 			this->gui_series->TabIndex = 11;
@@ -304,7 +308,7 @@ namespace ConsoleApplication1 {
 			// gui_iterations
 			// 
 			this->gui_iterations->AutoSize = true;
-			this->gui_iterations->Location = System::Drawing::Point(259, 343);
+			this->gui_iterations->Location = System::Drawing::Point(350, 398);
 			this->gui_iterations->Name = L"gui_iterations";
 			this->gui_iterations->Size = System::Drawing::Size(16, 17);
 			this->gui_iterations->TabIndex = 12;
@@ -314,18 +318,18 @@ namespace ConsoleApplication1 {
 			// 
 			this->numeric_alpha->DecimalPlaces = 2;
 			this->numeric_alpha->Increment = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 131072 });
-			this->numeric_alpha->Location = System::Drawing::Point(326, 175);
+			this->numeric_alpha->Location = System::Drawing::Point(323, 196);
 			this->numeric_alpha->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numeric_alpha->Name = L"numeric_alpha";
 			this->numeric_alpha->Size = System::Drawing::Size(119, 22);
 			this->numeric_alpha->TabIndex = 4;
 			this->numeric_alpha->Tag = L"d";
-			this->numeric_alpha->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 98, 0, 0, 131072 });
+			this->numeric_alpha->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 97, 0, 0, 131072 });
 			// 
 			// label8
 			// 
 			this->label8->AutoSize = true;
-			this->label8->Location = System::Drawing::Point(69, 268);
+			this->label8->Location = System::Drawing::Point(160, 323);
 			this->label8->Name = L"label8";
 			this->label8->Size = System::Drawing::Size(85, 17);
 			this->label8->TabIndex = 14;
@@ -334,7 +338,7 @@ namespace ConsoleApplication1 {
 			// gui_total_range
 			// 
 			this->gui_total_range->AutoSize = true;
-			this->gui_total_range->Location = System::Drawing::Point(259, 268);
+			this->gui_total_range->Location = System::Drawing::Point(350, 323);
 			this->gui_total_range->Name = L"gui_total_range";
 			this->gui_total_range->Size = System::Drawing::Size(16, 17);
 			this->gui_total_range->TabIndex = 11;
@@ -365,6 +369,16 @@ namespace ConsoleApplication1 {
 			this->chart1->TabIndex = 15;
 			this->chart1->Text = L"chart1";
 			// 
+			// auto_btn
+			// 
+			this->auto_btn->Location = System::Drawing::Point(60, 128);
+			this->auto_btn->Name = L"auto_btn";
+			this->auto_btn->Size = System::Drawing::Size(103, 52);
+			this->auto_btn->TabIndex = 16;
+			this->auto_btn->Text = L"Auto";
+			this->auto_btn->UseVisualStyleBackColor = true;
+			this->auto_btn->Click += gcnew System::EventHandler(this, &MainForm::auto_btn_Click);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -372,6 +386,7 @@ namespace ConsoleApplication1 {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1222, 773);
+			this->Controls->Add(this->auto_btn);
 			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->label8);
 			this->Controls->Add(this->gui_iterations);
@@ -428,6 +443,7 @@ namespace ConsoleApplication1 {
 			this->numeric_alpha->Enabled = false;
 			this->numeric_range->Enabled = false;
 			this->numeric_temp->Enabled = false;
+			this->auto_btn->Enabled = false;
 		}
 		series_executor->next_series();
 		this->gui_series->Text = (System::Int32::Parse(this->gui_series->Text) + 1).ToString();
@@ -509,6 +525,7 @@ namespace ConsoleApplication1 {
 		auto achievables = args[1];
 		this->clear_map();
 		this->board_to_draw = System::Drawing::Graphics::FromImage(this->map->Image);
+		
 		for(int i=0; i<achievables->Count; i++)
 		{
 			auto a = achievables[i];
@@ -560,6 +577,18 @@ namespace ConsoleApplication1 {
 		this->chart1->Series["best"]->Points->AddY(value);
 	}
 
+private: System::Void auto_btn_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	int range = System::Convert::ToInt32(this->numeric_range->Value);
+	int base_quantity = System::Convert::ToInt32(this->numeric_bases->Value);
+	
+	int arg = range * base_quantity;
+	int auto_temperature = static_cast<int> (0.0016213*pow(arg,2) - 0.717574*arg + 86.5998);
+	int auto_alpha = 93 + base_quantity;
+
+	this->numeric_temp->Value = auto_temperature;
+	this->numeric_alpha->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { auto_alpha, 0, 0, 131072 });
+}
 };
 
 }
