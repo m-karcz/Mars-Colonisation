@@ -18,7 +18,7 @@ namespace ConsoleApplication1
 		while(sa->run() && !form->IsDisposed){}
 		if(!form->IsDisposed)
 		{
-		form->SetRun(true);
+			form->SetRun(true);
 		}
 		std::cout << "Serie time: " << duration_cast<seconds>(high_resolution_clock::now() - t1).count() << "s" << std::endl;
 	}

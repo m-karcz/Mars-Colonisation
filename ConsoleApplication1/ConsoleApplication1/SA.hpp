@@ -9,6 +9,7 @@
 #include"Validator.hpp"
 #include <gcroot.h>
 #include <memory>
+#include <string>
 
 namespace ConsoleApplication1 {
 	ref class MainForm;
@@ -30,6 +31,8 @@ struct SA
 	int rejected; //liczba odrzuconych pogorszeñ wartoœci achievable_points w actualu
 	std::shared_ptr<Graph> map;
 	gcroot<ConsoleApplication1::MainForm^> form;
+	bool first = true;
+	const std::string file_name = "output.txt";
 
 
 	SA(double temperature, const double alpha, std::shared_ptr<Solution> initial, std::shared_ptr<Graph> map, ConsoleApplication1::MainForm^ form, int max_range) : temperature(temperature), alpha(alpha), actual(initial), best(initial), map(map), nei_generator(map, start_temperature), form(form), start_temperature(temperature), max_range(max_range) {}
@@ -40,4 +43,5 @@ struct SA
 	void show_iterations(); //inkrementuje aktualn¹ iloœæ iteracji w gui
 	void draw_best_solution(std::shared_ptr<Solution> solution, std::list<SimplePoint>&& range); //maluje aktualne rozwiazanie na mapie w gui
 	void plot_objective_function();
+	void save_objective_funtion();
 };

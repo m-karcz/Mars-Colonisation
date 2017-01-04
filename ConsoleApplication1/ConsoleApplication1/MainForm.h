@@ -3,6 +3,7 @@
 #include "Series_executor.hpp"
 #include <list>
 #include <cmath>
+#include <string>
 #include "XY_CLR.h"
 
 namespace ConsoleApplication1 {
@@ -26,9 +27,6 @@ namespace ConsoleApplication1 {
 		MainForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
 			InitializeBrushes();
 		}
 
@@ -91,6 +89,7 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::Label^  gui_total_range;
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^  chart1;
 	private: System::Windows::Forms::Button^  auto_btn;
+	private: System::DirectoryServices::DirectoryEntry^  directoryEntry1;
 
 
 
@@ -141,6 +140,7 @@ namespace ConsoleApplication1 {
 			this->gui_total_range = (gcnew System::Windows::Forms::Label());
 			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			this->auto_btn = (gcnew System::Windows::Forms::Button());
+			this->directoryEntry1 = (gcnew System::DirectoryServices::DirectoryEntry());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->map))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_bases))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numeric_range))->BeginInit();

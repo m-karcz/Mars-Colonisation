@@ -1,6 +1,7 @@
 #include "SA.hpp"
 #include <functional>
 #include <iostream>
+#include <fstream>
 #include "MainForm.h"
 
 
@@ -58,6 +59,7 @@ bool SA::run(void)
 	}
 	this->show_best_solution();
 	this->plot_objective_function();
+	this->save_objective_funtion();
 	show_iterations();
 	iteration++;
 	temperature = alpha*temperature;
@@ -96,4 +98,23 @@ void SA::draw_best_solution(std::shared_ptr<Solution> solution, std::list<Simple
 void SA::plot_objective_function()
 {
 	this->form->PlotObjectiveFunction(actual->achievable_points, best->achievable_points);
+}
+
+void SA::save_objective_funtion()
+{
+	std::ofstream file;
+	if (first)
+	{
+		file.open(file_name);
+		first = false;
+	}
+	else
+	{
+		file.open(file_name, std::ios::ate | std::ios::app);
+	}
+	
+	if (file.is_open())
+	{
+		file << actual->achievable_points << "\t" << best->achievable_points << std::endl;
+	}
 }

@@ -132,8 +132,8 @@ std::shared_ptr<Solution>  Neighbourhood_generator::generate_wider_neighbourhood
 	std::vector<Base> candidate_bases = std::vector<Base>(actual->bases.begin(), actual->bases.end());
 	unsigned int base = (std::rand() % (candidate_bases.size() - 1)) + 1;
 	
-	int	x_to_move = ((std::rand() % (width / 4)) - (width / 8)) * (actual_temp / start_temp);
-	int	y_to_move = ((std::rand() % (height / 4)) - (height / 8)) * (actual_temp / start_temp);
+	int	x_to_move = static_cast<int> (((std::rand() % (width / 4)) - (width / 8)) * (actual_temp / start_temp));
+	int	y_to_move = static_cast<int>(((std::rand() % (height / 4)) - (height / 8)) * (actual_temp / start_temp));
 	
 	auto & base_to_move = (candidate_bases[base]);
 
