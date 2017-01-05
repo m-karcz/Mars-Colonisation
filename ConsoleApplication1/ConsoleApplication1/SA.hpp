@@ -10,6 +10,7 @@
 #include <gcroot.h>
 #include <memory>
 #include <string>
+#include <fstream>
 
 namespace ConsoleApplication1 {
 	ref class MainForm;
@@ -31,11 +32,11 @@ struct SA
 	int rejected; //liczba odrzuconych pogorszeñ wartoœci achievable_points w actualu
 	std::shared_ptr<Graph> map;
 	gcroot<ConsoleApplication1::MainForm^> form;
-	bool first = true;
 	const std::string file_name = "output.txt";
+	std::ofstream file;
 
-
-	SA(double temperature, const double alpha, std::shared_ptr<Solution> initial, std::shared_ptr<Graph> map, ConsoleApplication1::MainForm^ form, int max_range) : temperature(temperature), alpha(alpha), actual(initial), best(initial), map(map), nei_generator(map, start_temperature), form(form), start_temperature(temperature), max_range(max_range) {}
+	SA(double temperature, const double alpha, std::shared_ptr<Solution> initial, std::shared_ptr<Graph> map, ConsoleApplication1::MainForm^ form, int max_range) : temperature(temperature), alpha(alpha), actual(initial), best(initial), map(map), nei_generator(map, start_temperature), form(form), start_temperature(temperature), max_range(max_range) { file.open(file_name); }
+	~SA() { file.close(); }
 	bool run(void);
 	void prepare_next_iteration(); //ustawia temperature przed kolejn¹ iteracj¹
 	void prepare_next_iteration(double new_temp, double new_alpha);

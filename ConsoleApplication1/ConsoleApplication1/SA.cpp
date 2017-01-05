@@ -1,7 +1,6 @@
 #include "SA.hpp"
 #include <functional>
 #include <iostream>
-#include <fstream>
 #include "MainForm.h"
 
 
@@ -102,21 +101,5 @@ void SA::plot_objective_function()
 
 void SA::save_objective_funtion()
 {
-	std::ofstream file;
-	if (first)
-	{
-		file.open(file_name);
-		first = false;
-	}
-	else
-	{
-		file.open(file_name, std::ios::ate | std::ios::app);
-	}
-	
-	if (file.is_open())
-	{
-		file << actual->achievable_points << "\t" << best->achievable_points << std::endl;
-	}
-
-	file.close();
+	file << actual->achievable_points << "\t" << best->achievable_points << std::endl;
 }
