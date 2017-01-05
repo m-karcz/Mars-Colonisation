@@ -117,4 +117,6 @@ void SA::save_objective_funtion()
 	{
 		file << actual->achievable_points << "\t" << best->achievable_points << std::endl;
 	}
+
+	file.close();
 }
