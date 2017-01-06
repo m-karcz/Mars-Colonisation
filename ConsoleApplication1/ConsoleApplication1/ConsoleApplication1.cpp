@@ -26,14 +26,7 @@ int main(array<System::String ^> ^args)
 	System::Diagnostics::Debug::WriteLine(std::rand());
 	System::Diagnostics::Debug::WriteLine(std::rand());
 	//std::srand(static_cast<unsigned int>(std::time(nullptr)));
-	ConsoleApplication1::MainForm myForm;
-#ifdef AUTOMATE_IT
-	if(myForm.SetStart(args))
-	{
-		myForm.ShowDialog();
-	}
-#else
+	ConsoleApplication1::MainForm myForm(args);
 	myForm.ShowDialog();
-#endif
     return 0;
 }

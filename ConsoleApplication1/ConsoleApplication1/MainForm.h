@@ -25,10 +25,20 @@ namespace ConsoleApplication1 {
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 	public:
-		MainForm(void)
+		MainForm()
 		{
 			InitializeComponent();
 			InitializeBrushes();
+			std::cout << "stworzy³em" << std::endl;
+		}
+		MainForm(array<System::String^>^ args)
+		{
+			InitializeComponent();
+			InitializeBrushes();
+#ifdef AUTOMATE_IT
+			this->args = args;
+			this->Shown += gcnew System::EventHandler(this, &ConsoleApplication1::MainForm::OnShown);
+#endif
 		}
 
 	protected:
@@ -92,7 +102,8 @@ namespace ConsoleApplication1 {
 	private: System::Windows::Forms::Button^  auto_btn;
 	private: System::DirectoryServices::DirectoryEntry^  directoryEntry1;
 
-
+	private: array<System::String^>^ args;
+	private: System::String^ output_filename;
 
 
 	protected:
@@ -585,6 +596,11 @@ namespace ConsoleApplication1 {
 	{
 		this->gui_series->Text = (System::Int32::Parse(this->gui_series->Text) + 1).ToString();
 	}
+	public: void ShowTempAndAlpha(double temp, double alpha)
+	{
+		this->numeric_temp->Value = System::Convert::ToDecimal(temp);
+		this->numeric_alpha->Value = System::Convert::ToDecimal(alpha);
+	}
 #ifdef AUTOMATE_IT
 	public: void CloseForAutomation()
 	{
@@ -592,13 +608,19 @@ namespace ConsoleApplication1 {
 	}
 	private: void CloseForAutomationAction()
 	{
+		SaveOutput();
 		this->Close();
 	}
-	public: bool SetStart(array<System::String^>^ args)
+	public: bool AutomaticStart()
 	{
 		if (args->Length != 6)
 		{
 			std::cout << "zle dane, powinien byæ format: X Y ilosc_baz max_zasieg sciezka_do_img nazwa_outputu" << std::endl;
+			return false;
+		}
+		if(this->numeric_bases==nullptr)
+		{
+			std::cout << "WTF" << std::endl;
 			return false;
 		}
 		if (System::Int32::TryParse(args[0], this->init_x) && System::Int32::TryParse(args[1], this->init_y) && System::Decimal::TryParse(args[2], this->numeric_bases->Value) && System::Decimal::TryParse(args[3], this->numeric_range->Value))
@@ -618,7 +640,7 @@ namespace ConsoleApplication1 {
 			double temperature = System::Convert::ToDouble(this->numeric_temp->Value);
 			int max_range = System::Convert::ToInt32(this->numeric_range->Value);
 			series_executor = gcnew Series_executor(this->gui_series, this->gui_iterations, this->best_solutions, this);
-			System::String^ output_filename = args[5];
+			output_filename = args[5];
 			//series_executor->sa->set_output_filename(msclr::interop::marshal_as<std::string>(output_filename));
 			//series_executor->sa->set_output_filename(CppStrFromNet(output_filename));
 			series_executor->init(temperature, alpha, init_x, init_y, number_of_bases, map->Image, max_slope, max_range, CppStrFromNet(output_filename));
@@ -634,6 +656,15 @@ namespace ConsoleApplication1 {
 		for (; *ppchar != '\0'; ppchar++)
 			output_str.append(1, char(*ppchar));
 		return output_str;
+	}
+	private: void OnShown(System::Object^ sender, System::EventArgs^ e)
+	{
+		AutomaticStart();
+	}
+	private: void SaveOutput()
+	{
+		System::String^ output = output_filename->Split('.')[0] + ".bmp";
+		this->map->Image->Save(output);
 	}
 #endif
 

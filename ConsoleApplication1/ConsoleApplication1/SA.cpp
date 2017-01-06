@@ -114,10 +114,20 @@ void SA::save_objective_funtion()
 
 void SA::calculate_new_parameters()
 {
-	double sum = static_cast<double>(accepted + rejected + improved);
-	double accepted_percent = accepted / sum;
-	double rejected_percent = rejected / sum;
-	double improved_percent = improved / sum;
-	start_temperature *= 5;
-	alpha = (alpha+2.0)/3;
+	/*
+	 *	accepted > 1.5 rejected -> zniejszyc temp
+	 *	1.5 accepted < rejected -> zwiekszyc temp
+	 *	
+	 *	brak improved -> zwiekszyc delte
+	 */
+	if (1.5*accepted > rejected)
+		this->start_temperature /= 5.0;
+	else if (2.5*accepted < rejected)
+		this->start_temperature *= 5.0;
+
+	if (improved == 0)
+		this->alpha = (this->alpha + 1.0) / 2.0;
+
+	this->form->ShowTempAndAlpha(start_temperature, alpha);
+	
 }
