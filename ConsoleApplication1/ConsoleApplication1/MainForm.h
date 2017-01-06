@@ -583,7 +583,7 @@ private: System::Void auto_btn_Click(System::Object^  sender, System::EventArgs^
 	int base_quantity = System::Convert::ToInt32(this->numeric_bases->Value);
 	
 	int arg = range * base_quantity;
-	int auto_temperature = static_cast<int> (0.0016213*pow(arg,2) - 0.717574*arg + 86.5998);
+	int auto_temperature = static_cast<int> (0.00401786*pow(arg,2) - 0.321429*arg - 33);
 	int auto_alpha = 93 + base_quantity;
 
 	this->numeric_temp->Value = auto_temperature;
