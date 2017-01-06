@@ -67,6 +67,11 @@ bool SA::run(void)
 	return temperature > min_temp;
 }
 
+auto SA::get_best_achievable_points() -> decltype(best->achievable_points)
+{
+	return this->best->achievable_points;
+}
+
 void SA::show_best_solution()
 {
 	form->SetBestSolution(best);
