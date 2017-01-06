@@ -46,4 +46,5 @@ struct SA
 	void draw_best_solution(std::shared_ptr<Solution> solution, std::list<SimplePoint>&& range); //maluje aktualne rozwiazanie na mapie w gui
 	void plot_objective_function();
 	void save_objective_funtion();
+	void calculate_new_parameters();
 };

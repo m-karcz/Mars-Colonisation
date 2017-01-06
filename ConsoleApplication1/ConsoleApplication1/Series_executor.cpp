@@ -11,7 +11,7 @@ namespace ConsoleApplication1
 	{
 		form->SetRun(false);
 		auto tx = high_resolution_clock::now();
-		while (this->without_improvement < 3)
+		while (this->without_improvement < 10)
 		{
 			sa->prepare_next_iteration();
 			form->IncrementSeries();

@@ -21,7 +21,11 @@ using namespace System;
 int main(array<System::String ^> ^args)
 {
 	//WinExec("matlab -r test", SW_SHOWNORMAL);
-	std::srand(static_cast<unsigned int>(std::time(nullptr)));
+	auto x = static_cast<unsigned int>(std::time(0));
+	std::srand(x);
+	System::Diagnostics::Debug::WriteLine(std::rand());
+	System::Diagnostics::Debug::WriteLine(std::rand());
+	//std::srand(static_cast<unsigned int>(std::time(nullptr)));
 	ConsoleApplication1::MainForm myForm;
 #ifdef AUTOMATE_IT
 	if(myForm.SetStart(args))

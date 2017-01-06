@@ -2,7 +2,7 @@
 #include <functional>
 #include <iostream>
 #include "MainForm.h"
-
+#include <cmath>
 
 
 bool SA::run(void)
@@ -88,6 +88,8 @@ void SA::prepare_next_iteration()
 }
 void SA::prepare_next_iteration(double new_temp, double new_alpha)
 {
+	std::cout << "Accepted: " << accepted << ",Rejected:" << rejected << ",Improved:" << improved << std::endl;
+	calculate_new_parameters();
 	this->accepted = 0;
 	this->rejected = 0;
 	this->improved = 0;
@@ -95,6 +97,7 @@ void SA::prepare_next_iteration(double new_temp, double new_alpha)
 	this->temperature = new_temp;
 	this->iteration = 0;
 }
+
 void SA::draw_best_solution(std::shared_ptr<Solution> solution, std::list<SimplePoint>&& range)
 {
 	this->form->DrawBestSolution(solution, std::move(range));
@@ -107,4 +110,14 @@ void SA::plot_objective_function()
 void SA::save_objective_funtion()
 {
 	file << actual->achievable_points << "\t" << best->achievable_points << std::endl;
+}
+
+void SA::calculate_new_parameters()
+{
+	double sum = static_cast<double>(accepted + rejected + improved);
+	double accepted_percent = accepted / sum;
+	double rejected_percent = rejected / sum;
+	double improved_percent = improved / sum;
+	start_temperature *= 5;
+	alpha = (alpha+2.0)/3;
 }
