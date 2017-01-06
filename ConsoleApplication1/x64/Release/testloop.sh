@@ -1,9 +1,11 @@
-X=60
-Y=40
-NUMBER_OF_BASES=2
-RANGE=40
+X=100
+Y=60
+NUMBER_OF_BASES=3
+RANGE=80
 MAP=mars2.png
-for i in {1..3}; do
-  echo -e "\t\t\t\t\t\t$i of 3"
+
+echo "Parameters: X=$X, Y=$Y, bases=$NUMBER_OF_BASES, range=$RANGE, map=$MAP"
+for i in {1..5}; do
+  echo -e "\t\t\t\t$i of 5"
   ./ConsoleApplication1.exe $X $Y $NUMBER_OF_BASES $RANGE $MAP $i.txt
 done

@@ -5,6 +5,7 @@
 #include <cmath>
 #include <string>
 #include "XY_CLR.h"
+#include <msclr/marshal_cppstd.h>
 
 namespace ConsoleApplication1 {
 
@@ -19,8 +20,8 @@ namespace ConsoleApplication1 {
 	/// Summary for MainForm
 	/// </summary>
 
-	
-	
+
+
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 	public:
@@ -74,7 +75,7 @@ namespace ConsoleApplication1 {
 
 	private: System::Drawing::Brush^ base_brush;
 	private: System::Drawing::Brush^ range_brush;
-		
+
 	private: System::Drawing::Image^ map_original;
 
 	private: System::Drawing::Image^ map_cpy;
@@ -424,11 +425,11 @@ namespace ConsoleApplication1 {
 		void InitializeBrushes(void)
 		{
 			this->base_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(255, 0, 0, 0));
-			this->range_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(150, 0,0,0));
+			this->range_brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(150, 0, 0, 0));
 		}
 #pragma endregion
 	private: System::Void run_button_Click(System::Object^  sender, System::EventArgs^  e) {
-		if(!is_run)
+		if (!is_run)
 		{
 			int number_of_bases = System::Convert::ToInt32(this->numeric_bases->Value);
 			int max_slope = System::Convert::ToInt32(this->numeric_slope->Value);
@@ -449,8 +450,8 @@ namespace ConsoleApplication1 {
 		this->gui_series->Text = (System::Int32::Parse(this->gui_series->Text) + 1).ToString();
 	}
 	private: System::Void open_map_Click(System::Object^  sender, System::EventArgs^  e) {
-		auto result=open_map_dialog->ShowDialog();
-		if (result==System::Windows::Forms::DialogResult::OK)
+		auto result = open_map_dialog->ShowDialog();
+		if (result == System::Windows::Forms::DialogResult::OK)
 		{
 			map_original = System::Drawing::Image::FromFile(open_map_dialog->FileName);
 			map->Image = (System::Drawing::Image^)(map_original->Clone());
@@ -464,7 +465,7 @@ namespace ConsoleApplication1 {
 			this->open_map->Enabled = false;
 		}
 	}
-		
+
 	private: System::Void open_map_dialog_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 		System::Console::WriteLine("no tutaj xD");
 
@@ -474,43 +475,43 @@ namespace ConsoleApplication1 {
 		using namespace System;
 		using namespace System::Collections::Generic;
 		List<String^>^ bases = gcnew List<String^>();
-		for(auto& base : solution->bases)
+		for (auto& base : solution->bases)
 		{
 			bases->Add(base.x.ToString() + ", " + base.y.ToString());
 		}
 		this->Invoke(gcnew Action<List<String^>^>(this, &MainForm::SetBestSolutionAction), bases);
 		this->Invoke(gcnew Action<int>(this, &MainForm::SetBestSoltuionValue), solution->achievable_points);
 	}
-	void SetBestSolutionAction(System::Collections::Generic::List<System::String^>^ bases)
-	{
-		this->best_solutions->Items->Clear();
-		for(int i=0; i<bases->Count; i++)
-		{
-			this->best_solutions->Items->Add(bases[i]);
-		}
-	}
-	void SetBestSoltuionValue(int value)
-	{
-		this->gui_total_range->Text = value.ToString();
-	}
-	void SetIterations(int iterations)
-	{
-		this->Invoke(gcnew Action<int>(this, &MainForm::SetIterationsAction), iterations);
-	}
-	void SetIterationsAction(int iterations)
-	{
-		this->gui_iterations->Text = iterations.ToString();
-	}
+			void SetBestSolutionAction(System::Collections::Generic::List<System::String^>^ bases)
+			{
+				this->best_solutions->Items->Clear();
+				for (int i = 0; i < bases->Count; i++)
+				{
+					this->best_solutions->Items->Add(bases[i]);
+				}
+			}
+			void SetBestSoltuionValue(int value)
+			{
+				this->gui_total_range->Text = value.ToString();
+			}
+			void SetIterations(int iterations)
+			{
+				this->Invoke(gcnew Action<int>(this, &MainForm::SetIterationsAction), iterations);
+			}
+			void SetIterationsAction(int iterations)
+			{
+				this->gui_iterations->Text = iterations.ToString();
+			}
 	public: void DrawBestSolution(std::shared_ptr<Solution> solution, std::list<SimplePoint>&& ranges)
 	{
 		using namespace System::Collections::Generic;
 		auto bases = gcnew List<XY^>();
 		auto achievables = gcnew List<XY^>();
-		for(auto b : solution->bases)
+		for (auto b : solution->bases)
 		{
 			bases->Add(gcnew XY(b));
 		}
-		for(auto r : ranges)
+		for (auto r : ranges)
 		{
 			achievables->Add(gcnew XY(r.x, r.y));
 		}
@@ -525,13 +526,13 @@ namespace ConsoleApplication1 {
 		auto achievables = args[1];
 		this->clear_map();
 		this->board_to_draw = System::Drawing::Graphics::FromImage(this->map->Image);
-		
-		for(int i=0; i<achievables->Count; i++)
+
+		for (int i = 0; i < achievables->Count; i++)
 		{
 			auto a = achievables[i];
 			this->board_to_draw->FillRectangle(range_brush, 2 * a->x, 2 * a->y, 2, 2);
 		}
-		for(int i=0; i<bases->Count; i++)
+		for (int i = 0; i < bases->Count; i++)
 		{
 			auto b = bases[i];
 			this->board_to_draw->FillRectangle(base_brush, 2 * b->x, 2 * b->y, 2, 2);
@@ -542,25 +543,25 @@ namespace ConsoleApplication1 {
 	{
 		this->map->Image = (System::Drawing::Image^)(map_original->Clone());
 	}
-	void click_on_image(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
-	{
-		if(!is_run)
-		{
-		this->init_x = e->Location.X/2;
-		this->init_y = e->Location.Y/2;
-		this->best_solutions->Items->Clear();
-		this->best_solutions->Items->Add(this->init_x.ToString() + ", " + this->init_y.ToString());
-		}
-	}
-	void SetRun(bool val)
-	{
-		this->Invoke(gcnew Action<bool>(this, &MainForm::SetRunAction), val);
-	}
-	
-	void SetRunAction(bool val)
-	{
-		this->run_button->Enabled = val;
-	}
+			void click_on_image(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
+			{
+				if (!is_run)
+				{
+					this->init_x = e->Location.X / 2;
+					this->init_y = e->Location.Y / 2;
+					this->best_solutions->Items->Clear();
+					this->best_solutions->Items->Add(this->init_x.ToString() + ", " + this->init_y.ToString());
+				}
+			}
+			void SetRun(bool val)
+			{
+				this->Invoke(gcnew Action<bool>(this, &MainForm::SetRunAction), val);
+			}
+
+			void SetRunAction(bool val)
+			{
+				this->run_button->Enabled = val;
+			}
 
 	public: void PlotObjectiveFunction(int actual, int best)
 	{
@@ -576,19 +577,82 @@ namespace ConsoleApplication1 {
 	{
 		this->chart1->Series["best"]->Points->AddY(value);
 	}
+	public: void IncrementSeries(void)
+	{
+		this->Invoke(gcnew Action(this, &MainForm::IncrementSeriesAction));
+	}
+	private: void IncrementSeriesAction()
+	{
+		this->gui_series->Text = (System::Int32::Parse(this->gui_series->Text) + 1).ToString();
+	}
+#ifdef AUTOMATE_IT
+	public: void CloseForAutomation()
+	{
+		this->Invoke(gcnew Action(this, &MainForm::CloseForAutomationAction));
+	}
+	private: void CloseForAutomationAction()
+	{
+		this->Close();
+	}
+	public: bool SetStart(array<System::String^>^ args)
+	{
+		if (args->Length != 6)
+		{
+			std::cout << "zle dane, powinien byæ format: X Y ilosc_baz max_zasieg sciezka_do_img nazwa_outputu" << std::endl;
+			return false;
+		}
+		if (System::Int32::TryParse(args[0], this->init_x) && System::Int32::TryParse(args[1], this->init_y) && System::Decimal::TryParse(args[2], this->numeric_bases->Value) && System::Decimal::TryParse(args[3], this->numeric_range->Value))
+		{
+			this->numeric_bases->Value = System::Decimal::Parse(args[2]);
+			this->numeric_range->Value = System::Decimal::Parse(args[3]);
+			map_original = System::Drawing::Image::FromFile(args[4]);
+			map->Image = (System::Drawing::Image^)map_original->Clone();
+			set_auto_temp_and_alpha();
+			this->map->Width = this->map->Image->Width;
+			this->map->Height = this->map->Image->Height;
+			this->best_solutions->Items->Clear();
+			this->best_solutions->Items->Add(this->init_x.ToString() + ", " + this->init_y.ToString());
+			int number_of_bases = System::Convert::ToInt32(this->numeric_bases->Value);
+			int max_slope = System::Convert::ToInt32(this->numeric_slope->Value);
+			double alpha = System::Convert::ToDouble(this->numeric_alpha->Value);
+			double temperature = System::Convert::ToDouble(this->numeric_temp->Value);
+			int max_range = System::Convert::ToInt32(this->numeric_range->Value);
+			series_executor = gcnew Series_executor(this->gui_series, this->gui_iterations, this->best_solutions, this);
+			System::String^ output_filename = args[5];
+			//series_executor->sa->set_output_filename(msclr::interop::marshal_as<std::string>(output_filename));
+			//series_executor->sa->set_output_filename(CppStrFromNet(output_filename));
+			series_executor->init(temperature, alpha, init_x, init_y, number_of_bases, map->Image, max_slope, max_range, CppStrFromNet(output_filename));
+			series_executor->next_series();
+		}
 
-private: System::Void auto_btn_Click(System::Object^  sender, System::EventArgs^  e) 
-{
-	int range = System::Convert::ToInt32(this->numeric_range->Value);
-	int base_quantity = System::Convert::ToInt32(this->numeric_bases->Value);
-	
-	int arg = range * base_quantity;
-	int auto_temperature = static_cast<int> (0.0016213*pow(arg,2) - 0.717574*arg + 86.5998);
-	int auto_alpha = 93 + base_quantity;
+		return true;
+	}
+	private: std::string CppStrFromNet(System::String^ str)
+	{
+		std::string output_str = "";
+		interior_ptr<const Char> ppchar = PtrToStringChars(str);
+		for (; *ppchar != '\0'; ppchar++)
+			output_str.append(1, char(*ppchar));
+		return output_str;
+	}
+#endif
 
-	this->numeric_temp->Value = auto_temperature;
-	this->numeric_alpha->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { auto_alpha, 0, 0, 131072 });
-}
-};
+	private: System::Void auto_btn_Click(System::Object^  sender, System::EventArgs^  e)
+	{
+		set_auto_temp_and_alpha();
+	}
+	private: System::Void set_auto_temp_and_alpha()
+	{
+		int range = System::Convert::ToInt32(this->numeric_range->Value);
+		int base_quantity = System::Convert::ToInt32(this->numeric_bases->Value);
+
+		int arg = range * base_quantity;
+		int auto_temperature = static_cast<int> (0.0016213*pow(arg, 2) - 0.717574*arg + 86.5998);
+		int auto_alpha = 93 + base_quantity;
+
+		this->numeric_temp->Value = auto_temperature;
+		this->numeric_alpha->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { auto_alpha, 0, 0, 131072 });
+	}
+	};
 
 }
