@@ -50,17 +50,21 @@ std::shared_ptr<Solution> Neighbourhood_generator::next( std::shared_ptr<Solutio
 		switch(neighbourhood_type)
 		{
 			case 0:
-				neighbour = generate_random_neighbourhood(actual);
-				simple_used = false;
-				break;
-			case 1:
+				if (0.1 < actual_temp / start_temp)
+				{
+					neighbour = generate_wider_neighbourhood(actual);
+					simple_used = false;
+					break;
+				}
+			case 2:
 				neighbour = generate_simple_neighbourhood(actual);
 				simple_used = true;
 				break;
-			case 2:
-				neighbour = generate_wider_neighbourhood(actual);
+			case 1:
+				neighbour = generate_random_neighbourhood(actual);
 				simple_used = false;
 				break;
+			
 		}
 	} while (!this->is_new(neighbour) || !(this->is_inside(neighbour)) );
 
