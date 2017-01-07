@@ -598,7 +598,15 @@ namespace ConsoleApplication1 {
 	}
 	public: void ShowTempAndAlpha(double temp, double alpha)
 	{
+		this->Invoke(gcnew Action<double>(this, &MainForm::ShowTempAction), temp);
+		this->Invoke(gcnew Action<double>(this, &MainForm::ShowAlphaAction), alpha);
+	}
+	private: void ShowTempAction(double temp)
+	{
 		this->numeric_temp->Value = System::Convert::ToDecimal(temp);
+	}
+	private: void ShowAlphaAction(double alpha)
+	{
 		this->numeric_alpha->Value = System::Convert::ToDecimal(alpha);
 	}
 #ifdef AUTOMATE_IT
@@ -618,7 +626,7 @@ namespace ConsoleApplication1 {
 			std::cout << "zle dane, powinien byæ format: X Y ilosc_baz max_zasieg sciezka_do_img nazwa_outputu" << std::endl;
 			return false;
 		}
-		if(this->numeric_bases==nullptr)
+		if (this->numeric_bases == nullptr)
 		{
 			std::cout << "WTF" << std::endl;
 			return false;
