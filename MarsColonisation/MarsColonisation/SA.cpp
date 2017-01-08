@@ -84,8 +84,7 @@ bool SA::run(void)
 	nei_generator.temp_actualize(temperature);
 	add_of_history(best->achievable_points);
 
-	return !is_stationary();
-	// temperature > min_temp;
+	return (!is_stationary() || (temperature > min_temp));
 }
 
 void SA::add_of_history(int val)
