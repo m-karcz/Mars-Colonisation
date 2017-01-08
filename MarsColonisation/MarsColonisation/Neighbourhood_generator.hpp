@@ -28,6 +28,7 @@ struct Neighbourhood_generator
 
 	bool simple_used;
 	int prev_move;
+	int prev_base;
 	bool better;
 
 	std::list<std::multiset<Base>> generated;
