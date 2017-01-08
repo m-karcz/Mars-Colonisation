@@ -480,7 +480,7 @@ namespace MarsColonisation {
 			this->auto_btn->Enabled = false;
 		}
 		series_executor->next_series();
-		this->gui_series->Text = (System::Int32::Parse(this->gui_series->Text) + 1).ToString();
+		//this->gui_series->Text = (System::Int32::Parse(this->gui_series->Text) + 1).ToString();
 	}
 	private: System::Void open_map_Click(System::Object^  sender, System::EventArgs^  e) {
 		auto result = open_map_dialog->ShowDialog();

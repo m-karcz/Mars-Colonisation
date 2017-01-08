@@ -20,7 +20,9 @@ struct SA
 {
 	std::shared_ptr<Solution> actual;
 	std::shared_ptr<Solution> best;
+	std::vector<int> of_history;
 	Neighbourhood_generator nei_generator;
+	const int history_size = 50;
 	double temperature;
 	double start_temperature;
 	unsigned int iteration = 0;
@@ -37,7 +39,9 @@ struct SA
 
 	SA(double temperature, const double alpha, std::shared_ptr<Solution> initial, std::shared_ptr<Graph> map, MarsColonisation::MainForm^ form, int max_range, std::string file_name) : temperature(temperature), alpha(alpha), actual(initial), best(initial), map(map), nei_generator(map, start_temperature), form(form), start_temperature(temperature), max_range(max_range), file_name(file_name) { file.open(file_name); }
 	~SA() { file.close(); }
+	bool is_stationary();
 	bool run(void);
+	void add_of_history(int val);
 	auto get_best_achievable_points() -> decltype(best->achievable_points);
 	void prepare_next_iteration(); //ustawia temperature przed kolejn¹ iteracj¹
 	void prepare_next_iteration(double new_temp, double new_alpha);

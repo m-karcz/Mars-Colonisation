@@ -5,6 +5,25 @@
 #include <cmath>
 
 
+bool SA::is_stationary()
+{
+	bool result = false;
+	if (history_size == of_history.size())
+	{
+		result = true;
+		int val = of_history[0];
+		for (int i : of_history)
+		{
+			if (i != val)
+			{
+				result = false;
+				break;
+			}
+		}
+	}
+	return result;
+}
+
 bool SA::run(void)
 {
 	std::shared_ptr<Solution> candidate = nei_generator.next(actual);
@@ -63,8 +82,19 @@ bool SA::run(void)
 	iteration++;
 	temperature = alpha*temperature;
 	nei_generator.temp_actualize(temperature);
+	add_of_history(best->achievable_points);
 
-	return temperature > min_temp;
+	return !is_stationary();
+	// temperature > min_temp;
+}
+
+void SA::add_of_history(int val)
+{
+	of_history.push_back(val);
+	if (history_size < of_history.size())
+	{
+		of_history.erase(of_history.begin());
+	}
 }
 
 auto SA::get_best_achievable_points() -> decltype(best->achievable_points)
