@@ -441,6 +441,7 @@ namespace MarsColonisation {
 			this->Controls->Add(this->open_map);
 			this->Controls->Add(this->map);
 			this->Controls->Add(this->run_button);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Fixed3D;
 			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"MainForm";
 			this->Text = L"Mars Colonization";
