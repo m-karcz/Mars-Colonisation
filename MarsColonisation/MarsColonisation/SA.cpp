@@ -138,7 +138,7 @@ void SA::plot_objective_function()
 
 void SA::save_objective_funtion()
 {
-	file << actual->achievable_points << "\t" << best->achievable_points << std::endl;
+	file << actual->achievable_points << "\t" << best->achievable_points << "\t" << *actual << "\t" << *best << std::endl;
 }
 
 void SA::calculate_new_parameters()

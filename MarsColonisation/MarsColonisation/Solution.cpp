@@ -27,9 +27,8 @@ std::ostream & operator<< (std::ostream & output, const Solution & s)
 {
 	for (auto& base : s.bases)
 	{
-		output << '{' << base.x << ',' << base.y << "} ";
+		output << base.x << ',' << base.y << " ";
 	}
-	output << s.achievable_points;
 	return output;
 }
 

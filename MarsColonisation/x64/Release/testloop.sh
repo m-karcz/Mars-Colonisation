@@ -1,5 +1,5 @@
-X=50
-Y=30
+X=70
+Y=40
 NUMBER_OF_BASES=2
 RANGE=80
 MAX_SLOPE=30
@@ -10,3 +10,6 @@ for i in {1..5}; do
   echo -e "\t\t\t\t$i of 5"
   ./MarsColonisation.exe $X $Y $NUMBER_OF_BASES $RANGE $MAX_SLOPE $MAP $i.txt
 done
+
+read end
+

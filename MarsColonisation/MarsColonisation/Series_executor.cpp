@@ -39,6 +39,7 @@ namespace MarsColonisation
 		}
 #ifdef AUTOMATE_IT
 		std::cout << "Run time: " << duration_cast<seconds>(high_resolution_clock::now() - tx).count() << "s" << std::endl;
+		System::Console::WriteLine("Iterations: "+(this->gui_iterations->Text));
 		this->form->CloseForAutomation();
 #endif
 	}
