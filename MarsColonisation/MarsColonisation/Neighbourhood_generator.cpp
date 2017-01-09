@@ -79,18 +79,21 @@ std::shared_ptr<Solution>  Neighbourhood_generator::generate_simple_neighbourhoo
 {
 		std::shared_ptr<Solution> neighbour = std::make_shared<Solution>(*actual);
 		std::vector<Base> candidate_bases = std::vector<Base>(actual->bases.begin(), actual->bases.end());
-		unsigned int base = (std::rand() % (candidate_bases.size() - 1)) + 1;
+		unsigned int base;
 		int repeat_lottery = std::rand() % 2;
 		int where_to_move;
 		if ( simple_used  && better && repeat_lottery )
 		{
 			where_to_move = prev_move;
+			base = prev_base;
 		}
 		else
 		{
 			where_to_move = (std::rand() % 8);
+			base = (std::rand() % (candidate_bases.size() - 1)) + 1;
 		}
 		prev_move = where_to_move;
+		prev_base = base;
 
 		auto & base_to_move = (candidate_bases[base]);
 		switch (where_to_move)
