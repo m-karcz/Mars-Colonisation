@@ -29,7 +29,6 @@ namespace MarsColonisation {
 		{
 			InitializeComponent();
 			InitializeBrushes();
-			std::cout << "stworzy³em" << std::endl;
 		}
 		MainForm(array<System::String^>^ args)
 		{
@@ -501,7 +500,6 @@ namespace MarsColonisation {
 	}
 
 	private: System::Void open_map_dialog_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
-		System::Console::WriteLine("no tutaj xD");
 
 	}
 	public: void SetBestSolution(std::shared_ptr<Solution> solution)
@@ -670,7 +668,6 @@ namespace MarsColonisation {
 		}
 		if (this->numeric_bases == nullptr)
 		{
-			std::cout << "WTF" << std::endl;
 			return false;
 		}
 		if (System::Int32::TryParse(args[0], this->init_x) && System::Int32::TryParse(args[1], this->init_y) && System::Decimal::TryParse(args[2], this->numeric_bases->Value) && System::Decimal::TryParse(args[3], this->numeric_range->Value) && System::Decimal::TryParse(args[4], this->numeric_slope->Value))

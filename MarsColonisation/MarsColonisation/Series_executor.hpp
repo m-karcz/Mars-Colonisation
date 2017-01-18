@@ -5,14 +5,8 @@
 #include <string>
 
 
-//namespace MarsColonisation
-//{
 namespace MarsColonisation {
 	ref class MainForm;
-	//}
-
-	//potem siê rozbije na cpp
-	// klasa bêd¹ca pomostem miêdzy gui, a naszym algorytmem
 	public ref class Series_executor {
 	public:
 		Series_executor(System::Windows::Forms::Label^ gui_series, System::Windows::Forms::Label^ gui_iterations, System::Windows::Forms::ListBox^ gui_best_solution, MainForm^ form) {
@@ -28,7 +22,6 @@ namespace MarsColonisation {
 		void init(double temperature, double alpha, int x, int y, int amount, System::Drawing::Image^ map_image, int max_slope, int max_range, std::string file_name) {
 			auto initial_solution = Solution::generate_initial(x, y, amount);
 			this->sa = new SA(temperature, alpha, initial_solution, std::shared_ptr<Graph>(new Graph(map_image, max_slope)), form, max_range, file_name);
-			//gui_best_solution->Invoke(Add123);
 		}
 		MainForm^ form;
 		SA* sa;

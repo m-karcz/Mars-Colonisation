@@ -17,7 +17,6 @@ namespace MarsColonisation
 struct Solution {
 	long achievable_points = 0;
 	std::vector<Base> bases;
-	//std::list<std::pair<int,int>> objective_function(std::shared_ptr<Graph> map, const long range);
 	std::list<SimplePoint> objective_function(std::shared_ptr<Graph> map, const long range);
 
 	void move_bases(std::vector<Base> new_bases);

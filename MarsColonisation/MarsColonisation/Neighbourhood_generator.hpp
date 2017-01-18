@@ -13,12 +13,6 @@
 #include <utility>
 
 
-/*struct Solutions_comparator {
-	bool operator() (const std::set<Base>& left, const std::set<Base>& right) {
-
-	}
-};*/
-
 struct Neighbourhood_generator
 {
 	int width;			//map width

@@ -117,7 +117,6 @@ void SA::prepare_next_iteration()
 }
 void SA::prepare_next_iteration(double new_temp, double new_alpha)
 {
-	//std::cout << "Accepted: " << accepted << ",Rejected:" << rejected << ",Improved:" << improved << std::endl;
 	calculate_new_parameters();
 	this->accepted = 0;
 	this->rejected = 0;

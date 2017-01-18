@@ -40,14 +40,11 @@ Graph::Graph(System::Drawing::Image^ img, int max_slope)
 				for (int yy = (y == 0 ? 0 : -1); yy <= (y == heights.size() - 1 ? 0 : 1); yy++) {
 					if (!(xx == 0 && yy == 0))
 					{
-						//zostawiam jakby jendak nie by³o skopane
-						/*edges.emplace_back(x+xx, y+yy, static_cast<int>(std::abs((std::abs(xx)+std::abs(yy)==2 ? 1.41 : 1)*(heights[y+yy][x+xx]-heights[y][x]+cost_of_path))));
-						edges_reversed.emplace_back(x + xx, y+yy, static_cast<int>(std::abs((std::abs(xx), std::abs(yy) == 2 ? 1.41 : 1)*(heights[y][x] - heights[y + yy][x + xx] + cost_of_path))));*/
 						double slope = heights[y][x] - heights[y + yy][x + xx];
 						if (std::abs(slope) < max_slope) {
 							double flat_path = (std::abs(xx) + std::abs(yy) == 2.0 ? 1.41 : 1.0)*cost_of_path;
-							edges.emplace_back(Edge(x + xx, y + yy, static_cast<int>(std::abs(flat_path + slope))));
-							edges_reversed.emplace_back(Edge(x + xx, y + yy, static_cast<int>(std::abs(flat_path - slope))));
+							edges.emplace_back(Edge(x + xx, y + yy, std::max(static_cast<int>(flat_path + slope),0)));
+							edges_reversed.emplace_back(Edge(x + xx, y + yy, std::max(static_cast<int>(flat_path - slope),0)));
 						}
 					}
 				}

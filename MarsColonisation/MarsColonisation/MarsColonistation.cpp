@@ -20,12 +20,8 @@ using namespace System;
 [System::STAThread]
 int main(array<System::String ^> ^args)
 {
-	//WinExec("matlab -r test", SW_SHOWNORMAL);
 	auto x = static_cast<unsigned int>(std::time(0));
 	std::srand(x);
-	System::Diagnostics::Debug::WriteLine(std::rand());
-	System::Diagnostics::Debug::WriteLine(std::rand());
-	//std::srand(static_cast<unsigned int>(std::time(nullptr)));
 	MarsColonisation::MainForm myForm(args);
 	myForm.ShowDialog();
     return 0;
